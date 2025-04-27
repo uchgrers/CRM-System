@@ -1,0 +1,21 @@
+.item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  column-gap: 40px;
+  background-color: var(--color-light);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 6px 0 var(--color-dark);
+
+  &__content_container {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+  }
+
+  &__checkbox {
+
+  }
+}

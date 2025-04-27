@@ -1,0 +1,8 @@
+.list {
+  max-width: var(--content-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  row-gap: 16px;
+}

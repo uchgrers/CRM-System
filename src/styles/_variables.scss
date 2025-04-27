@@ -1,0 +1,18 @@
+:root {
+  --container-width: 1240px;
+  --content-width: 500px;
+
+  --color-dark: #000000;
+  --color-gray: #e5e6e8;
+  --color-light: #ffffff;
+  --color-blue: #5d6bf5;
+  --color-red: #e06060;
+  --color-accent: #4bd34d;
+
+  --border: 1px solid var(--color-dark);
+  --border-radius: 12px;
+
+  --input-height: 50px;
+  --opacity: 0.75;
+  --transition-duration: 0.2s;
+}

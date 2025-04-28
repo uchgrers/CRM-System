@@ -8,7 +8,10 @@ const Todos = (props) => {
     return (
         <section className={s.todos}>
             <AddTodoForm addTodo={props.addTodo}/>
-            <TodosList todos={props.todos} deleteTodo={props.deleteTodo}/>
+            <TodosList todos={props.todos}
+                       deleteTodo={props.deleteTodo}
+                       updateTodo={props.updateTodo}
+            />
         </section>
     );
 };

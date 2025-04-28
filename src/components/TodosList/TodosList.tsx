@@ -6,7 +6,10 @@ const TodosList = (props) => {
 
     const todos = props.todos.map(todo => <TodoItem id={todo.id}
                                                     title={todo.title}
+                                                    isDone={todo.isDone}
                                                     deleteTodo={props.deleteTodo}
+                                                    updateTodo={props.updateTodo}
+                                                    key={todo.id}
     />)
 
     return (

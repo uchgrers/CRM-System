@@ -12,7 +12,6 @@ body {
 
 input,
 button {
-  border: var(--border);
   border-radius: var(--border-radius);
   transition-duration: var(--transition-duration);
   height: var(--input-height);
@@ -21,6 +20,7 @@ button {
 }
 
 button {
+  border: var(--border);
   aspect-ratio: 1;
   opacity: var(--opacity);
   background-color: var(--color-blue);
@@ -34,6 +34,7 @@ button {
 
 input {
   width: 70%;
+  border: none;
 }
 
 ul {

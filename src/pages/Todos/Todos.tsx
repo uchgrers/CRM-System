@@ -3,7 +3,14 @@ import TodosList from "../../components/TodosList/TodosList"
 import AddTodoForm from "../../components/AddTodoForm/AddTodoForm"
 import s from './Todos.module.scss'
 
-const Todos = (props) => {
+type TodosPage = {
+    todos: Todos,
+    addTodo: (title: string) => void,
+    deleteTodo: (id: number) => void,
+    updateTodo: (id: number, isDone: boolean, title: string) => void
+}
+
+const Todos: React.FC<TodosPage> = (props) => {
 
     return (
         <section className={s.todos}>

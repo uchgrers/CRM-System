@@ -1,11 +1,35 @@
 import React from 'react'
 import s from './TodoItemButtons.module.scss'
 
-const TodoItemButtons = (props) => {
+type TodoItemButtonsType = {
+    id: number,
+    isDone: boolean,
+    isEditing: boolean,
+    setIsEditing: (isEditing: boolean) => void,
+    setTitle: (title: string) => void,
+    deleteTodo: (id: number) => void,
+    updateTodo: (relevantIsDone: boolean) => void,
+    cancelEditing: () => void
+}
+
+const TodoItemButtons: React.FC<TodoItemButtonsType> = (props) => {
+
+    const handleSetIsEditing = () => {
+        props.setIsEditing(true)
+    }
+
+    const handleUpdateTodo = () => {
+        props.updateTodo(props.isDone)
+    }
+
+    const handleDeleteTodo = () => {
+        props.deleteTodo(props.id)
+    }
+
     return (
         <>
             { !props.isEditing?
-                <button onClick={() => props.setIsEditing(true)}>
+                <button onClick={handleSetIsEditing}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -7 36 36" fill="none" stroke="black"
                          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                          className="feather feather-edit">
@@ -13,7 +37,7 @@ const TodoItemButtons = (props) => {
                         <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
                     </svg>
                 </button> :
-                <button onClick={() => props.updateTodo(props.isDone)}>
+                <button onClick={handleUpdateTodo}>
                     Save
                 </button>
             }
@@ -21,7 +45,7 @@ const TodoItemButtons = (props) => {
             {props.isEditing && <button onClick={props.cancelEditing}>Cancel</button>}
 
             <button className={s.delete_btn}
-                    onClick={() => props.deleteTodo(props.id)}
+                    onClick={handleDeleteTodo}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -7 36 36" fill="none" stroke="black"
                      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"

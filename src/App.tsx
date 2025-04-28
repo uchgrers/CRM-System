@@ -3,12 +3,12 @@ import './App.css'
 import {Route, Routes} from "react-router-dom"
 import Todos from "./pages/Todos/Todos"
 import Preloader from "./components/common/Preloader/Preloader"
-import TodoItemDetails from "./components/TodoItemDetails/TodoItemDetails";
+import TodoItemDetails from "./components/TodoItemDetails/TodoItemDetails"
 
 function App() {
 
-    const [todos, setTodos] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
+    const [todos, setTodos] = useState<Todos>([])
+    const [isLoading, setIsLoading] = useState<Boolean>(true)
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -29,7 +29,7 @@ function App() {
 
 
     const addTodo = async (title) => {
-        setIsLoading(true)
+        // setIsLoading(true)
         const response = await fetch('https://easydev.club/api/v1/todos', {
             method: "POST",
             headers: {
@@ -41,7 +41,7 @@ function App() {
             const newTodo = await response.json()
             setTodos([...todos, newTodo])
         }
-        setIsLoading(false)
+        // setIsLoading(false)
     }
 
     const deleteTodo = async (id) => {

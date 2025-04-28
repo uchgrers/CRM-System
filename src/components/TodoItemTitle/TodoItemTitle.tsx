@@ -1,8 +1,29 @@
-import React from 'react';
-import s from "../TodoItem/TodoItem.module.scss";
-import Preloader from "../common/Preloader/Preloader";
+import React from 'react'
+import s from "../TodoItem/TodoItem.module.scss"
+import Preloader from "../common/Preloader/Preloader"
 
-const TodoItemTitle = (props) => {
+type TodoItemTitleType = {
+    title: string,
+    isDone: boolean,
+    isLoading: boolean,
+    isEditing: boolean,
+    setIsDone: (relevantIsDone: boolean) => void,
+    setTitle: (title: string) => void,
+    updateTodo: (relevantIsDone: boolean) => void
+}
+
+const TodoItemTitle: React.FC<TodoItemTitleType> = (props) => {
+
+    const handleCheckboxStatusChange = () => {
+        const relevantIsDone = !props.isDone
+        props.setIsDone(relevantIsDone)
+        props.updateTodo(relevantIsDone)
+    }
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.setTitle(e.target.value)
+    }
+
     return (
         <>
             { !props.isLoading ?
@@ -10,16 +31,12 @@ const TodoItemTitle = (props) => {
                     <input className={s.item__checkbox}
                            type="checkbox"
                            checked={props.isDone}
-                           onChange={() => {
-                               const changedIsDone = !props.isDone
-                               props.setIsDone(changedIsDone)
-                               props.updateTodo(changedIsDone)
-                           }}
+                           onChange={handleCheckboxStatusChange}
                     />
                     {props.isEditing ?
                         <input type="text"
                                value={props.title}
-                               onChange={(e) => props.setTitle(e.target.value)}
+                               onChange={handleInputChange}
                                autoFocus={true}
                         />
                         : <p>{props.title}</p>

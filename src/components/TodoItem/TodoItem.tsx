@@ -3,12 +3,20 @@ import s from './TodoItem.module.scss'
 import TodoItemButtons from "../TodoItemButtons/TodoItemButtons"
 import TodoItemTitle from "../TodoItemTitle/TodoItemTitle"
 
-const TodoItem = (props) => {
+type TodoItemType = {
+    title: string,
+    isDone: boolean,
+    id: number,
+    updateTodo: (id: number, isDone: boolean, title: string) => void,
+    deleteTodo: (id: number) => void
+}
 
-    const [title, setTitle] = useState(props.title || '')
+const TodoItem: React.FC<TodoItemType> = (props) => {
+
+    const [title, setTitle] = useState<string>(props.title)
     const [isLoading, setIsLoading] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
-    const [isDone, setIsDone] = useState(props.isDone || false)
+    const [isDone, setIsDone] = useState<boolean>(props.isDone)
 
     const changeTodoParams = async (relevantIsDone) => {
         setIsEditing(false)

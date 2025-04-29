@@ -1,3 +1,8 @@
 .todos {
   width: var(--content-width);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px 0;
 }

@@ -4,28 +4,37 @@ import {Route, Routes} from "react-router-dom"
 import Preloader from "./components/common/Preloader/Preloader"
 import TodoItemDetails from "./components/TodoItemDetails/TodoItemDetails"
 import TodosPage from "./pages/TodosPage/TodosPage"
-import {Todos} from "./assets/types"
+import {Todos, TodosStatus} from "./assets/types"
 
 function App() {
 
     const [todos, setTodos] = useState<Todos>([])
     const [isLoading, setIsLoading] = useState<Boolean>(true)
+    const [todosStatus, setTodosStatus] = useState<TodosStatus>('all')
+    const [todosCount, setTodosCount] = useState<any>()
+
+    const getTodos = async (todosStatus = 'all') => {
+        try {
+            const response = await fetch(`https://easydev.club/api/v1/todos?filter=${todosStatus}`)
+            if (response.ok) {
+                const todos = await response.json()
+                setTodos(todos.data)
+                const inWork = todos.data.filter(todo => !todo.isDone).length
+                setTodosCount({
+                    all: todos.data.length,
+                    inWork,
+                    completed: todos.data.length - inWork
+                })
+            }
+        } catch (error) {
+            throw new Error(error)
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     useEffect(() => {
-        const fetchTasks = async () => {
-            try {
-                const response = await fetch('https://easydev.club/api/v1/todos')
-                if (response.ok) {
-                    const todos = await response.json()
-                    setTodos(todos.data)
-                }
-            } catch (error) {
-                throw new Error(error)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        fetchTasks()
+        getTodos()
     }, [])
 
 
@@ -42,6 +51,7 @@ function App() {
             const newTodo = await response.json()
             setTodos([...todos, newTodo])
         }
+
         // setIsLoading(false)
     }
 
@@ -59,7 +69,7 @@ function App() {
         setIsLoading(false)
     }
 
-    const updateTodo = async (id, isDone, title) => {
+    const updateTodo = async (id, isDone, title, todosStatus) => {
         const response = await fetch(`https://easydev.club/api/v1/todos/${id}`, {
             method: "PUT",
             headers: {
@@ -69,6 +79,10 @@ function App() {
         })
         if (response.ok) {
             const updatedTodo = await response.json()
+            if (todosStatus !== 'all') {
+                setTodos(todos.filter(todo => todo.id !== updatedTodo.id))
+                return
+            }
             setTodos(todos.map(todo => todo.id === updatedTodo.id ? updatedTodo : todo))
         }
     }
@@ -82,15 +96,23 @@ function App() {
             <Routes>
                 <Route path='/'
                        element={<TodosPage todos={todos}
+                                           todosStatus={todosStatus}
+                                           todosCount={todosCount}
                                            addTodo={addTodo}
                                            deleteTodo={deleteTodo}
                                            updateTodo={updateTodo}
+                                           getTodos={getTodos}
+                                           setTodosStatus={setTodosStatus}
                        />}/>
                 <Route path='/todos'
                        element={<TodosPage todos={todos}
+                                           todosStatus={todosStatus}
+                                           todosCount={todosCount}
                                            addTodo={addTodo}
                                            deleteTodo={deleteTodo}
                                            updateTodo={updateTodo}
+                                           getTodos={getTodos}
+                                           setTodosStatus={setTodosStatus}
                        />}/>
                 <Route path='/todos/:id' element={<TodoItemDetails todos={todos}/>}/>
 

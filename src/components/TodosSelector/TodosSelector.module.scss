@@ -1,0 +1,15 @@
+.selector {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  border: none;
+
+  & input {
+    display: none;
+  }
+
+  & input:checked + label {
+    text-decoration: underline;
+    color: var(--color-accent);
+  }
+}

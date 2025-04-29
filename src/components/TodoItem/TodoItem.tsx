@@ -3,7 +3,7 @@ import s from './TodoItem.module.scss'
 import TodoItemButtons from "../TodoItemButtons/TodoItemButtons"
 import TodoItemTitle from "../TodoItemTitle/TodoItemTitle"
 import {TodosPageType} from "../../pages/TodosPage/TodosPage"
-import {Todo} from "../../assets/types";
+import {Todo} from "../../assets/types"
 
 export type TodoItemTitleAndButtonsPropsType = {
     isLoading?: boolean,
@@ -15,20 +15,20 @@ export type TodoItemTitleAndButtonsPropsType = {
     updateTodo: (relevantIsDone: boolean) => void,
 }
 
-type TodoItemType = Pick<TodosPageType, 'updateTodo' |
+type TodoItemType = Pick<TodosPageType, 'todosStatus' | 'updateTodo' |
     'deleteTodo'> & Pick<Todo, 'title' | 'isDone' | 'id'>
 
 const TodoItem: React.FC<TodoItemType> = (props) => {
 
     const [title, setTitle] = useState<string>(props.title)
-    const [isLoading, setIsLoading] = useState(false)
-    const [isEditing, setIsEditing] = useState(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isEditing, setIsEditing] = useState<boolean>(false)
     const [isDone, setIsDone] = useState<boolean>(props.isDone)
 
     const changeTodoParams = async (relevantIsDone) => {
         setIsEditing(false)
         setIsLoading(true)
-        await props.updateTodo(props.id, relevantIsDone, title)
+        await props.updateTodo(props.id, relevantIsDone, title, props.todosStatus)
         setIsLoading(false)
     }
 

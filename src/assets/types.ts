@@ -1,8 +1,8 @@
-type Todo = {
+export type Todo = {
     title: string,
     isDone: boolean,
     created: string,
     id: number
 }
 
-type Todos = Todo[]
+export type Todos = Todo[]

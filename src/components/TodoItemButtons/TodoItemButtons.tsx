@@ -1,16 +1,11 @@
 import React from 'react'
 import s from './TodoItemButtons.module.scss'
+import {TodosPageType} from "../../pages/TodosPage/TodosPage";
+import {TodoItemTitleAndButtonsPropsType} from "../TodoItem/TodoItem";
+import {Todo} from "../../assets/types";
 
-type TodoItemButtonsType = {
-    id: number,
-    isDone: boolean,
-    isEditing: boolean,
-    setIsEditing: (isEditing: boolean) => void,
-    setTitle: (title: string) => void,
-    deleteTodo: (id: number) => void,
-    updateTodo: (relevantIsDone: boolean) => void,
-    cancelEditing: () => void
-}
+type TodoItemButtonsType = Pick<Todo, 'id' | 'isDone'> &
+    Pick<TodosPageType, 'deleteTodo'> & TodoItemTitleAndButtonsPropsType
 
 const TodoItemButtons: React.FC<TodoItemButtonsType> = (props) => {
 

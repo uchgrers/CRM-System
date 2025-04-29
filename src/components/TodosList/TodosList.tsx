@@ -1,12 +1,9 @@
 import React from 'react'
 import TodoItem from "../TodoItem/TodoItem"
 import s from './TodoList.module.scss'
+import {TodosPageType} from "../../pages/TodosPage/TodosPage";
 
-type TodosList = {
-    todos: Todos,
-    updateTodo: (id: number, isDone: boolean, title: string) => void,
-    deleteTodo: (id: number) => void
-}
+type TodosList = Pick<TodosPageType, 'todos' | 'updateTodo' | 'deleteTodo'>
 
 const TodosList: React.FC<TodosList> = (props) => {
 

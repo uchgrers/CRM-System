@@ -1,16 +1,17 @@
 import React from 'react'
 import TodosList from "../../components/TodosList/TodosList"
 import AddTodoForm from "../../components/AddTodoForm/AddTodoForm"
-import s from './Todos.module.scss'
+import s from './TodosPage.module.scss'
+import {Todos} from "../../assets/types";
 
-type TodosPage = {
+export type TodosPageType = {
     todos: Todos,
     addTodo: (title: string) => void,
     deleteTodo: (id: number) => void,
     updateTodo: (id: number, isDone: boolean, title: string) => void
 }
 
-const Todos: React.FC<TodosPage> = (props) => {
+const TodosPage: React.FC<TodosPageType> = (props) => {
 
     return (
         <section className={s.todos}>
@@ -23,4 +24,4 @@ const Todos: React.FC<TodosPage> = (props) => {
     );
 };
 
-export default Todos;
+export default TodosPage;

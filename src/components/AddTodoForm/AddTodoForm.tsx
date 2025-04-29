@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
 import s from './AddTodoForm.module.scss'
+import {TodosPageType} from "../../pages/TodosPage/TodosPage";
 
-type AddTodoFormType = {
-    addTodo: (title: string) => void
-}
+type AddTodoFormType = Pick<TodosPageType, 'addTodo'>
 
 const AddTodoForm: React.FC<AddTodoFormType> = (props) => {
 

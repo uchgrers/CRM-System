@@ -2,14 +2,21 @@ import React, {useState} from 'react'
 import s from './TodoItem.module.scss'
 import TodoItemButtons from "../TodoItemButtons/TodoItemButtons"
 import TodoItemTitle from "../TodoItemTitle/TodoItemTitle"
+import {TodosPageType} from "../../pages/TodosPage/TodosPage"
+import {Todo} from "../../assets/types";
 
-type TodoItemType = {
-    title: string,
-    isDone: boolean,
-    id: number,
-    updateTodo: (id: number, isDone: boolean, title: string) => void,
-    deleteTodo: (id: number) => void
+export type TodoItemTitleAndButtonsPropsType = {
+    isLoading?: boolean,
+    isEditing: boolean,
+    setIsDone?: (relevantIsDone: boolean) => void,
+    setIsEditing?: (isEditing: boolean) => void,
+    cancelEditing?: () => void,
+    setTitle: (title: string) => void,
+    updateTodo: (relevantIsDone: boolean) => void,
 }
+
+type TodoItemType = Pick<TodosPageType, 'updateTodo' |
+    'deleteTodo'> & Pick<Todo, 'title' | 'isDone' | 'id'>
 
 const TodoItem: React.FC<TodoItemType> = (props) => {
 

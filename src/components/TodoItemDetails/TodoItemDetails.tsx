@@ -1,10 +1,15 @@
-import React from 'react';
-import {useParams} from "react-router-dom";
+import React from 'react'
+import {useParams} from "react-router-dom"
+import {Todos} from '../../assets/types'
 
-const TodoItemDetails = (props) => {
+type TodoItemDetailsType = {
+    todos: Todos
+}
+
+const TodoItemDetails: React.FC<TodoItemDetailsType> = (props) => {
 
     const {id} = useParams()
-    const todo = props.todos.find(todo => String(todo.id) === id)
+    let todo = props.todos.find(todo => String(todo.id) === id)
 
     if (!todo) {
         return <div>Page not found</div>

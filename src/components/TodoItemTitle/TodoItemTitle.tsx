@@ -1,16 +1,10 @@
 import React from 'react'
 import s from "../TodoItem/TodoItem.module.scss"
 import Preloader from "../common/Preloader/Preloader"
+import {TodoItemTitleAndButtonsPropsType} from "../TodoItem/TodoItem"
+import {Todo} from "../../assets/types";
 
-type TodoItemTitleType = {
-    title: string,
-    isDone: boolean,
-    isLoading: boolean,
-    isEditing: boolean,
-    setIsDone: (relevantIsDone: boolean) => void,
-    setTitle: (title: string) => void,
-    updateTodo: (relevantIsDone: boolean) => void
-}
+type TodoItemTitleType = Pick<Todo, 'title' | 'isDone'> & TodoItemTitleAndButtonsPropsType
 
 const TodoItemTitle: React.FC<TodoItemTitleType> = (props) => {
 
@@ -41,7 +35,6 @@ const TodoItemTitle: React.FC<TodoItemTitleType> = (props) => {
                         />
                         : <p>{props.title}</p>
                     }
-
                 </div> : <Preloader/>
             }
         </>

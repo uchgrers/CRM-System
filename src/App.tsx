@@ -1,9 +1,10 @@
 import {useEffect, useState} from 'react'
 import './App.css'
 import {Route, Routes} from "react-router-dom"
-import Todos from "./pages/Todos/Todos"
 import Preloader from "./components/common/Preloader/Preloader"
 import TodoItemDetails from "./components/TodoItemDetails/TodoItemDetails"
+import TodosPage from "./pages/TodosPage/TodosPage"
+import {Todos} from "./assets/types"
 
 function App() {
 
@@ -80,16 +81,16 @@ function App() {
         <>
             <Routes>
                 <Route path='/'
-                       element={<Todos todos={todos}
-                                       addTodo={addTodo}
-                                       deleteTodo={deleteTodo}
-                                       updateTodo={updateTodo}
+                       element={<TodosPage todos={todos}
+                                           addTodo={addTodo}
+                                           deleteTodo={deleteTodo}
+                                           updateTodo={updateTodo}
                        />}/>
                 <Route path='/todos'
-                       element={<Todos todos={todos}
-                                       addTodo={addTodo}
-                                       deleteTodo={deleteTodo}
-                                       updateTodo={updateTodo}
+                       element={<TodosPage todos={todos}
+                                           addTodo={addTodo}
+                                           deleteTodo={deleteTodo}
+                                           updateTodo={updateTodo}
                        />}/>
                 <Route path='/todos/:id' element={<TodoItemDetails todos={todos}/>}/>
 

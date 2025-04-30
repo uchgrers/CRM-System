@@ -7,20 +7,7 @@ type TodosList = Pick<TodosPageType, 'todos' | 'updateTodo' | 'deleteTodo' | 'to
 
 const TodosList: React.FC<TodosList> = (props) => {
 
-    // let todos
-    //
-    // switch (props.todosStatus) {
-    //     case 'all':
-    //         todos = props.todos
-    //         break
-    //     case 'inWork':
-    //         todos = props.todos.filter(todo => !todo.isDone)
-    //         break
-    //     case 'completed':
-    //         todos = props.todos.filter(todo => todo.isDone)
-    // }
-
-    const todosComponents = props.todos.map(todo => <TodoItem id={todo.id}
+    const todos = props.todos.map(todo => <TodoItem id={todo.id}
                              title={todo.title}
                              isDone={todo.isDone}
                              deleteTodo={props.deleteTodo}
@@ -31,7 +18,7 @@ const TodosList: React.FC<TodosList> = (props) => {
 
     return (
         <ul className={s.list}>
-            {todosComponents}
+            {todos}
         </ul>
     );
 };

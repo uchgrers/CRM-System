@@ -1,10 +1,12 @@
 .item {
-  width: 100%;
+  position: relative;
+  width: var(--content-width);
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
-  column-gap: 40px;
+  margin: 4px 0;
+  padding: 20px 20px;
   background-color: var(--color-light);
   border-radius: var(--border-radius);
   box-shadow: 0 2px 6px 0 var(--color-dark);
@@ -14,8 +16,20 @@
     align-items: center;
     column-gap: 20px;
   }
+  //
+  //&__content_container input[type="text"]:focus {
+  //  background-color: var(--color-accent) solid 1px;
+  //}
 
-  &__checkbox {
+  &__content_container div {
+    line-break: normal;
+    text-align: justify;
+    width: 270px;
+    max-height: 100%;
+    overflow-wrap: break-word;
+  }
 
+  &__delete_btn {
+    background-color: var(--color-red);
   }
 }

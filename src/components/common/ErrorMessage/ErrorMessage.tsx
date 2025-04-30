@@ -8,9 +8,11 @@ type ErrorType = {
 
 const ErrorMessage: React.FC<ErrorType> = (props) => {
     return (
-        <p className={s.error}>
+        <div className={s.error}>
+        <p>
             {props.message}
         </p>
+        </div>
     );
 };
 

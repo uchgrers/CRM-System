@@ -3,6 +3,7 @@ import s from './AddTodoForm.module.scss'
 import {TodosPageType} from "../../pages/TodosPage/TodosPage"
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
 import {ErrorMessageType} from "../../assets/types"
+import {handleFormSubmit, handleInputChange} from "../../assets/inputValidation"
 
 type AddTodoFormType = Pick<TodosPageType, 'addTodo'>
 
@@ -11,27 +12,11 @@ const AddTodoForm: React.FC<AddTodoFormType> = (props) => {
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<ErrorMessageType | null>(null)
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > 64) {
-            setError('Maximum task length is 64 symbols')
-            return
-        }
-        setError(null)
-        setTitle(e.target.value)
-    }
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        if (title.trim().length < 2) {
-            setError('Task must contain at least 2 symbols')
-            return
+        if (handleFormSubmit(e, title, setError)) {
+            props.addTodo(title)
+            setTitle('')
         }
-        if (title.trim().length > 64) {
-            setError('Maximum task length is 64 symbols')
-            return
-        }
-        props.addTodo(title)
-        setTitle('')
     }
 
     return (
@@ -40,7 +25,7 @@ const AddTodoForm: React.FC<AddTodoFormType> = (props) => {
             <input type="text"
                    placeholder="Task To Be Done..."
                    value={title}
-                   onChange={handleInputChange}
+                   onChange={(e) => handleInputChange(e, setError, setTitle)}
             />
             <button className={s.form__submission_btn}>
                 Add

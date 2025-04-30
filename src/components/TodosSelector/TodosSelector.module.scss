@@ -3,6 +3,7 @@
   justify-content: space-between;
   margin-top: 20px;
   border: none;
+  width: var(--content-width);
 
   & input {
     display: none;

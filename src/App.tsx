@@ -9,6 +9,8 @@ import {addTodo, deleteTodo, getTodos, updateTodo} from "./api"
 function App() {
 
     const [todos, setTodos] = useState<Todos>([])
+
+    // Статус просматриваемых туду (все/в работе/завершенные)
     const [todosStatus, setTodosStatus] = useState<TodosStatus>('all')
 
     const fetchTodos = async (todosStatus) => {
@@ -32,6 +34,9 @@ function App() {
 
     const handleUpdateTodo = async (id, isDone, title, todosStatus, typeOfUpdate) => {
         const updatedTodo = await updateTodo(id, isDone, title, todosStatus)
+
+        // Проверка на текущий статус просматриваемых туду
+        // и какой тип обновления был сделан (чекбокс или название)
         if (todosStatus !== 'all' && typeOfUpdate === 'check') {
             setTodos(todos.filter(todo => todo.id !== updatedTodo.id))
             return
@@ -40,32 +45,30 @@ function App() {
     }
 
     return (
-        <>
-            <Routes>
-                <Route path='/'
-                       element={<TodosPage todos={todos}
-                                           todosStatus={todosStatus}
-                                           addTodo={handleAddTodo}
-                                           deleteTodo={handleDeleteTodo}
-                                           updateTodo={handleUpdateTodo}
-                                           getTodos={fetchTodos}
-                                           setTodosStatus={setTodosStatus}
+        <Routes>
+            <Route path='/'
+                   element={<TodosPage todos={todos}
+                                       todosStatus={todosStatus}
+                                       addTodo={handleAddTodo}
+                                       deleteTodo={handleDeleteTodo}
+                                       updateTodo={handleUpdateTodo}
+                                       getTodos={fetchTodos}
+                                       setTodosStatus={setTodosStatus}
 
-                       />}/>
-                <Route path='/todos'
-                       element={<TodosPage todos={todos}
-                                           todosStatus={todosStatus}
-                                           addTodo={handleAddTodo}
-                                           deleteTodo={handleDeleteTodo}
-                                           updateTodo={handleUpdateTodo}
-                                           getTodos={fetchTodos}
-                                           setTodosStatus={setTodosStatus}
-                       />}/>
-                <Route path='/todos/:id' element={<TodoItemDetails todos={todos}/>}/>
+                   />}/>
+            <Route path='/todos'
+                   element={<TodosPage todos={todos}
+                                       todosStatus={todosStatus}
+                                       addTodo={handleAddTodo}
+                                       deleteTodo={handleDeleteTodo}
+                                       updateTodo={handleUpdateTodo}
+                                       getTodos={fetchTodos}
+                                       setTodosStatus={setTodosStatus}
+                   />}/>
+            <Route path='/todos/:id' element={<TodoItemDetails todos={todos}/>}/>
 
-                <Route path='/*' element={<div>Not found</div>}/>
-            </Routes>
-        </>
+            <Route path='/*' element={<div>Not found</div>}/>
+        </Routes>
     )
 }
 

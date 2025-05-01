@@ -3,7 +3,8 @@ import TodoItem from "../TodoItem/TodoItem"
 import s from './TodoList.module.scss'
 import {TodosPageType} from "../../pages/TodosPage/TodosPage"
 
-type TodosList = Pick<TodosPageType, 'todos' | 'updateTodo' | 'deleteTodo' | 'todosStatus'>
+type TodosList = Pick<TodosPageType, 'todos' |
+    'updateTodo' | 'deleteTodo' | 'todosStatus'>
 
 const TodosList: React.FC<TodosList> = (props) => {
 
@@ -14,6 +15,8 @@ const TodosList: React.FC<TodosList> = (props) => {
                              updateTodo={props.updateTodo}
                              key={todo.id}
                              todosStatus={props.todosStatus}
+
+
     />)
 
     return (

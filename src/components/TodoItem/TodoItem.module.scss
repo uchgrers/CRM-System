@@ -16,10 +16,10 @@
     align-items: center;
     column-gap: 20px;
   }
-  //
-  //&__content_container input[type="text"]:focus {
-  //  background-color: var(--color-accent) solid 1px;
-  //}
+
+  &__content_container input[type="text"]:focus {
+    background-color: var(--color-accent) solid 1px;
+  }
 
   &__content_container div {
     line-break: normal;

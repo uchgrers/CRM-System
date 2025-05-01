@@ -13,25 +13,28 @@ const TodoItem: React.FC<TodoItemType> = (props) => {
     const [title, setTitle] = useState<string>(props.title)
     const [isEditing, setIsEditing] = useState<boolean>(false)
     const [isDone, setIsDone] = useState<boolean>(props.isDone)
-    const [error, setError] = useState<ErrorMessageType | null>(null)
+    const [error, setError] = useState<ErrorMessageType>(null)
 
-    const handleTitleEditing = (e, relevantIsDone) => {
+    const handleTitleEditing = (e: React.FormEvent<HTMLFormElement> |
+                                    React.MouseEvent<HTMLButtonElement>,
+                                relevantIsDone: boolean
+    ) => {
         if (handleFormSubmit(e, title, setError)) {
             setIsEditing(false)
-            props.updateTodo(props.id, relevantIsDone, title, props.todosStatus)
+            props.updateTodo(props.id, relevantIsDone, title, props.todosStatus, 'title')
         }
+    }
+
+    const handleCheckboxStatusChange = () => {
+        const relevantIsDone = !isDone
+        setIsDone?.(relevantIsDone)
+        props.updateTodo(props.id, relevantIsDone, title, props.todosStatus, 'check')
     }
 
     const cancelEditing = () => {
         setError(null)
         setTitle(props.title)
         setIsEditing(false)
-    }
-
-    const handleCheckboxStatusChange = () => {
-        const relevantIsDone = !isDone
-        setIsDone?.(relevantIsDone)
-        props.updateTodo(props.id, relevantIsDone, title, props.todosStatus)
     }
 
     return (
@@ -70,7 +73,9 @@ const TodoItem: React.FC<TodoItemType> = (props) => {
                 {isEditing && <button onClick={cancelEditing}>Cancel</button>}
 
                 <button className={s.item__delete_btn}
-                        onClick={() => props.deleteTodo(props.id)}
+                        onClick={() => {
+                            props.deleteTodo(props.id)
+                        }}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -7 36 36" fill="none" stroke="black"
                          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"

@@ -1,13 +1,20 @@
 import React, {useEffect, useState} from 'react'
 import s from './TodosSelector.module.scss'
 import {TodosPageType} from "../../pages/TodosPage/TodosPage"
-import {TodosStatus} from "../../assets/types"
+import {TodosCountObjectType, TodosStatus} from "../../assets/types"
+import {getTodos} from "../../api"
 
-type TodosSelectorType = Pick<TodosPageType, 'getTodos' | 'setTodosStatus' | 'todosCount' | 'todos'>
+type TodosSelectorType = Pick<TodosPageType, 'getTodos' | 'setTodosStatus' | 'todos'>
+
+
 
 const TodosSelector: React.FC<TodosSelectorType> = (props) => {
 
-    const [todosCount, setTodosCount] = useState<any>()
+    const [todosCount, setTodosCount] = useState<TodosCountObjectType>({
+        all: 0,
+        inWork: 0,
+        completed: 0
+    })
 
     const handleSelectorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         props.setTodosStatus(e.target.value as TodosStatus)
@@ -15,39 +22,33 @@ const TodosSelector: React.FC<TodosSelectorType> = (props) => {
     }
 
     useEffect(() => {
-        const fetchTodos = async (todosStatus = 'all') => {
-            try {
-                const response = await fetch(`https://easydev.club/api/v1/todos?filter=${todosStatus}`)
-                if (!response.ok) {
-                    throw new Error('Request failed')
-                }
-                const todos = await response.json()
-                const inWork = todos.data.filter(todo => !todo.isDone).length
-                setTodosCount({
-                    all: todos.data.length,
-                    inWork,
-                    completed: todos.data.length - inWork
-                })
-            } catch (error) {
-                console.log(error)
-            }
+        const fetchedCount = {
+            all: 0,
+            inWork: 0,
+            completed: 0
         }
-        fetchTodos()
+        getTodos()
+            .then(res => {
+                fetchedCount.all = res.data.length
+                fetchedCount.inWork = res.data.filter(todo => !todo.isDone).length
+                fetchedCount.completed = res.data.filter(todo => todo.isDone).length
+                setTodosCount(fetchedCount)
+            })
     },[props.todos])
 
     return (
         <fieldset className={s.selector}>
             <div>
                 <input defaultChecked={true} id="all" type="radio" name="todo_selector" value='all' onChange={handleSelectorChange}/>
-                <label htmlFor="all">All {todosCount?.all || 0}</label>
+                <label htmlFor="all">All {todosCount?.all}</label>
             </div>
             <div>
                 <input id="inWork" type="radio" name="todo_selector" value='inWork' onChange={handleSelectorChange}/>
-                <label htmlFor="inWork">In work {todosCount?.inWork || 0}</label>
+                <label htmlFor="inWork">In work {todosCount?.inWork}</label>
             </div>
             <div>
                 <input id="completed" type="radio" name="todo_selector" value='completed' onChange={handleSelectorChange}/>
-                <label htmlFor="completed">Completed {todosCount?.completed || 0}</label>
+                <label htmlFor="completed">Completed {todosCount?.completed}</label>
             </div>
         </fieldset>
     );

@@ -1,94 +1,49 @@
 import {useEffect, useState} from 'react'
 import './App.css'
 import {Route, Routes} from "react-router-dom"
-import Preloader from "./components/common/Preloader/Preloader"
 import TodoItemDetails from "./components/TodoItemDetails/TodoItemDetails"
 import TodosPage from "./pages/TodosPage/TodosPage"
 import {Todos, TodosStatus} from "./assets/types"
+import {addTodo, deleteTodo, getTodos, updateTodo} from "./api"
 
 function App() {
 
     const [todos, setTodos] = useState<Todos>([])
-    const [isLoading, setIsLoading] = useState<Boolean>(true)
     const [todosStatus, setTodosStatus] = useState<TodosStatus>('all')
-    const [todosCount, setTodosCount] = useState<any>()
+    // const [todosCount, setTodosCount] = useState<any>({all: 0, inWork: 0, completed: 0})
 
-    const getTodos = async (todosStatus = 'all') => {
-        try {
-            const response = await fetch(`https://easydev.club/api/v1/todos?filter=${todosStatus}`)
-            if (response.ok) {
-                const todos = await response.json()
-                setTodos(todos.data)
-                const inWork = todos.data.filter(todo => !todo.isDone).length
-                setTodosCount({
-                    all: todos.data.length,
-                    inWork,
-                    completed: todos.data.length - inWork
-                })
-            }
-        } catch (error) {
-            throw new Error(error)
-        } finally {
-            setIsLoading(false)
-        }
+    const fetchTodos = async (todosStatus) => {
+        const fetchedTodos = await getTodos(todosStatus)
+        setTodos(fetchedTodos.data)
+        // const inWork = fetchedTodos.data.filter(todo => !todo.isDone).length
+        // setTodosCount({
+        //     all: fetchedTodos.data.length,
+        //     inWork,
+        //     completed: fetchedTodos.data.length - inWork
+        // })
     }
 
     useEffect(() => {
-        getTodos()
+        fetchTodos('all')
     }, [])
 
-
-    const addTodo = async (title) => {
-        // setIsLoading(true)
-        const response = await fetch('https://easydev.club/api/v1/todos', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({idDone: false, title})
-        })
-        if (response.ok) {
-            const newTodo = await response.json()
-            setTodos([...todos, newTodo])
-        }
-
-        // setIsLoading(false)
+    const handleAddTodo = async (title) => {
+        const newTodo = await addTodo(title)
+        setTodos([...todos, newTodo])
     }
 
-    const deleteTodo = async (id) => {
-        setIsLoading(true)
-        const response = await fetch(`https://easydev.club/api/v1/todos/${id}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        if (response.ok) {
-            setTodos(todos.filter(todo => todo.id !== id))
-        }
-        setIsLoading(false)
+    const handleDeleteTodo = async (id) => {
+        const deletedTodoId = await deleteTodo(id)
+        setTodos(todos.filter(todo => todo.id !== deletedTodoId))
     }
 
-    const updateTodo = async (id, isDone, title, todosStatus) => {
-        const response = await fetch(`https://easydev.club/api/v1/todos/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({isDone, title})
-        })
-        if (response.ok) {
-            const updatedTodo = await response.json()
-            if (todosStatus !== 'all') {
-                setTodos(todos.filter(todo => todo.id !== updatedTodo.id))
-                return
-            }
-            setTodos(todos.map(todo => todo.id === updatedTodo.id ? updatedTodo : todo))
+    const handleUpdateTodo = async (id, isDone, title, todosStatus, typeOfUpdate) => {
+        const updatedTodo = await updateTodo(id, isDone, title, todosStatus)
+        if (todosStatus !== 'all' && typeOfUpdate === 'check') {
+            setTodos(todos.filter(todo => todo.id !== updatedTodo.id))
+            return
         }
-    }
-
-    if (isLoading) {
-        return <Preloader/>
+        setTodos(todos.map(todo => todo.id === updatedTodo.id ? updatedTodo : todo))
     }
 
     return (
@@ -97,21 +52,20 @@ function App() {
                 <Route path='/'
                        element={<TodosPage todos={todos}
                                            todosStatus={todosStatus}
-                                           todosCount={todosCount}
-                                           addTodo={addTodo}
-                                           deleteTodo={deleteTodo}
-                                           updateTodo={updateTodo}
-                                           getTodos={getTodos}
+                                           addTodo={handleAddTodo}
+                                           deleteTodo={handleDeleteTodo}
+                                           updateTodo={handleUpdateTodo}
+                                           getTodos={fetchTodos}
                                            setTodosStatus={setTodosStatus}
+
                        />}/>
                 <Route path='/todos'
                        element={<TodosPage todos={todos}
                                            todosStatus={todosStatus}
-                                           todosCount={todosCount}
-                                           addTodo={addTodo}
-                                           deleteTodo={deleteTodo}
-                                           updateTodo={updateTodo}
-                                           getTodos={getTodos}
+                                           addTodo={handleAddTodo}
+                                           deleteTodo={handleDeleteTodo}
+                                           updateTodo={handleUpdateTodo}
+                                           getTodos={fetchTodos}
                                            setTodosStatus={setTodosStatus}
                        />}/>
                 <Route path='/todos/:id' element={<TodoItemDetails todos={todos}/>}/>

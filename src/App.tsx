@@ -37,7 +37,7 @@ function App() {
                                     title: string,
                                     todosStatus: TodosStatus,
                                     typeOfUpdate: TypeOfUpdate) => {
-        const updatedTodo = await updateTodo(id, isDone, title, todosStatus)
+        const updatedTodo = await updateTodo(id, isDone, title)
 
         // Проверка на текущий статус просматриваемых туду
         // и какой тип обновления был сделан (чекбокс или название)

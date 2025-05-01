@@ -3,7 +3,7 @@ import './App.css'
 import {Route, Routes} from "react-router-dom"
 import TodoItemDetails from "./components/TodoItemDetails/TodoItemDetails"
 import TodosPage from "./pages/TodosPage/TodosPage"
-import {Todos, TodosStatus} from "./assets/types"
+import {Todos, TodosStatus, TypeOfUpdate} from "./assets/types"
 import {addTodo, deleteTodo, getTodos, updateTodo} from "./api"
 
 function App() {
@@ -22,17 +22,21 @@ function App() {
         fetchTodos('all')
     }, [])
 
-    const handleAddTodo = async (title) => {
+    const handleAddTodo = async (title: string) => {
         const newTodo = await addTodo(title)
         setTodos([...todos, newTodo])
     }
 
-    const handleDeleteTodo = async (id) => {
+    const handleDeleteTodo = async (id: number) => {
         const deletedTodoId = await deleteTodo(id)
         setTodos(todos.filter(todo => todo.id !== deletedTodoId))
     }
 
-    const handleUpdateTodo = async (id, isDone, title, todosStatus, typeOfUpdate) => {
+    const handleUpdateTodo = async (id: number,
+                                    isDone: boolean,
+                                    title: string,
+                                    todosStatus: TodosStatus,
+                                    typeOfUpdate: TypeOfUpdate) => {
         const updatedTodo = await updateTodo(id, isDone, title, todosStatus)
 
         // Проверка на текущий статус просматриваемых туду

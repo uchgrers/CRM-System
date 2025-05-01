@@ -17,3 +17,5 @@ export type TodosCountObjectType = {
 
 export type ErrorMessageType = 'Task must contain at least 2 symbols' |
     'Maximum task length is 64 symbols' | null
+
+export type TypeOfUpdate = 'check' | 'title'

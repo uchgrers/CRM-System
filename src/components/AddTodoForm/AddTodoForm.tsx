@@ -10,7 +10,7 @@ type AddTodoFormType = Pick<TodosPageType, 'addTodo'>
 const AddTodoForm: React.FC<AddTodoFormType> = (props) => {
 
     const [title, setTitle] = useState<string>('')
-    const [error, setError] = useState<ErrorMessageType | null>(null)
+    const [error, setError] = useState<ErrorMessageType>(null)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         if (handleFormSubmit(e, title, setError)) {

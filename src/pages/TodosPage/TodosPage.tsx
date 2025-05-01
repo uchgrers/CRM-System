@@ -2,7 +2,7 @@ import React from 'react'
 import TodosList from "../../components/TodosList/TodosList"
 import AddTodoForm from "../../components/AddTodoForm/AddTodoForm"
 import s from './TodosPage.module.scss'
-import {Todos, TodosCountObjectType, TodosStatus} from "../../assets/types"
+import {Todos, TodosStatus} from "../../assets/types"
 import TodosSelector from "../../components/TodosSelector/TodosSelector"
 
 export type TodosPageType = {

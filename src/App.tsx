@@ -10,17 +10,10 @@ function App() {
 
     const [todos, setTodos] = useState<Todos>([])
     const [todosStatus, setTodosStatus] = useState<TodosStatus>('all')
-    // const [todosCount, setTodosCount] = useState<any>({all: 0, inWork: 0, completed: 0})
 
     const fetchTodos = async (todosStatus) => {
         const fetchedTodos = await getTodos(todosStatus)
         setTodos(fetchedTodos.data)
-        // const inWork = fetchedTodos.data.filter(todo => !todo.isDone).length
-        // setTodosCount({
-        //     all: fetchedTodos.data.length,
-        //     inWork,
-        //     completed: fetchedTodos.data.length - inWork
-        // })
     }
 
     useEffect(() => {

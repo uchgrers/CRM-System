@@ -52,7 +52,7 @@ const TodoItem: React.FC<TodoItemType> = (props) => {
                            onChange={(e) => handleInputChange(e, setError, setTitle)}
                            autoFocus={true}
                     />
-                    : <div><p>{props.title}</p></div>
+                    : <div className={props.isDone ? s.item__done : ''}><p>{props.title}</p></div>
                 }
             </div>
             <div className={s.item__content_container}>

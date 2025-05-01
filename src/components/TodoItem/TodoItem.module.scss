@@ -32,4 +32,9 @@
   &__delete_btn {
     background-color: var(--color-red);
   }
+
+  &__done {
+    text-decoration: line-through;
+    opacity: var(--opacity);
+  }
 }

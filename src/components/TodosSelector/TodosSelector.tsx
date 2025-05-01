@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import s from './TodosSelector.module.scss'
 import {TodosPageType} from "../../pages/TodosPage/TodosPage"
-import {TodosCountObjectType, TodosStatus} from "../../assets/types"
+import {Todo, TodosCountObjectType, TodosStatus} from "../../assets/types"
 import {getTodos} from "../../api"
 
 type TodosSelectorType = Pick<TodosPageType, 'getTodos' | 'setTodosStatus' | 'todos'>
@@ -24,8 +24,8 @@ const TodosSelector: React.FC<TodosSelectorType> = (props) => {
             .then(res => {
                 setTodosCount({
                     all: res.data.length,
-                    inWork: res.data.filter(todo => !todo.isDone).length,
-                    completed: res.data.filter(todo => todo.isDone).length
+                    inWork: res.data.filter((todo: Todo) => !todo.isDone).length,
+                    completed: res.data.filter((todo: Todo) => todo.isDone).length
                 })
             })
     },[props.todos])

@@ -13,7 +13,7 @@ function App() {
     // Статус просматриваемых туду (все/в работе/завершенные)
     const [todosStatus, setTodosStatus] = useState<TodosStatus>('all')
 
-    const fetchTodos = async (todosStatus) => {
+    const fetchTodos = async (todosStatus: TodosStatus) => {
         const fetchedTodos = await getTodos(todosStatus)
         setTodos(fetchedTodos.data)
     }

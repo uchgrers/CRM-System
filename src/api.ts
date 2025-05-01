@@ -44,7 +44,7 @@ export const deleteTodo = async (id: number) => {
     }
 }
 
-export const updateTodo = async (id: number, isDone, title, todosStatus) => {
+export const updateTodo = async (id: number, isDone: boolean, title: string) => {
     try {
         const response = await fetch(`${baseUrl}todos/${id}`, {
             method: "PUT",

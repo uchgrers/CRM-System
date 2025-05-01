@@ -10,7 +10,7 @@ export type TodosPageType = {
     todosStatus: TodosStatus,
     addTodo: (title: string) => void,
     deleteTodo: (id: number) => void,
-    updateTodo: (id: number, isDone: boolean, title: string, todosStatus, typeOfUpdate: 'check' | 'title') => void,
+    updateTodo: (id: number, isDone: boolean, title: string, todosStatus: TodosStatus, typeOfUpdate: 'check' | 'title') => void,
     getTodos: (todosStatus: TodosStatus) => void,
     setTodosStatus: (todosStatus: TodosStatus) => void,
 }

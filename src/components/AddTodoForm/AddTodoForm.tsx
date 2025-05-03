@@ -13,6 +13,7 @@ const AddTodoForm: React.FC<AddTodoFormType> = (props) => {
     const [error, setError] = useState<ErrorMessageType>(null)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         if (handleFormSubmit(e, title, setError)) {
             props.addTodo(title)
             setTitle('')
@@ -27,7 +28,7 @@ const AddTodoForm: React.FC<AddTodoFormType> = (props) => {
                    value={title}
                    onChange={(e) => handleInputChange(e, setError, setTitle)}
             />
-            <button className={s.form__submission_btn}>
+            <button type="submit" className={s.form__submission_btn}>
                 Add
             </button>
         </form>

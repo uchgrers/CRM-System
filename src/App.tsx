@@ -3,7 +3,7 @@ import './App.css'
 import {Route, Routes} from "react-router-dom"
 import TodoItemDetails from "./components/TodoItemDetails/TodoItemDetails"
 import TodosPage from "./pages/TodosPage/TodosPage"
-import {Todos, TodosStatus, TypeOfUpdate} from "./assets/types"
+import {Todo, Todos, TodosCountObjectType, TodosStatus} from "./assets/types"
 import {addTodo, deleteTodo, getTodos, updateTodo} from "./api"
 
 function App() {
@@ -12,14 +12,31 @@ function App() {
 
     // Статус просматриваемых туду (все/в работе/завершенные)
     const [todosStatus, setTodosStatus] = useState<TodosStatus>('all')
-
-    const fetchTodos = async (todosStatus: TodosStatus) => {
-        const fetchedTodos = await getTodos(todosStatus)
-        setTodos(fetchedTodos.data)
-    }
+    // Вычисление списков туду по статусу
+    const [todosCount, setTodosCount] = useState<TodosCountObjectType>({
+        all: 0,
+        inWork: 0,
+        completed: 0
+    })
 
     useEffect(() => {
-        fetchTodos('all')
+        setTodosCount({
+            all: todos.length,
+            inWork: todos.filter((todo: Todo) => !todo.isDone).length,
+            completed: todos.filter((todo: Todo) => todo.isDone).length
+        })
+    }, [todos])
+
+    useEffect(() => {
+        getTodos()
+            .then(res => {
+                setTodos(res.data)
+                setTodosCount({
+                    all: res.data.length,
+                    inWork: res.data.filter((todo: Todo) => !todo.isDone).length,
+                    completed: res.data.filter((todo: Todo) => todo.isDone).length
+                })
+            })
     }, [])
 
     const handleAddTodo = async (title: string) => {
@@ -32,19 +49,8 @@ function App() {
         setTodos(todos.filter(todo => todo.id !== deletedTodoId))
     }
 
-    const handleUpdateTodo = async (id: number,
-                                    isDone: boolean,
-                                    title: string,
-                                    todosStatus: TodosStatus,
-                                    typeOfUpdate: TypeOfUpdate) => {
+    const handleUpdateTodo = async (id: number, isDone: boolean, title: string) => {
         const updatedTodo = await updateTodo(id, isDone, title)
-
-        // Проверка на текущий статус просматриваемых туду
-        // и какой тип обновления был сделан (чекбокс или название)
-        if (todosStatus !== 'all' && typeOfUpdate === 'check') {
-            setTodos(todos.filter(todo => todo.id !== updatedTodo.id))
-            return
-        }
         setTodos(todos.map(todo => todo.id === updatedTodo.id ? updatedTodo : todo))
     }
 
@@ -56,8 +62,9 @@ function App() {
                                        addTodo={handleAddTodo}
                                        deleteTodo={handleDeleteTodo}
                                        updateTodo={handleUpdateTodo}
-                                       getTodos={fetchTodos}
                                        setTodosStatus={setTodosStatus}
+
+                                       todosCount={todosCount}
 
                    />}/>
             <Route path='/todos'
@@ -66,8 +73,9 @@ function App() {
                                        addTodo={handleAddTodo}
                                        deleteTodo={handleDeleteTodo}
                                        updateTodo={handleUpdateTodo}
-                                       getTodos={fetchTodos}
                                        setTodosStatus={setTodosStatus}
+
+                                       todosCount={todosCount}
                    />}/>
             <Route path='/todos/:id' element={<TodoItemDetails todos={todos}/>}/>
 

@@ -7,34 +7,35 @@
   justify-content: space-between;
   margin: 4px 0;
   padding: 20px 20px;
+  column-gap: 2px;
   background-color: var(--color-light);
   border-radius: var(--border-radius);
   box-shadow: 0 2px 6px 0 var(--color-dark);
+  line-break: normal;
+  text-align: justify;
+  max-height: 100%;
+  overflow-wrap: break-word;
 
-  &__content_container {
-    display: flex;
-    align-items: center;
-    column-gap: 20px;
-  }
-
-  &__content_container input[type="text"]:focus {
-    background-color: var(--color-accent) solid 1px;
-  }
-
-  &__content_container div {
-    line-break: normal;
-    text-align: justify;
-    width: 270px;
-    max-height: 100%;
-    overflow-wrap: break-word;
-  }
-
-  &__delete_btn {
-    background-color: var(--color-red);
+  &__title,
+  &__done {
+    width: 250px;
   }
 
   &__done {
     text-decoration: line-through;
     opacity: var(--opacity);
+  }
+
+  & form {
+    width: 250px;
+  }
+
+  & input[type="text"] {
+    border-radius: 0;
+    border-bottom: var(--color-accent) 1px solid;
+  }
+
+  &__delete_btn {
+    background-color: var(--color-red);
   }
 }

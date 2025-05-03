@@ -12,9 +12,10 @@ export const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>,
 }
 
 // Функция валидации формы (также используется в AddTodoForm и TodoItem)
-export const handleFormSubmit = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>,
-                             title: string,
-                             setError: ((error: ErrorMessageType) => void),
+export const handleFormSubmit = (e: React.FormEvent<HTMLFormElement> |
+                                     React.MouseEvent<HTMLButtonElement>,
+                                 title: string,
+                                 setError: ((error: ErrorMessageType) => void),
 ) => {
     e.preventDefault()
     if (title.trim().length < 2) {

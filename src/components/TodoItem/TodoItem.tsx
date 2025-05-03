@@ -6,7 +6,7 @@ import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
 import {handleFormSubmit, handleInputChange} from "../../assets/inputValidation"
 
 type TodoItemType = Pick<TodosPageType, 'updateTodo' |
-    'deleteTodo'> & Pick<Todo, 'title' | 'isDone' | 'id'>
+    'deleteTodo' | 'todosStatus'> & Pick<Todo, 'title' | 'isDone' | 'id'>
 
 const TodoItem: React.FC<TodoItemType> = (props) => {
 

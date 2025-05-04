@@ -1,24 +1,34 @@
 import React, {useState} from 'react'
 import s from './AddTodoForm.module.scss'
+import {TodosPageType} from "../../pages/TodosPage/TodosPage"
+import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
+import {ErrorMessageType} from "../../assets/types"
+import {handleFormSubmit, handleInputChange} from "../../assets/inputValidation"
 
-const AddTodoForm = (props) => {
+type AddTodoFormType = Pick<TodosPageType, 'addTodo'>
 
-    const [title, setTitle] = useState('')
+const AddTodoForm: React.FC<AddTodoFormType> = (props) => {
+
+    const [title, setTitle] = useState<string>('')
+    const [error, setError] = useState<ErrorMessageType>(null)
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (handleFormSubmit(e, title, setError)) {
+            props.addTodo(title)
+            setTitle('')
+        }
+    }
 
     return (
-        <form className={s.form}>
+        <form className={s.form} onSubmit={handleSubmit}>
+            {error && <ErrorMessage message={error}/>}
             <input type="text"
                    placeholder="Task To Be Done..."
                    value={title}
-                   onChange={(e) => setTitle(e.target.value)}
+                   onChange={(e) => handleInputChange(e, setError, setTitle)}
             />
-            <button className={s.form__submission_btn}
-                    onClick={(e) => {
-                        props.addTodo(title)
-                        e.preventDefault()
-                        setTitle('')
-                    }}
-            >
+            <button type="submit" className={s.form__submission_btn}>
                 Add
             </button>
         </form>

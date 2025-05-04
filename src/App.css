@@ -2,7 +2,6 @@
   max-width: var(--container-width);
   min-height: 100vh;
   margin: 0 auto;
-  padding: 10px;
   text-align: center;
   display: flex;
   justify-content: center;

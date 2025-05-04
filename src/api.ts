@@ -1,10 +1,16 @@
+import {Todos, TodosCountObjectType, TodosStatus} from "./assets/types";
+
 const baseUrl = 'https://easydev.club/api/v1/'
 
-export const getTodos = async (todosStatus = 'all') => {
+export const getTodos = async (todosStatus: TodosStatus = 'all',
+                               setTodos: (todos: Todos) => void,
+                               setTodosCount: (todosCount: TodosCountObjectType) => void) => {
     try {
         const response = await fetch(`${baseUrl}todos?filter=${todosStatus}`)
         if (response.ok) {
-            return await response.json()
+            const result = await response.json()
+            setTodos(result.data)
+            setTodosCount(result.info)
         }
     } catch (error) {
         console.log(error)
@@ -18,7 +24,7 @@ export const addTodo = async (title: string) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({idDone: false, title})
+            body: JSON.stringify({isDone: false, title})
         })
         if (response.ok) {
             return await response.json()

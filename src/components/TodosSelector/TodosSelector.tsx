@@ -3,12 +3,12 @@ import s from './TodosSelector.module.scss'
 import {TodosPageType} from "../../pages/TodosPage/TodosPage"
 import {TodosStatus} from "../../assets/types"
 
-type TodosSelectorType = Pick<TodosPageType, 'setTodosStatus' | 'todos' | 'todosCount'>
+type TodosSelectorType = Pick<TodosPageType, 'todos' | 'todosCount' | 'changeStatus'>
 
 const TodosSelector: React.FC<TodosSelectorType> = (props) => {
 
-    const handleSelectorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        props.setTodosStatus(e.target.value as TodosStatus)
+    const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.changeStatus(e.target.value as TodosStatus)
     }
 
     return (
@@ -18,7 +18,7 @@ const TodosSelector: React.FC<TodosSelectorType> = (props) => {
                        id="all"
                        type="radio"
                        name="todo_selector"
-                       value="all" onChange={handleSelectorChange}
+                       value="all" onChange={handleStatusChange}
                 />
                 <label htmlFor="all">All ({props.todosCount?.all})</label>
             </div>
@@ -27,7 +27,7 @@ const TodosSelector: React.FC<TodosSelectorType> = (props) => {
                        type="radio"
                        name="todo_selector"
                        value="inWork"
-                       onChange={handleSelectorChange}
+                       onChange={handleStatusChange}
                 />
                 <label htmlFor="inWork">In work ({props.todosCount?.inWork})</label>
             </div>
@@ -36,7 +36,7 @@ const TodosSelector: React.FC<TodosSelectorType> = (props) => {
                        type="radio"
                        name="todo_selector"
                        value="completed"
-                       onChange={handleSelectorChange}
+                       onChange={handleStatusChange}
                 />
                 <label htmlFor="completed">Completed ({props.todosCount?.completed})</label>
             </div>

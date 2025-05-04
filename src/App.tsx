@@ -3,7 +3,7 @@ import './App.css'
 import {Route, Routes} from "react-router-dom"
 import TodoItemDetails from "./components/TodoItemDetails/TodoItemDetails"
 import TodosPage from "./pages/TodosPage/TodosPage"
-import {Todo, Todos, TodosCountObjectType, TodosStatus} from "./assets/types"
+import {Todos, TodosCountObjectType, TodosStatus} from "./assets/types"
 import {addTodo, deleteTodo, getTodos, updateTodo} from "./api"
 
 function App() {
@@ -19,59 +19,53 @@ function App() {
         completed: 0
     })
 
-    useEffect(() => {
-        setTodosCount({
-            all: todos.length,
-            inWork: todos.filter((todo: Todo) => !todo.isDone).length,
-            completed: todos.filter((todo: Todo) => todo.isDone).length
-        })
-    }, [todos])
-
-    useEffect(() => {
-        getTodos()
-            .then(res => {
-                setTodos(res.data)
-                setTodosCount(res.info)
-            })
-    }, [])
+    const handleStatusChange = async (todosStatus: TodosStatus = 'all') => {
+        setTodosStatus(todosStatus)
+        await getTodos(todosStatus, setTodos, setTodosCount)
+    }
 
     const handleAddTodo = async (title: string) => {
-        const newTodo = await addTodo(title)
-        setTodos([...todos, newTodo])
+        await addTodo(title)
+        await getTodos(todosStatus, setTodos, setTodosCount)
     }
 
     const handleDeleteTodo = async (id: number) => {
-        const deletedTodoId = await deleteTodo(id)
-        setTodos(todos.filter(todo => todo.id !== deletedTodoId))
+        await deleteTodo(id)
+        await getTodos(todosStatus, setTodos, setTodosCount)
     }
 
     const handleUpdateTodo = async (id: number, isDone: boolean, title: string) => {
-        const updatedTodo = await updateTodo(id, isDone, title)
-        setTodos(todos.map(todo => todo.id === updatedTodo.id ? updatedTodo : todo))
+        await updateTodo(id, isDone, title)
+        await getTodos(todosStatus, setTodos, setTodosCount)
     }
+
+    useEffect(() => {
+        const fetchTodos = async () => {
+            await getTodos(todosStatus, setTodos, setTodosCount)
+        }
+        fetchTodos()
+    }, [])
 
     return (
         <Routes>
             <Route path='/'
                    element={<TodosPage todos={todos}
                                        todosStatus={todosStatus}
+                                       todosCount={todosCount}
                                        addTodo={handleAddTodo}
                                        deleteTodo={handleDeleteTodo}
                                        updateTodo={handleUpdateTodo}
-                                       setTodosStatus={setTodosStatus}
-
-                                       todosCount={todosCount}
+                                       changeStatus={handleStatusChange}
 
                    />}/>
             <Route path='/todos'
                    element={<TodosPage todos={todos}
                                        todosStatus={todosStatus}
+                                       todosCount={todosCount}
                                        addTodo={handleAddTodo}
                                        deleteTodo={handleDeleteTodo}
                                        updateTodo={handleUpdateTodo}
-                                       setTodosStatus={setTodosStatus}
-
-                                       todosCount={todosCount}
+                                       changeStatus={handleStatusChange}
                    />}/>
             <Route path='/todos/:id' element={<TodoItemDetails todos={todos}/>}/>
 

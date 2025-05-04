@@ -12,7 +12,7 @@ export type TodosPageType = {
     addTodo: (title: string) => void,
     deleteTodo: (id: number) => void,
     updateTodo: (id: number, isDone: boolean, title: string) => void,
-    setTodosStatus: (todosStatus: TodosStatus) => void,
+    changeStatus: (todosStatus: TodosStatus) => void
 }
 
 const TodosPage: React.FC<TodosPageType> = (props) => {
@@ -22,7 +22,7 @@ const TodosPage: React.FC<TodosPageType> = (props) => {
             <AddTodoForm addTodo={props.addTodo}/>
             <TodosSelector todos={props.todos}
                            todosCount={props.todosCount}
-                           setTodosStatus={props.setTodosStatus}
+                           changeStatus={props.changeStatus}
             />
             <TodosList todos={props.todos}
                        todosStatus={props.todosStatus}

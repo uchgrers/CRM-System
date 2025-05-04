@@ -31,11 +31,7 @@ function App() {
         getTodos()
             .then(res => {
                 setTodos(res.data)
-                setTodosCount({
-                    all: res.data.length,
-                    inWork: res.data.filter((todo: Todo) => !todo.isDone).length,
-                    completed: res.data.filter((todo: Todo) => todo.isDone).length
-                })
+                setTodosCount(res.info)
             })
     }, [])
 

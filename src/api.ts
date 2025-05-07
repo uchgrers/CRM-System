@@ -1,4 +1,4 @@
-import {Todos, TodosCountObjectType, TodosStatus} from "./assets/types";
+import {Todos, TodosCountObjectType, TodosStatus} from "./assets/types"
 
 const baseUrl = 'https://easydev.club/api/v1/'
 

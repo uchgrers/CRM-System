@@ -1,10 +1,14 @@
 import {useEffect, useState} from 'react'
 import './App.css'
 import {Route, Routes} from "react-router-dom"
-import TodoItemDetails from "./components/TodoItemDetails/TodoItemDetails"
 import TodosPage from "./pages/TodosPage/TodosPage"
 import {Todos, TodosCountObjectType, TodosStatus} from "./assets/types"
 import {addTodo, deleteTodo, getTodos, updateTodo} from "./api"
+
+// assets - иконки, картинки и тд
+// заменить перечисления на enum
+// имена типам давать в соответствии с докумнентацией
+// сделать мини ui либу (ui kit)
 
 function App() {
 
@@ -67,8 +71,6 @@ function App() {
                                        updateTodo={handleUpdateTodo}
                                        changeStatus={handleStatusChange}
                    />}/>
-            <Route path='/todos/:id' element={<TodoItemDetails todos={todos}/>}/>
-
             <Route path='/*' element={<div>Not found</div>}/>
         </Routes>
     )

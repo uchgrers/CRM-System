@@ -5,11 +5,13 @@ export type Todo = {
     id: number
 }
 
-export type Todos = Todo[]
+export enum TodosStatus {
+    All = 'all',
+    Completed = 'completed',
+    InWork = 'inWork'
+}
 
-export type TodosStatus = 'all' | 'completed' | 'inWork'
-
-export type TodosCountObjectType = {
+export type TodoInfo = {
     all: number,
     inWork: number,
     completed: number

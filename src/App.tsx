@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import './App.css'
 import {Route, Routes} from "react-router-dom"
 import TodosPage from "./pages/TodosPage/TodosPage"
-import {Todos, TodosCountObjectType, TodosStatus} from "./assets/types"
+import {Todo, TodoInfo, TodosStatus} from "./assets/types"
 import {addTodo, deleteTodo, getTodos, updateTodo} from "./api"
 
 // assets - иконки, картинки и тд
@@ -12,18 +12,18 @@ import {addTodo, deleteTodo, getTodos, updateTodo} from "./api"
 
 function App() {
 
-    const [todos, setTodos] = useState<Todos>([])
+    const [todos, setTodos] = useState<Todo[]>([])
 
     // Статус просматриваемых туду (все/в работе/завершенные)
-    const [todosStatus, setTodosStatus] = useState<TodosStatus>('all')
+    const [todosStatus, setTodosStatus] = useState<TodosStatus>(TodosStatus.All)
     // Вычисление списков туду по статусу
-    const [todosCount, setTodosCount] = useState<TodosCountObjectType>({
+    const [todosCount, setTodosCount] = useState<TodoInfo>({
         all: 0,
         inWork: 0,
         completed: 0
     })
 
-    const handleStatusChange = async (todosStatus: TodosStatus = 'all') => {
+    const handleStatusChange = async (todosStatus: TodosStatus = TodosStatus.All) => {
         setTodosStatus(todosStatus)
         await getTodos(todosStatus, setTodos, setTodosCount)
     }

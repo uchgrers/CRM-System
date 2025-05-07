@@ -1,10 +1,10 @@
-import {Todos, TodosCountObjectType, TodosStatus} from "./assets/types"
+import {Todo, TodoInfo, TodosStatus} from "./assets/types"
 
 const baseUrl = 'https://easydev.club/api/v1/'
 
-export const getTodos = async (todosStatus: TodosStatus = 'all',
-                               setTodos: (todos: Todos) => void,
-                               setTodosCount: (todosCount: TodosCountObjectType) => void) => {
+export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All,
+                               setTodos: (todos: Todo[]) => void,
+                               setTodosCount: (todosCount: TodoInfo) => void) => {
     try {
         const response = await fetch(`${baseUrl}todos?filter=${todosStatus}`)
         if (response.ok) {

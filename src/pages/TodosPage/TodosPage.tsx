@@ -2,13 +2,13 @@ import React from 'react'
 import TodosList from "../../components/TodosList/TodosList"
 import AddTodoForm from "../../components/AddTodoForm/AddTodoForm"
 import s from './TodosPage.module.scss'
-import {Todos, TodosCountObjectType, TodosStatus} from "../../assets/types"
+import {Todo, TodoInfo, TodosStatus} from "../../assets/types"
 import TodosSelector from "../../components/TodosSelector/TodosSelector"
 
 export type TodosPageType = {
-    todos: Todos,
+    todos: Todo[],
     todosStatus: TodosStatus,
-    todosCount: TodosCountObjectType
+    todosCount: TodoInfo
     addTodo: (title: string) => void,
     deleteTodo: (id: number) => void,
     updateTodo: (id: number, isDone: boolean, title: string) => void,

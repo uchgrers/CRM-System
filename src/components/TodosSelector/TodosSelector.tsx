@@ -18,7 +18,7 @@ const TodosSelector: React.FC<TodosSelectorType> = (props) => {
                        id="all"
                        type="radio"
                        name="todo_selector"
-                       value="all" onChange={handleStatusChange}
+                       value={TodosStatus.All} onChange={handleStatusChange}
                 />
                 <label htmlFor="all">All ({props.todosCount?.all})</label>
             </div>
@@ -26,7 +26,7 @@ const TodosSelector: React.FC<TodosSelectorType> = (props) => {
                 <input id="inWork"
                        type="radio"
                        name="todo_selector"
-                       value="inWork"
+                       value={TodosStatus.InWork}
                        onChange={handleStatusChange}
                 />
                 <label htmlFor="inWork">In work ({props.todosCount?.inWork})</label>
@@ -35,7 +35,7 @@ const TodosSelector: React.FC<TodosSelectorType> = (props) => {
                 <input id="completed"
                        type="radio"
                        name="todo_selector"
-                       value="completed"
+                       value={TodosStatus.Completed}
                        onChange={handleStatusChange}
                 />
                 <label htmlFor="completed">Completed ({props.todosCount?.completed})</label>

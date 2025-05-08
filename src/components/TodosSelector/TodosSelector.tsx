@@ -1,14 +1,18 @@
-import React from 'react'
+import React, {useState} from 'react'
 import s from './TodosSelector.module.scss'
-import {TodosPageType} from "../../pages/TodosPage/TodosPage"
-import {TodosStatus} from "../../assets/types"
+import {TodoInfo, TodosStatus} from "../../assets/types"
 
-type TodosSelectorType = Pick<TodosPageType, 'todos' | 'todosCount' | 'changeStatus'>
+type TodosSelector = {
+    todosCount: TodoInfo,
+    fetchTodos: (todosStatus: TodosStatus) => void,
+    setTodosStatus: (todosStatus: TodosStatus) => void
+}
 
-const TodosSelector: React.FC<TodosSelectorType> = (props) => {
+const TodosSelector: React.FC<TodosSelector> = (props) => {
 
     const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        props.changeStatus(e.target.value as TodosStatus)
+        props.setTodosStatus(e.target.value as TodosStatus)
+        props.fetchTodos(e.target.value as TodosStatus)
     }
 
     return (

@@ -1,33 +1,32 @@
 import React, {useState} from 'react'
 import s from './TodoItem.module.scss'
-import {TodosPageType} from "../../pages/TodosPage/TodosPage"
-import {ErrorMessageType, Todo} from "../../assets/types"
+import {ErrorMessageType} from "../../assets/types"
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
 import {handleFormSubmit, handleInputChange} from "../../assets/inputValidation"
+import {deleteTodo, updateTodo} from "../../api"
 
-type TodoItemType = Pick<TodosPageType, 'updateTodo' |
-    'deleteTodo' | 'todosStatus'> & Pick<Todo, 'title' | 'isDone' | 'id'>
-
-const TodoItem: React.FC<TodoItemType> = (props) => {
+const TodoItem = (props) => {
 
     const [title, setTitle] = useState<string>(props.title)
     const [isEditing, setIsEditing] = useState<boolean>(false)
     const [isDone, setIsDone] = useState<boolean>(props.isDone)
     const [error, setError] = useState<ErrorMessageType>(null)
 
-    const handleTitleEditing = (e: React.FormEvent<HTMLFormElement> |
+    const handleTitleEditing = async (e: React.FormEvent<HTMLFormElement> |
         React.MouseEvent<HTMLButtonElement>
     ) => {
         if (handleFormSubmit(e, title, setError)) {
             setIsEditing(false)
-            props.updateTodo(props.id, props.isDone, title)
+            await updateTodo(props.id, props.isDone, title)
+            props.fetchTodos(props.todosStatus)
         }
     }
 
-    const handleCheckboxStatusChange = () => {
+    const handleCheckboxStatusChange = async () => {
         const relevantIsDone = !isDone
         setIsDone(relevantIsDone)
-        props.updateTodo(props.id, relevantIsDone, title)
+        await updateTodo(props.id, relevantIsDone, title)
+        props.fetchTodos(props.todosStatus)
     }
 
     const cancelEditing = () => {
@@ -36,26 +35,31 @@ const TodoItem: React.FC<TodoItemType> = (props) => {
         setIsEditing(false)
     }
 
+    const handleDeleteTodo = async () => {
+        await deleteTodo(props.id)
+        props.fetchTodos(props.todosStatus)
+    }
+
     return (
         <li className={s.item}>
             {error && <ErrorMessage message={error}/>}
-                <input type="checkbox"
-                       checked={props.isDone}
-                       onChange={handleCheckboxStatusChange}
-                />
-                {isEditing ?
-                    <form onSubmit={handleTitleEditing}>
-                        <input type="text"
-                               value={title}
-                               onChange={(e) => handleInputChange(e, setError, setTitle)}
-                               autoFocus={true}
-                        />
-                        <button type="submit">
-                            Save
-                        </button>
-                    </form>
-                    : <div className={props.isDone ? s.item__done : s.item__title}><p>{props.title}</p></div>
-                }
+            <input type="checkbox"
+                   checked={props.isDone}
+                   onChange={handleCheckboxStatusChange}
+            />
+            {isEditing ?
+                <form onSubmit={handleTitleEditing}>
+                    <input type="text"
+                           value={title}
+                           onChange={(e) => handleInputChange(e, setError, setTitle)}
+                           autoFocus={true}
+                    />
+                    <button type="submit">
+                        Save
+                    </button>
+                </form>
+                : <div className={props.isDone ? s.item__done : s.item__title}><p>{props.title}</p></div>
+            }
 
             {!isEditing ?
                 <button onClick={() => setIsEditing(true)}>
@@ -69,11 +73,7 @@ const TodoItem: React.FC<TodoItemType> = (props) => {
                 <button onClick={cancelEditing}>Cancel</button>
             }
 
-            <button className={s.item__delete_btn}
-                    onClick={() => {
-                        props.deleteTodo(props.id)
-                    }}
-            >
+            <button className={s.item__delete_btn} onClick={handleDeleteTodo}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -7 36 36" fill="none" stroke="black"
                      strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                      className="feather feather-trash-2">

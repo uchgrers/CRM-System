@@ -1,22 +1,25 @@
 import React, {useState} from 'react'
 import s from './AddTodoForm.module.scss'
-import {TodosPageType} from "../../pages/TodosPage/TodosPage"
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
 import {ErrorMessageType} from "../../assets/types"
 import {handleFormSubmit, handleInputChange} from "../../assets/inputValidation"
+import {addTodo} from "../../api"
 
-type AddTodoFormType = Pick<TodosPageType, 'addTodo'>
+type AddTodoForm = {
+    fetchTodos: () => void
+}
 
-const AddTodoForm: React.FC<AddTodoFormType> = (props) => {
+const AddTodoForm: React.FC<AddTodoForm> = (props) => {
 
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<ErrorMessageType>(null)
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (handleFormSubmit(e, title, setError)) {
-            props.addTodo(title)
+            await addTodo(title)
             setTitle('')
+            props.fetchTodos()
         }
     }
 

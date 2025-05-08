@@ -1,16 +1,12 @@
-import {Todo, TodoInfo, TodosStatus} from "./assets/types"
+import {TodosStatus} from "./assets/types"
 
 const baseUrl = 'https://easydev.club/api/v1/'
 
-export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All,
-                               setTodos: (todos: Todo[]) => void,
-                               setTodosCount: (todosCount: TodoInfo) => void) => {
+export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All) => {
     try {
         const response = await fetch(`${baseUrl}todos?filter=${todosStatus}`)
         if (response.ok) {
-            const result = await response.json()
-            setTodos(result.data)
-            setTodosCount(result.info)
+            return await response.json()
         }
     } catch (error) {
         console.log(error)

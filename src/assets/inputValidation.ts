@@ -2,7 +2,7 @@ import React from "react"
 import {ErrorMessageType} from "./types"
 
 // Функция валидации формы (используется в AddTodoForm и TodoItem)
-export const handleFormSubmit = (e: React.FormEvent<HTMLFormElement> |
+export const checkTodoTitle = (e: React.FormEvent<HTMLFormElement> |
                                      React.MouseEvent<HTMLButtonElement>,
                                  title: string) => {
     e.preventDefault()

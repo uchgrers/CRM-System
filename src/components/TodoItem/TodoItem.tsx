@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import s from './TodoItem.module.scss'
 import {ErrorMessageType} from "../../assets/types"
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
-import {handleFormSubmit} from "../../assets/inputValidation"
+import {checkTodoTitle} from "../../assets/inputValidation"
 import {deleteTodo, updateTodo} from "../../api"
 
 const TodoItem = (props) => {
@@ -20,11 +20,14 @@ const TodoItem = (props) => {
     const handleTitleEditing = async (e: React.FormEvent<HTMLFormElement> |
         React.MouseEvent<HTMLButtonElement>
     ) => {
-        if (!handleFormSubmit(e, title)) {
+        const isIncorrect = checkTodoTitle(e, title)
+        if (!isIncorrect) {
             setIsEditing(false)
             await updateTodo(props.id, props.isDone, title)
             props.fetchTodos(props.todosStatus)
+            return
         }
+        setError(isIncorrect)
     }
 
     const handleCheckboxStatusChange = async () => {

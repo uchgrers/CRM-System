@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import s from './AddTodoForm.module.scss'
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
 import {ErrorMessageType} from "../../assets/types"
-import {handleFormSubmit} from "../../assets/inputValidation"
+import {checkTodoTitle} from "../../assets/inputValidation"
 import {addTodo} from "../../api"
 
 type AddTodoForm = {
@@ -20,11 +20,13 @@ const AddTodoForm: React.FC<AddTodoForm> = (props) => {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        if (!handleFormSubmit(e, title)) {
+        const isIncorrect = checkTodoTitle(e, title)
+        if (!isIncorrect) {
             await addTodo(title)
             setTitle('')
             props.fetchTodos()
         }
+        setError(isIncorrect)
     }
 
     return (

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import s from './TodoItem.module.scss'
 import {ErrorMessageType} from "../../assets/types"
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
-import {handleFormSubmit, handleInputChange} from "../../assets/inputValidation"
+import {handleFormSubmit} from "../../assets/inputValidation"
 import {deleteTodo, updateTodo} from "../../api"
 
 const TodoItem = (props) => {
@@ -10,12 +10,17 @@ const TodoItem = (props) => {
     const [title, setTitle] = useState<string>(props.title)
     const [isEditing, setIsEditing] = useState<boolean>(false)
     const [isDone, setIsDone] = useState<boolean>(props.isDone)
-    const [error, setError] = useState<ErrorMessageType>(null)
+    const [error, setError] = useState<ErrorMessageType>(ErrorMessageType.Correct)
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setError(ErrorMessageType.Correct)
+        setTitle(e.target.value)
+    }
 
     const handleTitleEditing = async (e: React.FormEvent<HTMLFormElement> |
         React.MouseEvent<HTMLButtonElement>
     ) => {
-        if (handleFormSubmit(e, title, setError)) {
+        if (!handleFormSubmit(e, title)) {
             setIsEditing(false)
             await updateTodo(props.id, props.isDone, title)
             props.fetchTodos(props.todosStatus)
@@ -29,8 +34,12 @@ const TodoItem = (props) => {
         props.fetchTodos(props.todosStatus)
     }
 
-    const cancelEditing = () => {
-        setError(null)
+    const handleStartEditing = () => {
+        setIsEditing(true)
+    }
+
+    const handleCancelEditing = () => {
+        setError(ErrorMessageType.Correct)
         setTitle(props.title)
         setIsEditing(false)
     }
@@ -51,7 +60,7 @@ const TodoItem = (props) => {
                 <form onSubmit={handleTitleEditing}>
                     <input type="text"
                            value={title}
-                           onChange={(e) => handleInputChange(e, setError, setTitle)}
+                           onChange={handleInputChange}
                            autoFocus={true}
                     />
                     <button type="submit">
@@ -62,7 +71,7 @@ const TodoItem = (props) => {
             }
 
             {!isEditing ?
-                <button onClick={() => setIsEditing(true)}>
+                <button onClick={handleStartEditing}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -7 36 36" fill="none" stroke="black"
                          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
                          className="feather feather-edit">
@@ -70,7 +79,7 @@ const TodoItem = (props) => {
                         <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
                     </svg>
                 </button> :
-                <button onClick={cancelEditing}>Cancel</button>
+                <button onClick={handleCancelEditing}>Cancel</button>
             }
 
             <button className={s.item__delete_btn} onClick={handleDeleteTodo}>

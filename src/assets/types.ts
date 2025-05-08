@@ -17,5 +17,8 @@ export type TodoInfo = {
     completed: number
 }
 
-export type ErrorMessageType = 'Task must contain at least 2 symbols' |
-    'Maximum task length is 64 symbols' | null
+export enum ErrorMessageType {
+    TooShort = 'Task must contain at least 2 symbols',
+    TooLong = 'Maximum task length is 64 symbols',
+    Correct = null
+}

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import s from './AddTodoForm.module.scss'
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
 import {ErrorMessageType} from "../../assets/types"
-import {handleFormSubmit, handleInputChange} from "../../assets/inputValidation"
+import {handleFormSubmit} from "../../assets/inputValidation"
 import {addTodo} from "../../api"
 
 type AddTodoForm = {
@@ -12,11 +12,15 @@ type AddTodoForm = {
 const AddTodoForm: React.FC<AddTodoForm> = (props) => {
 
     const [title, setTitle] = useState<string>('')
-    const [error, setError] = useState<ErrorMessageType>(null)
+    const [error, setError] = useState<ErrorMessageType>(ErrorMessageType.Correct)
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setError(ErrorMessageType.Correct)
+        setTitle(e.target.value)
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        if (handleFormSubmit(e, title, setError)) {
+        if (!handleFormSubmit(e, title)) {
             await addTodo(title)
             setTitle('')
             props.fetchTodos()
@@ -29,7 +33,7 @@ const AddTodoForm: React.FC<AddTodoForm> = (props) => {
             <input type="text"
                    placeholder="Task To Be Done..."
                    value={title}
-                   onChange={(e) => handleInputChange(e, setError, setTitle)}
+                   onChange={handleInputChange}
             />
             <button type="submit" className={s.form__submission_btn}>
                 Add

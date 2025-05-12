@@ -1,11 +1,4 @@
-import {GetTodos, Todo, TodoInfo, TodosStatus} from "../types/types"
-type G = {
-    data: Todo[],
-    info: TodoInfo,
-    meta: {
-        totalAmount: number
-    }
-}
+import {GetTodos, Todo, TodosStatus} from "../types/types"
 
 const baseUrl = 'https://easydev.club/api/v1/'
 

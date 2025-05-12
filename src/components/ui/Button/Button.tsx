@@ -2,7 +2,7 @@ import React from 'react'
 import s from './Button.module.scss'
 
 type Button = {
-    content: JSX.Element | string,
+    content: React.ReactNode | string,
     color: string,
     onClick: () => void
 }

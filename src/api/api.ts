@@ -45,7 +45,7 @@ export const deleteTodo = async (id: number): Promise<string> => {
         if (!response.ok) {
             throw new Error('request failed')
         }
-        return await response.json()
+        return await response.text()
     } catch (error) {
         console.log(error)
         throw new Error(String(error))

@@ -30,3 +30,9 @@ export type GetTodos = {
         totalAmount: number
     }
 } | string
+
+export enum ButtonColor {
+    Primary = 'button-primary',
+    Secondary = 'button-secondary',
+    Dangerous = 'danger'
+}

@@ -1,9 +1,12 @@
 import React, {useState} from 'react'
 import s from './TodoItem.module.scss'
-import {ErrorMessageType} from "../../types/types"
+import {ButtonColor, ErrorMessageType} from "../../types/types"
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
 import {checkTodoTitle} from "../../functions/inputValidation"
 import {deleteTodo, updateTodo} from "../../api/api"
+import DeleteIcon from "../ui/DeleteIcon/DeleteIcon"
+import Button from "../ui/Button/Button"
+import EditIcon from "../ui/EditIcon/EditIcon"
 
 const TodoItem = (props) => {
 
@@ -74,27 +77,19 @@ const TodoItem = (props) => {
             }
 
             {!isEditing ?
-                <button onClick={handleStartEditing}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -7 36 36" fill="none" stroke="black"
-                         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                         className="feather feather-edit">
-                        <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
-                        <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
-                    </svg>
-                </button> :
-                <button onClick={handleCancelEditing}>Cancel</button>
+                <Button content={<EditIcon/>}
+                        color={ButtonColor.Primary}
+                        onClick={handleStartEditing}
+                /> :
+                <Button content='Cancel'
+                        color={ButtonColor.Secondary}
+                        onClick={handleCancelEditing}
+                />
             }
-
-            <button className={s.item__delete_btn} onClick={handleDeleteTodo}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-6 -7 36 36" fill="none" stroke="black"
-                     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                     className="feather feather-trash-2">
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                </svg>
-            </button>
+            <Button content={<DeleteIcon/>}
+                    color={ButtonColor.Dangerous}
+                    onClick={handleDeleteTodo}
+            />
         </li>
     );
 };

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import s from './TodoItem.module.scss'
-import {ButtonColor, ErrorMessageType} from "../../types/types"
+import {ButtonColor, ErrorMessageType, Todo, TodosStatus} from "../../types/types"
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
 import {checkTodoTitle} from "../../functions/inputValidation"
 import {deleteTodo, updateTodo} from "../../api/api"
@@ -8,7 +8,13 @@ import DeleteIcon from "../ui/DeleteIcon/DeleteIcon"
 import Button from "../ui/Button/Button"
 import EditIcon from "../ui/EditIcon/EditIcon"
 
-const TodoItem = (props) => {
+type TodoItem = Omit<Todo, 'created'> & {
+    key: number,
+    todosStatus: TodosStatus,
+    fetchTodos: (todosStatus?: TodosStatus) => void
+}
+
+const TodoItem: React.FC<TodoItem> = (props) => {
 
     const [title, setTitle] = useState<string>(props.title)
     const [isEditing, setIsEditing] = useState<boolean>(false)

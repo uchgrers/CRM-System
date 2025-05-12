@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import s from './TodosSelector.module.scss'
 import {TodoInfo, TodosStatus} from "../../types/types"
 

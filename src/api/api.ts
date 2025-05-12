@@ -2,7 +2,7 @@ import {GetTodos, Todo, TodosStatus} from "../types/types"
 
 const baseUrl = 'https://easydev.club/api/v1/'
 
-export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All): Promise<GetTodos> => {
+export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All): Promise<GetTodos | string> => {
     try {
         const response = await fetch(`${baseUrl}todos?filter=${todosStatus}`)
         if (response.ok) {
@@ -10,10 +10,11 @@ export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All): Prom
         }
     } catch (error) {
         console.log(error)
+        throw new Error(error)
     }
 }
 
-export const addTodo = async (title: string): Promise<Todo> => {
+export const addTodo = async (title: string): Promise<Todo | string> => {
     try {
         const response = await fetch(`${baseUrl}todos`, {
             method: "POST",
@@ -46,7 +47,7 @@ export const deleteTodo = async (id: number): Promise<string> => {
     }
 }
 
-export const updateTodo = async (id: number, isDone: boolean, title: string): Promise<Todo> => {
+export const updateTodo = async (id: number, isDone: boolean, title: string): Promise<Todo | string> => {
     try {
         const response = await fetch(`${baseUrl}todos/${id}`, {
             method: "PUT",

@@ -9,9 +9,9 @@ export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All): Prom
             throw new Error('request failed')
         }
         return await response.json()
-    } catch (error) {
+    } catch (error: string) {
         console.log(error)
-        throw new Error(error)
+        throw new Error(String(error))
     }
 }
 
@@ -28,8 +28,9 @@ export const addTodo = async (title: string): Promise<Todo | string> => {
             throw new Error('request failed')
         }
         return await response.json()
-    } catch (error) {
+    } catch (error: string) {
         console.log(error)
+        throw new Error(String(error))
     }
 }
 
@@ -45,8 +46,9 @@ export const deleteTodo = async (id: number): Promise<string> => {
             throw new Error('request failed')
         }
         return await response.json()
-    } catch (error) {
+    } catch (error: string) {
         console.log(error)
+        throw new Error(String(error))
     }
 }
 
@@ -65,5 +67,6 @@ export const updateTodo = async (id: number, isDone: boolean, title: string): Pr
         return await response.json()
     } catch (error) {
         console.log(error)
+        throw new Error(String(error))
     }
 }

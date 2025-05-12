@@ -7,6 +7,5 @@
     "skipLibCheck": true,
     "types": ["react", "react-dom"]
   },
-  "include": ["src"],
-  "exclude": ["src/**/*.d.ts", "node_modules"]
+  "include": ["src"]
 }

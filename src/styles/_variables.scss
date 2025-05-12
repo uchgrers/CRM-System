@@ -2,14 +2,14 @@
   --container-width: 1240px;
   --content-width: 500px;
 
-  --color-dark: #000000;
-  --color-gray: #e5e6e8;
-  --color-light: #ffffff;
-  --color-blue: #5d6bf5;
-  --color-red: #e06060;
-  --color-accent: #4bd34d;
+  --color-bg-primary: #e5e6e8;
+  --color-bg-secondary: #ffffff;
+  --color-secondary: #000000;
+  --color-button-primary: #5d6bf5;
+  --color-success: #4bd34d;
+  --color-danger: #e06060;
 
-  --border: 1px solid var(--color-dark);
+  --border: 1px solid var(--color-secondary);
   --border-radius: 12px;
 
   --input-height: 50px;

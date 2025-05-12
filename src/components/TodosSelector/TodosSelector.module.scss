@@ -12,7 +12,7 @@
     align-content: center;
 
     &:hover {
-      color: var(--color-accent);
+      color: var(--color-success);
       transition-duration: var(--transition-duration);
     }
 
@@ -31,6 +31,6 @@
 
   & input:checked + label {
     text-decoration: underline;
-    color: var(--color-accent);
+    color: var(--color-success);
   }
 }

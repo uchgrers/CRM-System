@@ -23,8 +23,8 @@ button {
   border: var(--border);
   aspect-ratio: 1;
   opacity: var(--opacity);
-  background-color: var(--color-blue);
-  color: var(--color-light);
+  background-color: var(--color-button-primary);
+  color: var(--color-bg-secondary);
 
   &:hover {
     opacity: 1;

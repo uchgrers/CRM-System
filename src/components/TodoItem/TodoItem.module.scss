@@ -8,9 +8,9 @@
   margin: 4px 0;
   padding: 20px 20px;
   column-gap: 2px;
-  background-color: var(--color-light);
+  background-color: var(--color-bg-secondary);
   border-radius: var(--border-radius);
-  box-shadow: 0 2px 6px 0 var(--color-dark);
+  box-shadow: 0 2px 6px 0 var(--color-secondary);
   line-break: normal;
   text-align: justify;
   max-height: 100%;
@@ -32,10 +32,10 @@
 
   & input[type="text"] {
     border-radius: 0;
-    border-bottom: var(--color-accent) 1px solid;
+    border-bottom: var(--color-success) 1px solid;
   }
 
   &__delete_btn {
-    background-color: var(--color-red);
+    background-color: var(--color-danger);
   }
 }

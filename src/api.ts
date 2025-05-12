@@ -1,8 +1,15 @@
-import {TodosStatus} from "./assets/types"
+import {GetTodos, Todo, TodoInfo, TodosStatus} from "./assets/types"
+type G = {
+    data: Todo[],
+    info: TodoInfo,
+    meta: {
+        totalAmount: number
+    }
+}
 
 const baseUrl = 'https://easydev.club/api/v1/'
 
-export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All) => {
+export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All): Promise<GetTodos> => {
     try {
         const response = await fetch(`${baseUrl}todos?filter=${todosStatus}`)
         if (response.ok) {
@@ -13,7 +20,7 @@ export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All) => {
     }
 }
 
-export const addTodo = async (title: string) => {
+export const addTodo = async (title: string): Promise<Todo> => {
     try {
         const response = await fetch(`${baseUrl}todos`, {
             method: "POST",
@@ -30,7 +37,7 @@ export const addTodo = async (title: string) => {
     }
 }
 
-export const deleteTodo = async (id: number) => {
+export const deleteTodo = async (id: number): Promise<string> => {
     try {
         const response = await fetch(`${baseUrl}todos/${id}`, {
             method: "DELETE",
@@ -39,14 +46,14 @@ export const deleteTodo = async (id: number) => {
             }
         })
         if (response.ok) {
-            return id
+            return await response.json()
         }
     } catch (error) {
         console.log(error)
     }
 }
 
-export const updateTodo = async (id: number, isDone: boolean, title: string) => {
+export const updateTodo = async (id: number, isDone: boolean, title: string): Promise<Todo> => {
     try {
         const response = await fetch(`${baseUrl}todos/${id}`, {
             method: "PUT",

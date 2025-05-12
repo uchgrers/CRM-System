@@ -22,3 +22,11 @@ export enum ErrorMessageType {
     TooLong = 'Maximum task length is 64 symbols',
     Correct = null
 }
+
+export type GetTodos = {
+    data: Todo[],
+    info: TodoInfo,
+    meta: {
+        totalAmount: number
+    }
+} | string

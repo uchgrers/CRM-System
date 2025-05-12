@@ -29,7 +29,7 @@ export type GetTodos = {
     meta: {
         totalAmount: number
     }
-} | string
+}
 
 export enum ButtonColor {
     Primary = 'button-primary',

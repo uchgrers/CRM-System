@@ -2,7 +2,7 @@ import {GetTodos, Todo, TodosStatus} from "../types/types"
 
 const baseUrl = 'https://easydev.club/api/v1/'
 
-export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All): Promise<GetTodos | string> => {
+export const getTodos = async (todosStatus: TodosStatus = TodosStatus.All): Promise<GetTodos> => {
     try {
         const response = await fetch(`${baseUrl}todos?filter=${todosStatus}`)
         if (!response.ok) {

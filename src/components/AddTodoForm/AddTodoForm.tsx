@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import s from './AddTodoForm.module.scss'
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
-import {ErrorMessageType} from "../../assets/types"
-import {checkTodoTitle} from "../../assets/inputValidation"
-import {addTodo} from "../../api"
+import {ErrorMessageType} from "../../types/types"
+import {checkTodoTitle} from "../../functions/inputValidation"
+import {addTodo} from "../../api/api"
 
 type AddTodoForm = {
     fetchTodos: () => void

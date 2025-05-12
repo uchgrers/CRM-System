@@ -1,5 +1,5 @@
 import React from "react"
-import {ErrorMessageType} from "./types"
+import {ErrorMessageType} from "../types/types"
 
 // Функция валидации формы (используется в AddTodoForm и TodoItem)
 export const checkTodoTitle = (e: React.FormEvent<HTMLFormElement> |

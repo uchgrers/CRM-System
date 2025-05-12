@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import s from './TodosSelector.module.scss'
-import {TodoInfo, TodosStatus} from "../../assets/types"
+import {TodoInfo, TodosStatus} from "../../types/types"
 
 type TodosSelector = {
     todosCount: TodoInfo,

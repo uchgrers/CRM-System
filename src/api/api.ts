@@ -1,4 +1,4 @@
-import {GetTodos, Todo, TodoInfo, TodosStatus} from "./assets/types"
+import {GetTodos, Todo, TodoInfo, TodosStatus} from "../types/types"
 type G = {
     data: Todo[],
     info: TodoInfo,

@@ -1,7 +1,7 @@
 import React from 'react'
 import TodoItem from "../TodoItem/TodoItem"
 import s from './TodoList.module.scss'
-import {Todo, TodosStatus} from "../../assets/types"
+import {Todo, TodosStatus} from "../../types/types"
 
 type TodosList = {
     todos: Todo[],

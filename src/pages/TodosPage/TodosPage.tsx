@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react'
 import TodosList from "../../components/TodosList/TodosList"
 import AddTodoForm from "../../components/AddTodoForm/AddTodoForm"
 import s from './TodosPage.module.scss'
-import {Todo, TodoInfo, TodosStatus} from "../../assets/types"
+import {Todo, TodoInfo, TodosStatus} from "../../types/types"
 import TodosSelector from "../../components/TodosSelector/TodosSelector"
-import {getTodos} from "../../api"
+import {getTodos} from "../../api/api"
 
 const TodosPage = (props) => {
 

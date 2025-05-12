@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import s from './TodoItem.module.scss'
-import {ErrorMessageType} from "../../assets/types"
+import {ErrorMessageType} from "../../types/types"
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
-import {checkTodoTitle} from "../../assets/inputValidation"
-import {deleteTodo, updateTodo} from "../../api"
+import {checkTodoTitle} from "../../functions/inputValidation"
+import {deleteTodo, updateTodo} from "../../api/api"
 
 const TodoItem = (props) => {
 

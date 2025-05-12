@@ -4,7 +4,8 @@
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["react", "react-dom"]
   },
   "include": ["src"]
 }

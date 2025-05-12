@@ -20,13 +20,9 @@ const TodosPage = () => {
     })
 
     const fetchTodos = async (todosStatus?: TodosStatus) => {
-        try {
-            const result = await getTodos(todosStatus)
-            setTodos(result.data)
-            setTodosCount(result.info)
-        } catch (error) {
-
-        }
+        const result = await getTodos(todosStatus)
+        setTodos(result.data)
+        setTodosCount(result.info)
     }
 
     useEffect(() => {

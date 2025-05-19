@@ -5,7 +5,8 @@ import {ButtonColor} from "../uiTypes"
 type Button = {
     content: React.ReactNode | string,
     color: ButtonColor,
-    onClick?: () => void
+    onClick?: () => void,
+    type?: string
 }
 
 const Button: React.FC<Button> = (props) => {
@@ -15,7 +16,7 @@ const Button: React.FC<Button> = (props) => {
         }
     }
     return (
-        <button className={ s[ props.color ] } onClick={handleClick}>
+        <button className={s[props.color]} onClick={handleClick}>
             {props.content}
         </button>
     );

@@ -1,15 +1,16 @@
 import React, {useState} from 'react'
 import s from './AddTodoForm.module.scss'
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
-import {ErrorMessageType} from "../../types/types"
 import {checkTodoTitle} from "../../functions/inputValidation"
 import {addTodo} from "../../api/api"
+import {ErrorMessageType} from "../../constants/todo"
+import Button from "../ui/Button/Button";
 
-type AddTodoForm = {
+type AddTodoFormProps = {
     fetchTodos: () => void
 }
 
-const AddTodoForm: React.FC<AddTodoForm> = (props) => {
+const AddTodoForm: React.FC<AddTodoFormProps> = (props) => {
 
     const [title, setTitle] = useState<string>('')
     const [error, setError] = useState<ErrorMessageType>(ErrorMessageType.Correct)
@@ -37,9 +38,10 @@ const AddTodoForm: React.FC<AddTodoForm> = (props) => {
                    value={title}
                    onChange={handleInputChange}
             />
-            <button type="submit" className={s.form__submission_btn}>
-                Add
-            </button>
+            <Button type="submit"
+                    content={'Add'}
+                    color={'button-primary'}
+            ></Button>
         </form>
     );
 };

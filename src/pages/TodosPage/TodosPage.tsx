@@ -34,6 +34,7 @@ const TodosPage = () => {
         <section className={s.todos}>
             <AddTodoForm fetchTodos={fetchTodos}/>
             <TodosSelector todosCount={todosCount}
+                           todosStatus={todosStatus}
                            fetchTodos={fetchTodos}
                            setTodosStatus={setTodosStatus}
             />

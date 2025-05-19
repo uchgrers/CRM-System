@@ -12,24 +12,13 @@
     align-content: center;
 
     &:hover {
+      cursor: pointer;
       color: var(--color-success);
       transition-duration: var(--transition-duration);
     }
-
-    & input {
-      display: none;
-    }
-
-    & label {
-      display: block;
-      width: 100%;
-      height: 100%;
-      align-content: center;
-      cursor: pointer;
-    }
   }
 
-  & input:checked + label {
+  &__current {
     text-decoration: underline;
     color: var(--color-success);
   }

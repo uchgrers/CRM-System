@@ -1,6 +1,6 @@
 import React from 'react'
 import s from './ErrorMessage.module.scss'
-import {ErrorMessageType} from "../../../types/types"
+import {ErrorMessageType} from "../../../constants/todo"
 
 type ErrorType = {
     message: ErrorMessageType

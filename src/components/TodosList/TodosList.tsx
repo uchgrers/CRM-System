@@ -11,12 +11,7 @@ type TodosList = {
 
 const TodosList: React.FC<TodosList> = (props) => {
 
-    const filteredTodos = props.todosStatus === TodosStatus.All ?
-        props.todos : props.todosStatus === TodosStatus.InWork ? props.todos.filter(todo => !todo.isDone) :
-            props.todos.filter(todo => todo.isDone)
-
-
-    const todos = filteredTodos.map(todo => <TodoItem id={todo.id}
+    const todos = props.todos.map(todo => <TodoItem id={todo.id}
                                                       title={todo.title}
                                                       isDone={todo.isDone}
                                                       key={todo.id}

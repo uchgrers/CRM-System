@@ -4,47 +4,40 @@ import {TodoInfo, TodosStatus} from "../../types/types"
 
 type TodosSelector = {
     todosCount: TodoInfo,
+    todosStatus: TodosStatus,
     fetchTodos: (todosStatus: TodosStatus) => void,
     setTodosStatus: (todosStatus: TodosStatus) => void
 }
 
 const TodosSelector: React.FC<TodosSelector> = (props) => {
 
-    const handleStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        props.setTodosStatus(e.target.value as TodosStatus)
-        props.fetchTodos(e.target.value as TodosStatus)
+    const handleStatusChange = (status: TodosStatus) => {
+        props.setTodosStatus(status)
+        props.fetchTodos(status)
+    }
+
+    const getStatusClass = (status: TodosStatus) => {
+        return `${s.selector__category} ${props.todosStatus === status ? s.selector__current : ''}`
     }
 
     return (
-        <fieldset className={s.selector}>
-            <div className={s.selector__category}>
-                <input defaultChecked={true}
-                       id="all"
-                       type="radio"
-                       name="todo_selector"
-                       value={TodosStatus.All} onChange={handleStatusChange}
-                />
-                <label htmlFor="all">All ({props.todosCount?.all})</label>
+        <nav className={s.selector}>
+            <div className={getStatusClass(TodosStatus.All)}
+                 onClick={() => handleStatusChange(TodosStatus.All)}
+            >
+                All ({props.todosCount?.all})
             </div>
-            <div className={s.selector__category}>
-                <input id="inWork"
-                       type="radio"
-                       name="todo_selector"
-                       value={TodosStatus.InWork}
-                       onChange={handleStatusChange}
-                />
-                <label htmlFor="inWork">In work ({props.todosCount?.inWork})</label>
+            <div className={getStatusClass(TodosStatus.InWork)}
+                 onClick={() => handleStatusChange(TodosStatus.InWork)}
+            >
+                In Work ({props.todosCount?.inWork})
             </div>
-            <div className={s.selector__category}>
-                <input id="completed"
-                       type="radio"
-                       name="todo_selector"
-                       value={TodosStatus.Completed}
-                       onChange={handleStatusChange}
-                />
-                <label htmlFor="completed">Completed ({props.todosCount?.completed})</label>
+            <div className={getStatusClass(TodosStatus.Completed)}
+                 onClick={() => handleStatusChange(TodosStatus.Completed)}
+            >
+                Completed ({props.todosCount?.completed})
             </div>
-        </fieldset>
+        </nav>
     );
 };
 

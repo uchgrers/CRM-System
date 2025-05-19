@@ -17,22 +17,7 @@ export type TodoInfo = {
     completed: number
 }
 
-export enum ErrorMessageType {
-    TooShort = 'Task must contain at least 2 symbols',
-    TooLong = 'Maximum task length is 64 symbols',
-    Correct = ''
-}
-
-export type GetTodos = {
-    data: Todo[],
-    info: TodoInfo,
-    meta: {
-        totalAmount: number
-    }
-}
-
-export enum ButtonColor {
-    Primary = 'button-primary',
-    Secondary = 'button-secondary',
-    Dangerous = 'danger'
+export type MetaResponse<T, U> = {
+    data: T[],
+    info: U
 }

@@ -2,11 +2,10 @@ import React from 'react'
 import s from './Button.module.scss'
 import {ButtonColor} from "../uiTypes"
 
-type Button = {
+type Button = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     content: React.ReactNode | string,
     color: ButtonColor,
-    onClick?: () => void,
-    type?: string
+    onClick?: () => void
 }
 
 const Button: React.FC<Button> = (props) => {

@@ -39,9 +39,10 @@ const AddTodoForm: React.FC<AddTodoFormProps> = (props) => {
                    onChange={handleInputChange}
             />
             <Button type="submit"
-                    content={'Add'}
                     color={'button-primary'}
-            ></Button>
+            >
+                Add
+            </Button>
         </form>
     );
 };

@@ -3,7 +3,7 @@ import s from './Button.module.scss'
 import {ButtonColor} from "../uiTypes"
 
 type Button = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    content: React.ReactNode | string,
+    children?: React.ReactNode,
     color: ButtonColor,
     onClick?: () => void
 }
@@ -16,7 +16,7 @@ const Button: React.FC<Button> = (props) => {
     }
     return (
         <button className={s[props.color]} onClick={handleClick}>
-            {props.content}
+            {props.children}
         </button>
     );
 };

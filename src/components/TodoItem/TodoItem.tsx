@@ -77,27 +77,31 @@ const TodoItem: React.FC<TodoItem> = (props) => {
                            autoFocus={true}
                     />
                     <Button type="submit"
-                            content={'Save'}
                             color={'button-primary'}
-                    ></Button>
+                    >
+                        Save
+                    </Button>
                 </form>
                 : <div className={props.isDone ? s.item__done : s.item__title}><p>{props.title}</p></div>
             }
 
             {!isEditing ?
-                <Button content={<EditIcon/>}
-                        color={'button-primary'}
+                <Button color={'button-primary'}
                         onClick={handleStartEditing}
-                /> :
-                <Button content='Cancel'
-                        color={'button-secondary'}
+                >
+                    <EditIcon/>
+                </Button> :
+                <Button color={'button-secondary'}
                         onClick={handleCancelEditing}
-                />
+                >
+                    Cancel
+                </Button>
             }
-            <Button content={<DeleteIcon/>}
-                    color={'danger'}
+            <Button color={'danger'}
                     onClick={handleDeleteTodo}
-            />
+            >
+                <DeleteIcon/>
+            </Button>
         </li>
     );
 };

@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react'
 import TodosList from "../../components/TodosList/TodosList"
-import AddTodoForm from "../../components/AddTodoForm/AddTodoForm"
 import s from './TodosPage.module.scss'
 import {Todo, TodoInfo, TodosStatus} from "../../types/types"
 import TodosSelector from "../../components/TodosSelector/TodosSelector"
 import {getTodos} from "../../api/api"
+import AddTodoFormAntDesign from "../../components/AddTodoFormAntDesign/AddTodoFormAntDesign";
 
 const TodosPage = () => {
 
@@ -32,7 +32,7 @@ const TodosPage = () => {
 
     return (
         <section className={s.todos}>
-            <AddTodoForm fetchTodos={fetchTodos}/>
+            <AddTodoFormAntDesign fetchTodos={fetchTodos}/>
             <TodosSelector todosCount={todosCount}
                            todosStatus={todosStatus}
                            fetchTodos={fetchTodos}

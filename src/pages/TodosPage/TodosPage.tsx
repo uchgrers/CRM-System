@@ -1,49 +1,49 @@
-import {useEffect, useState} from 'react'
-import TodosList from "../../components/TodosList/TodosList"
-import s from './TodosPage.module.scss'
-import {Todo, TodoInfo, TodosStatus} from "../../types/types"
-import TodosSelector from "../../components/TodosSelector/TodosSelector"
-import {getTodos} from "../../api/api"
+import { useEffect, useState } from "react";
+import TodosList from "../../components/TodosList/TodosList";
+import s from "./TodosPage.module.scss";
+import { Todo, TodoInfo, TodosStatus } from "../../types/types";
+import TodosSelector from "../../components/TodosSelector/TodosSelector";
+import { getTodos } from "../../api/api";
 import AddTodoFormAntDesign from "../../components/AddTodoFormAntDesign/AddTodoFormAntDesign";
+import TodosSelectorAntDesign from "../../components/TodosSelectorAntDesign/TodosSelectorAntDesign";
 
 const TodosPage = () => {
+  const [todos, setTodos] = useState<Todo[]>([]);
 
-    const [todos, setTodos] = useState<Todo[]>([])
+  // Статус просматриваемых туду (все/в работе/завершенные)
+  const [todosStatus, setTodosStatus] = useState<TodosStatus>(TodosStatus.All);
+  // Вычисление списков туду по статусу
+  const [todosCount, setTodosCount] = useState<TodoInfo>({
+    all: 0,
+    inWork: 0,
+    completed: 0,
+  });
 
-    // Статус просматриваемых туду (все/в работе/завершенные)
-    const [todosStatus, setTodosStatus] = useState<TodosStatus>(TodosStatus.All)
-    // Вычисление списков туду по статусу
-    const [todosCount, setTodosCount] = useState<TodoInfo>({
-        all: 0,
-        inWork: 0,
-        completed: 0
-    })
+  const fetchTodos = async (todosStatus?: TodosStatus) => {
+    const result = await getTodos(todosStatus);
+    setTodos(result.data);
+    setTodosCount(result.info);
+  };
 
-    const fetchTodos = async (todosStatus?: TodosStatus) => {
-        const result = await getTodos(todosStatus)
-        setTodos(result.data)
-        setTodosCount(result.info)
-    }
+  useEffect(() => {
+    fetchTodos();
+  }, []);
 
-    useEffect(() => {
-        fetchTodos()
-    }, [])
-
-
-    return (
-        <section className={s.todos}>
-            <AddTodoFormAntDesign fetchTodos={fetchTodos}/>
-            <TodosSelector todosCount={todosCount}
-                           todosStatus={todosStatus}
-                           fetchTodos={fetchTodos}
-                           setTodosStatus={setTodosStatus}
-            />
-            <TodosList todos={todos}
-                       todosStatus={todosStatus}
-                       fetchTodos={fetchTodos}
-            />
-        </section>
-    );
+  return (
+    <section className={s.todos}>
+      <AddTodoFormAntDesign fetchTodos={fetchTodos} />
+      <TodosSelectorAntDesign
+        todosCount={todosCount}
+        fetchTodos={fetchTodos}
+        setTodosStatus={setTodosStatus}
+      />
+      <TodosList
+        todos={todos}
+        todosStatus={todosStatus}
+        fetchTodos={fetchTodos}
+      />
+    </section>
+  );
 };
 
 export default TodosPage;

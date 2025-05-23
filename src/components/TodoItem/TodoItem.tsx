@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import s from "./TodoItem.module.scss";
 import { Todo, TodosStatus } from "../../types/types";
-import ErrorMessage from "../common/ErrorMessage/ErrorMessage";
-import { checkTodoTitle } from "../../functions/inputValidation";
 import { deleteTodo, updateTodo } from "../../api/api";
-import DeleteIcon from "../ui/DeleteIcon/DeleteIcon";
-// import Button from "../ui/Button/Button"
-import EditIcon from "../ui/EditIcon/EditIcon";
 import { ErrorMessageType } from "../../constants/todo";
 import { Button } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
+import Form from "antd/es/form";
+import Input from "antd/es/input";
+import Checkbox from "antd/es/checkbox";
+import { useForm } from "antd/es/form/Form";
 
 type TodoItem = Omit<Todo, "created"> & {
   key: number;
@@ -18,29 +17,20 @@ type TodoItem = Omit<Todo, "created"> & {
 };
 
 const TodoItem: React.FC<TodoItem> = (props) => {
+  const [form] = useForm();
+
   const [title, setTitle] = useState<string>(props.title);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(props.isDone);
-  const [error, setError] = useState<ErrorMessageType>(
-    ErrorMessageType.Correct
-  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError(ErrorMessageType.Correct);
     setTitle(e.target.value);
   };
 
-  const handleTitleEditing = async (
-    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
-  ) => {
-    const isIncorrect = checkTodoTitle(e, title);
-    if (!isIncorrect) {
-      setIsEditing(false);
-      await updateTodo(props.id, props.isDone, title);
-      props.fetchTodos(props.todosStatus);
-      return;
-    }
-    setError(isIncorrect);
+  const handleTitleEditing = async () => {
+    setIsEditing(false);
+    await updateTodo(props.id, props.isDone, title);
+    props.fetchTodos(props.todosStatus);
   };
 
   const handleCheckboxStatusChange = async () => {
@@ -55,7 +45,12 @@ const TodoItem: React.FC<TodoItem> = (props) => {
   };
 
   const handleCancelEditing = () => {
-    setError(ErrorMessageType.Correct);
+    form.setFields([
+      {
+        name: "editTodoForm",
+        value: props.title,
+      },
+    ]);
     setTitle(props.title);
     setIsEditing(false);
   };
@@ -67,24 +62,40 @@ const TodoItem: React.FC<TodoItem> = (props) => {
 
   return (
     <li className={s.item}>
-      {error && <ErrorMessage message={error} />}
-      <input
-        type="checkbox"
-        checked={props.isDone}
-        onChange={handleCheckboxStatusChange}
-      />
+      <Checkbox checked={props.isDone} onChange={handleCheckboxStatusChange} />
       {isEditing ? (
-        <form onSubmit={handleTitleEditing}>
-          <input
-            type="text"
-            value={title}
-            onChange={handleInputChange}
-            autoFocus={true}
-          />
+        <Form
+          form={form}
+          layout="inline"
+          onFinish={handleTitleEditing}
+          initialValues={{ editTodoForm: title }}
+        >
+          <Form.Item
+            name="editTodoForm"
+            validateTrigger="onSubmit"
+            rules={[
+              { required: true, message: ErrorMessageType.TooShort },
+              { min: 2, message: ErrorMessageType.TooShort },
+              { max: 64, message: ErrorMessageType.TooLong },
+            ]}
+          >
+            <Input
+              autoFocus
+              onChange={(e) => {
+                handleInputChange(e);
+                form.setFields([
+                  {
+                    name: "editTodoForm",
+                    errors: undefined,
+                  },
+                ]);
+              }}
+            />
+          </Form.Item>
           <Button htmlType="submit" color="primary" type="primary">
             Save
           </Button>
-        </form>
+        </Form>
       ) : (
         <div className={props.isDone ? s.item__done : s.item__title}>
           <p>{props.title}</p>

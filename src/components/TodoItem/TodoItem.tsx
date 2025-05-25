@@ -9,6 +9,7 @@ import Input from "antd/es/input";
 import Checkbox from "antd/es/checkbox";
 import { useForm } from "antd/es/form/Form";
 import { todosApi } from "../../api/todosApi";
+import Typography from "antd/es/typography/Typography";
 
 type TodoItem = Omit<Todo, "created"> & {
   key: number;
@@ -63,7 +64,7 @@ const TodoItem: React.FC<TodoItem> = (props) => {
   return (
     <li className={s.item}>
       <Checkbox checked={props.isDone} onChange={handleCheckboxStatusChange} />
-      {isEditing ? (
+      {isEditing && (
         <Form
           form={form}
           layout="inline"
@@ -96,22 +97,24 @@ const TodoItem: React.FC<TodoItem> = (props) => {
             Save
           </Button>
         </Form>
-      ) : (
-        <div className={props.isDone ? s.item__done : s.item__title}>
-          <p>{props.title}</p>
-        </div>
       )}
-
-      {!isEditing ? (
-        <Button
-          type="primary"
-          onClick={handleStartEditing}
-          icon={<EditFilled />}
-        />
-      ) : (
-        <Button onClick={handleCancelEditing}>Cancel</Button>
+      {!isEditing && (
+        <Typography.Text style={{ width: "250px" }}>
+          {props.title}
+        </Typography.Text>
       )}
-      <Button danger icon={<DeleteFilled />} onClick={handleDeleteTodo} />
+      <div style={{ display: "flex", columnGap: "10px" }}>
+        {!isEditing ? (
+          <Button
+            type="primary"
+            onClick={handleStartEditing}
+            icon={<EditFilled />}
+          />
+        ) : (
+          <Button onClick={handleCancelEditing}>Cancel</Button>
+        )}
+        <Button danger icon={<DeleteFilled />} onClick={handleDeleteTodo} />
+      </div>
     </li>
   );
 };

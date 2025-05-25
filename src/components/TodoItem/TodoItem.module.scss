@@ -18,7 +18,7 @@
 
   &__title,
   &__done {
-    width: 250px;
+    width: 300px;
   }
 
   &__done {
@@ -27,11 +27,6 @@
   }
 
   & form {
-    width: 250px;
-  }
-
-  & input[type="text"] {
-    border-radius: 0;
-    border-bottom: var(--color-success) 1px solid;
+    width: 300px;
   }
 }

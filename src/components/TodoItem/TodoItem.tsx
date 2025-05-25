@@ -99,7 +99,13 @@ const TodoItem: React.FC<TodoItem> = (props) => {
         </Form>
       )}
       {!isEditing && (
-        <Typography style={{ width: "320px" }}>
+        <Typography
+          style={{
+            width: "320px",
+            textDecoration: isDone ? "line-through" : "none",
+            opacity: isDone ? 'var(--opacity)' : 1
+          }}
+        >
           {props.title}
         </Typography>
       )}

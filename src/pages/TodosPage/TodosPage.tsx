@@ -29,7 +29,7 @@ const TodosPage = () => {
   }, []);
 
   return (
-    <Flex vertical style={{margin: '20px 0', alignItems: 'center'}}>
+    <Flex vertical style={{ margin: "20px 0", alignItems: "center" }}>
       <AddTodoFormAntDesign fetchTodos={fetchTodos} />
       <TodosSelectorAntDesign
         todosCount={todosCount}

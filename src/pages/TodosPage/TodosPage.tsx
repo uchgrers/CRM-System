@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import TodosList from "../../components/TodosList/TodosList";
 import s from "./TodosPage.module.scss";
 import { Todo, TodoInfo, TodosStatus } from "../../types/types";
-import TodosSelector from "../../components/TodosSelector/TodosSelector";
-import { getTodos } from "../../api/api";
 import AddTodoFormAntDesign from "../../components/AddTodoFormAntDesign/AddTodoFormAntDesign";
 import TodosSelectorAntDesign from "../../components/TodosSelectorAntDesign/TodosSelectorAntDesign";
+import { todosApi } from "../../api/todosApi";
 
 const TodosPage = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -20,7 +19,7 @@ const TodosPage = () => {
   });
 
   const fetchTodos = async (todosStatus?: TodosStatus) => {
-    const result = await getTodos(todosStatus);
+    const result = await todosApi.getTodos(todosStatus);
     setTodos(result.data);
     setTodosCount(result.info);
   };

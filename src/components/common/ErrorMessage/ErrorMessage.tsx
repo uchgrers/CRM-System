@@ -1,19 +1,17 @@
-import React from 'react'
-import s from './ErrorMessage.module.scss'
-import {ErrorMessageType} from "../../../constants/todo"
+import React from "react";
+import s from "./ErrorMessage.module.scss";
+import { ErrorMessageType } from "../../../constants/todo";
 
 type ErrorType = {
-    message: ErrorMessageType
-}
+  message: ErrorMessageType;
+};
 
 const ErrorMessage: React.FC<ErrorType> = (props) => {
-    return (
-        <div className={s.error}>
-        <p>
-            {props.message}
-        </p>
-        </div>
-    );
+  return (
+    <div className={s.error}>
+      <p>{props.message}</p>
+    </div>
+  );
 };
 
 export default ErrorMessage;

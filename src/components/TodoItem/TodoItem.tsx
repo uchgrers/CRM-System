@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import s from "./TodoItem.module.scss";
 import { Todo, TodosStatus } from "../../types/types";
-import { deleteTodo, updateTodo } from "../../api/api";
 import { ErrorMessageType } from "../../constants/todo";
 import { Button } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
@@ -9,6 +8,7 @@ import Form from "antd/es/form";
 import Input from "antd/es/input";
 import Checkbox from "antd/es/checkbox";
 import { useForm } from "antd/es/form/Form";
+import { todosApi } from "../../api/todosApi";
 
 type TodoItem = Omit<Todo, "created"> & {
   key: number;
@@ -29,14 +29,14 @@ const TodoItem: React.FC<TodoItem> = (props) => {
 
   const handleTitleEditing = async () => {
     setIsEditing(false);
-    await updateTodo(props.id, props.isDone, title);
+    await todosApi.updateTodo(props.id, props.isDone, title);
     props.fetchTodos(props.todosStatus);
   };
 
   const handleCheckboxStatusChange = async () => {
     const relevantIsDone = !isDone;
     setIsDone(relevantIsDone);
-    await updateTodo(props.id, relevantIsDone, title);
+    await todosApi.updateTodo(props.id, relevantIsDone, title);
     props.fetchTodos(props.todosStatus);
   };
 
@@ -56,7 +56,7 @@ const TodoItem: React.FC<TodoItem> = (props) => {
   };
 
   const handleDeleteTodo = async () => {
-    await deleteTodo(props.id);
+    await todosApi.deleteTodo(props.id);
     props.fetchTodos(props.todosStatus);
   };
 

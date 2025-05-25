@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import s from './AddTodoForm.module.scss'
 import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
 import {checkTodoTitle} from "../../functions/inputValidation"
-import {addTodo} from "../../api/api"
+import {addTodo} from "../../api/todosApi"
 import {ErrorMessageType} from "../../constants/todo"
 import Button from "../ui/Button/Button";
 

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import TodosList from "../../components/TodosList/TodosList";
 import { Todo, TodoInfo, TodosStatus } from "../../types/types";
-import AddTodoFormAntDesign from "../../components/AddTodoFormAntDesign/AddTodoFormAntDesign";
-import TodosSelectorAntDesign from "../../components/TodosSelectorAntDesign/TodosSelectorAntDesign";
+import AddTodoFormAntDesign from "../../components/AddTodoForm/AddTodoForm";
+import TodosSelectorAntDesign from "../../components/TodosSelector/TodosSelector";
 import { todosApi } from "../../api/todosApi";
 import { Flex } from "antd";
 

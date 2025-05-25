@@ -12,33 +12,15 @@ body {
 
 input,
 button {
-  border-radius: var(--border-radius);
-  transition-duration: var(--transition-duration);
   height: var(--input-height);
-  outline: none;
-  padding-inline: 4px;
 }
 
 button {
-  border: var(--border);
-  aspect-ratio: 1;
   opacity: var(--opacity);
-  background-color: var(--color-button-primary);
-  color: var(--color-bg-secondary);
 
   &:hover {
     opacity: 1;
-    cursor: pointer;
   }
-}
-
-input {
-  width: 70%;
-  border: none;
-}
-
-ul {
-  list-style: none;
 }
 
 form {
@@ -46,10 +28,4 @@ form {
   align-items: center;
   justify-content: space-between;
   column-gap: 10px;
-}
-
-input[type="checkbox"] {
-  width: 25px;
-  aspect-ratio: 1;
-  border-radius: 50%;
 }

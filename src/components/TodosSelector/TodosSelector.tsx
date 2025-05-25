@@ -1,44 +1,40 @@
-import React from 'react'
-import s from './TodosSelector.module.scss'
-import {TodoInfo, TodosStatus} from "../../types/types"
+import React from "react";
+import { Tabs } from "antd";
+import { TodosStatus, TodoInfo } from "../../types/types";
 
 type TodosSelector = {
-    todosCount: TodoInfo,
-    todosStatus: TodosStatus,
-    fetchTodos: (todosStatus: TodosStatus) => void,
-    setTodosStatus: (todosStatus: TodosStatus) => void
-}
-
-const TodosSelector: React.FC<TodosSelector> = (props) => {
-
-    const handleStatusChange = (status: TodosStatus) => {
-        props.setTodosStatus(status)
-        props.fetchTodos(status)
-    }
-
-    const getStatusClass = (status: TodosStatus) => {
-        return `${s.selector__category} ${props.todosStatus === status ? s.selector__current : ''}`
-    }
-
-    return (
-        <nav className={s.selector}>
-            <div className={getStatusClass(TodosStatus.All)}
-                 onClick={() => handleStatusChange(TodosStatus.All)}
-            >
-                All ({props.todosCount?.all})
-            </div>
-            <div className={getStatusClass(TodosStatus.InWork)}
-                 onClick={() => handleStatusChange(TodosStatus.InWork)}
-            >
-                In Work ({props.todosCount?.inWork})
-            </div>
-            <div className={getStatusClass(TodosStatus.Completed)}
-                 onClick={() => handleStatusChange(TodosStatus.Completed)}
-            >
-                Completed ({props.todosCount?.completed})
-            </div>
-        </nav>
-    );
+  todosCount: TodoInfo;
+  fetchTodos: (todosStatus: TodosStatus) => void;
+  setTodosStatus: (todosStatus: TodosStatus) => void;
 };
 
-export default TodosSelector;
+const TodosSelectorAntDesign: React.FC<TodosSelector> = (props) => {
+  const handleStatusChange = (status: string) => {
+    props.setTodosStatus(status as TodosStatus);
+    props.fetchTodos(status as TodosStatus);
+  };
+
+  const items = [
+    {
+      key: TodosStatus.All,
+      label: `All (${props.todosCount.all})`,
+      childres: [],
+    },
+    {
+      key: TodosStatus.InWork,
+      label: `In Work (${props.todosCount.inWork})`,
+      childres: [],
+    },
+    {
+      key: TodosStatus.Completed,
+      label: `Completed (${props.todosCount.completed})`,
+      childres: [],
+    },
+  ];
+
+  return (
+    <Tabs defaultActiveKey={TodosStatus.All} items={items} onChange={handleStatusChange} />
+  );
+};
+
+export default TodosSelectorAntDesign;

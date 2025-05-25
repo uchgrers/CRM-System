@@ -1,1 +1,0 @@
-export type ButtonColor = 'button-primary' | 'button-secondary' | 'danger'

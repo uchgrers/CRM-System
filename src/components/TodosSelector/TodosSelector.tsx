@@ -33,7 +33,11 @@ const TodosSelectorAntDesign: React.FC<TodosSelector> = (props) => {
   ];
 
   return (
-    <Tabs defaultActiveKey={TodosStatus.All} items={items} onChange={handleStatusChange} />
+    <Tabs
+      defaultActiveKey={TodosStatus.All}
+      items={items}
+      onChange={handleStatusChange}
+    />
   );
 };
 

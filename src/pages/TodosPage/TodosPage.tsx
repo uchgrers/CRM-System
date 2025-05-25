@@ -25,8 +25,15 @@ const TodosPage = () => {
   };
 
   useEffect(() => {
-    fetchTodos();
-  }, []);
+    fetchTodos(todosStatus);
+    const interval = setInterval(() => {
+      fetchTodos(todosStatus);
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [todosStatus]);
 
   return (
     <Flex vertical style={{ margin: "20px 0", alignItems: "center" }}>

@@ -2,6 +2,7 @@ import React from "react";
 import TodoItem from "../TodoItem/TodoItem";
 import s from "./TodoList.module.scss";
 import { Todo, TodosStatus } from "../../types/types";
+import { List } from "antd";
 
 type TodosList = {
   todos: Todo[];
@@ -10,18 +11,21 @@ type TodosList = {
 };
 
 const TodosList: React.FC<TodosList> = (props) => {
-  const todos = props.todos.map((todo) => (
-    <TodoItem
-      id={todo.id}
-      title={todo.title}
-      isDone={todo.isDone}
-      key={todo.id}
-      todosStatus={props.todosStatus}
-      fetchTodos={props.fetchTodos}
+  return (
+    <List
+      dataSource={props.todos}
+      renderItem={(item: Todo) => (
+        <TodoItem
+          key={item.id}
+          todosStatus={props.todosStatus}
+          id={item.id}
+          title={item.title}
+          isDone={item.isDone}
+          fetchTodos={props.fetchTodos}
+        />
+      )}
     />
-  ));
-
-  return <ul className={s.list}>{todos}</ul>;
+  );
 };
 
 export default TodosList;

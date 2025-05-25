@@ -2,12 +2,6 @@
   position: relative;
   width: var(--content-width);
   height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 4px 0;
-  padding: 20px 20px;
-  column-gap: 2px;
   background-color: var(--color-bg-secondary);
   border-radius: var(--border-radius);
   box-shadow: 0 2px 6px 0 var(--color-secondary);

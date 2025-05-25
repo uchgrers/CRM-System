@@ -10,6 +10,7 @@ import Checkbox from "antd/es/checkbox";
 import { useForm } from "antd/es/form/Form";
 import { todosApi } from "../../api/todosApi";
 import Typography from "antd/es/typography/Typography";
+import { List } from "antd";
 
 type TodoItem = Omit<Todo, "created"> & {
   key: number;
@@ -62,7 +63,7 @@ const TodoItem: React.FC<TodoItem> = (props) => {
   };
 
   return (
-    <li className={s.item}>
+    <List.Item className={s.item} style={{padding: '10px', margin: '20px 0'}}>
       <Checkbox checked={props.isDone} onChange={handleCheckboxStatusChange} />
       {isEditing && (
         <Form
@@ -121,7 +122,7 @@ const TodoItem: React.FC<TodoItem> = (props) => {
         )}
         <Button danger icon={<DeleteFilled />} onClick={handleDeleteTodo} />
       </div>
-    </li>
+    </List.Item>
   );
 };
 

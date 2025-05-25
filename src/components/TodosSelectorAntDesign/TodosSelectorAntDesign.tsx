@@ -22,12 +22,12 @@ const TodosSelectorAntDesign: React.FC<TodosSelector> = (props) => {
     },
     {
       key: TodosStatus.InWork,
-      label: `All (${props.todosCount.inWork})`,
+      label: `In Work (${props.todosCount.inWork})`,
       childres: [],
     },
     {
       key: TodosStatus.Completed,
-      label: `All (${props.todosCount.completed})`,
+      label: `Completed (${props.todosCount.completed})`,
       childres: [],
     },
   ];

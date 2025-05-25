@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import TodosList from "../../components/TodosList/TodosList";
-import s from "./TodosPage.module.scss";
 import { Todo, TodoInfo, TodosStatus } from "../../types/types";
 import AddTodoFormAntDesign from "../../components/AddTodoFormAntDesign/AddTodoFormAntDesign";
 import TodosSelectorAntDesign from "../../components/TodosSelectorAntDesign/TodosSelectorAntDesign";
 import { todosApi } from "../../api/todosApi";
+import { Flex } from "antd";
 
 const TodosPage = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -29,7 +29,7 @@ const TodosPage = () => {
   }, []);
 
   return (
-    <section className={s.todos}>
+    <Flex vertical style={{margin: '20px 0', alignItems: 'center'}}>
       <AddTodoFormAntDesign fetchTodos={fetchTodos} />
       <TodosSelectorAntDesign
         todosCount={todosCount}
@@ -41,7 +41,7 @@ const TodosPage = () => {
         todosStatus={todosStatus}
         fetchTodos={fetchTodos}
       />
-    </section>
+    </Flex>
   );
 };
 

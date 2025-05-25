@@ -99,9 +99,9 @@ const TodoItem: React.FC<TodoItem> = (props) => {
         </Form>
       )}
       {!isEditing && (
-        <Typography.Text style={{ width: "250px" }}>
+        <Typography style={{ width: "320px" }}>
           {props.title}
-        </Typography.Text>
+        </Typography>
       )}
       <div style={{ display: "flex", columnGap: "10px" }}>
         {!isEditing ? (

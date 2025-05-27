@@ -15,6 +15,7 @@ const Nav = () => {
   const navigate = useNavigate();
   return (
     <Menu
+      defaultSelectedKeys={["/todos"]}
       style={{ height: "100%", backgroundColor: "var(--color-bg-primary)" }}
       onClick={({ key }) => navigate(key)}
       items={navigationItems}

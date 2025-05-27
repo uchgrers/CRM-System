@@ -1,0 +1,25 @@
+.selector {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  border: none;
+  width: var(--content-width);
+
+  &__category {
+    position: relative;
+    width: 120px;
+    height: 32px;
+    align-content: center;
+
+    &:hover {
+      cursor: pointer;
+      color: var(--color-success);
+      transition-duration: var(--transition-duration);
+    }
+  }
+
+  &__current {
+    text-decoration: underline;
+    color: var(--color-success);
+  }
+}

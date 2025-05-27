@@ -1,6 +1,7 @@
 .form {
-
-  &__submission_btn {
+  position: relative;
+  width: var(--content-width);
+  & button {
     width: 120px;
   }
 }

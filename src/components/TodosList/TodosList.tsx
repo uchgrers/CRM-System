@@ -1,6 +1,5 @@
-import React from "react";
+import React, { memo } from "react";
 import TodoItem from "../TodoItem/TodoItem";
-import s from "./TodoList.module.scss";
 import { Todo, TodosStatus } from "../../types/types";
 import { List } from "antd";
 
@@ -28,4 +27,4 @@ const TodosList: React.FC<TodosList> = (props) => {
   );
 };
 
-export default TodosList;
+export default React.memo(TodosList);

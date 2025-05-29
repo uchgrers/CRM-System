@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import s from "./TodoItem.module.scss";
 import { Todo, TodosStatus } from "../../types/types";
-import { ErrorMessageType } from "../../constants/todo";
+import { ErrorMessageType, TodoMinMaxLength } from "../../constants/todo";
 import { Button } from "antd";
 import { DeleteFilled, EditFilled } from "@ant-design/icons";
 import Form from "antd/es/form";
@@ -63,7 +63,7 @@ const TodoItem: React.FC<TodoItem> = (props) => {
   };
 
   return (
-    <List.Item className={s.item} style={{padding: '10px', margin: '20px 0'}}>
+    <List.Item className={s.item} style={{ padding: "10px", margin: "20px 0" }}>
       <Checkbox checked={props.isDone} onChange={handleCheckboxStatusChange} />
       {isEditing && (
         <Form
@@ -77,8 +77,8 @@ const TodoItem: React.FC<TodoItem> = (props) => {
             validateTrigger="onSubmit"
             rules={[
               { required: true, message: ErrorMessageType.TooShort },
-              { min: 2, message: ErrorMessageType.TooShort },
-              { max: 64, message: ErrorMessageType.TooLong },
+              { min: TodoMinMaxLength.Min, message: ErrorMessageType.TooShort },
+              { max: TodoMinMaxLength.Max, message: ErrorMessageType.TooLong },
             ]}
           >
             <Input
@@ -104,7 +104,7 @@ const TodoItem: React.FC<TodoItem> = (props) => {
           style={{
             width: "320px",
             textDecoration: isDone ? "line-through" : "none",
-            opacity: isDone ? 'var(--opacity)' : 1
+            opacity: isDone ? "var(--opacity)" : 1,
           }}
         >
           {props.title}

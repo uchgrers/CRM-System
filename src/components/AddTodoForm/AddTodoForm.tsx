@@ -2,7 +2,7 @@ import React from "react";
 import Form from "antd/es/form";
 import Button from "antd/es/button";
 import Input from "antd/es/input";
-import { ErrorMessageType } from "../../constants/todo";
+import { ErrorMessageType, TodoMinMaxLength } from "../../constants/todo";
 import { todosApi } from "../../api/todosApi";
 
 type AddTodoFormAntDesignProps = {
@@ -10,7 +10,6 @@ type AddTodoFormAntDesignProps = {
 };
 
 const AddTodoFormAntDesign: React.FC<AddTodoFormAntDesignProps> = (props) => {
-
   const [form] = Form.useForm();
 
   const onSubmit = async (formValues: any) => {
@@ -32,8 +31,8 @@ const AddTodoFormAntDesign: React.FC<AddTodoFormAntDesignProps> = (props) => {
         validateTrigger="onSubmit"
         rules={[
           { required: true, message: ErrorMessageType.TooShort },
-          { min: 2, message: ErrorMessageType.TooShort },
-          { max: 64, message: ErrorMessageType.TooLong },
+          { min: TodoMinMaxLength.Min, message: ErrorMessageType.TooShort },
+          { max: TodoMinMaxLength.Max, message: ErrorMessageType.TooLong },
         ]}
       >
         <Input

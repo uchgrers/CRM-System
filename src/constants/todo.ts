@@ -3,3 +3,8 @@ export enum ErrorMessageType {
     TooLong = 'Maximum task length is 64 symbols',
     Correct = ''
 }
+
+export enum TodoMinMaxLength {
+    Min = 2,
+    Max = 64
+}

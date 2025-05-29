@@ -18,17 +18,17 @@ const TodosSelector: React.FC<TodosSelectorProps> = (props) => {
     {
       key: TodosStatus.All,
       label: `All (${props.todosCount.all})`,
-      childres: [],
+      children: [],
     },
     {
       key: TodosStatus.InWork,
       label: `In Work (${props.todosCount.inWork})`,
-      childres: [],
+      children: [],
     },
     {
       key: TodosStatus.Completed,
       label: `Completed (${props.todosCount.completed})`,
-      childres: [],
+      children: [],
     },
   ];
 

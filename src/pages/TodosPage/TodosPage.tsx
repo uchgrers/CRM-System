@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import TodosList from "../../components/TodosList/TodosList";
 import { Todo, TodoInfo, TodosStatus } from "../../types/types";
-import AddTodoFormAntDesign from "../../components/AddTodoForm/AddTodoForm";
-import TodosSelectorAntDesign from "../../components/TodosSelector/TodosSelector";
+import AddTodoForm from "../../components/AddTodoForm/AddTodoForm";
+import TodosSelector from "../../components/TodosSelector/TodosSelector";
 import { todosApi } from "../../api/todosApi";
 import { Flex } from "antd";
 
@@ -43,8 +43,8 @@ const TodosPage = () => {
 
   return (
     <Flex vertical style={{ margin: "20px 0", alignItems: "center" }}>
-      <AddTodoFormAntDesign fetchTodos={fetchTodos} />
-      <TodosSelectorAntDesign
+      <AddTodoForm fetchTodos={fetchTodos} />
+      <TodosSelector
         todosCount={todosCount}
         fetchTodos={fetchTodos}
         setTodosStatus={setTodosStatus}

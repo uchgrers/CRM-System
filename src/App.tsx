@@ -2,7 +2,7 @@ import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import TodosPage from "./pages/TodosPage/TodosPage";
 import { Layout } from "antd";
-import Nav from "./components/Nav/Nav";
+import Nav from "./components/MainMenu/MainMenu";
 
 function App() {
   const navigate = useNavigate();

@@ -2,13 +2,13 @@ import React from "react";
 import { Tabs } from "antd";
 import { TodosStatus, TodoInfo } from "../../types/types";
 
-type TodosSelector = {
+type TodosSelectorProps = {
   todosCount: TodoInfo;
   fetchTodos: (todosStatus: TodosStatus) => void;
   setTodosStatus: (todosStatus: TodosStatus) => void;
 };
 
-const TodosSelectorAntDesign: React.FC<TodosSelector> = (props) => {
+const TodosSelector: React.FC<TodosSelectorProps> = (props) => {
   const handleStatusChange = (status: string) => {
     props.setTodosStatus(status as TodosStatus);
     props.fetchTodos(status as TodosStatus);
@@ -41,4 +41,4 @@ const TodosSelectorAntDesign: React.FC<TodosSelector> = (props) => {
   );
 };
 
-export default TodosSelectorAntDesign;
+export default TodosSelector;

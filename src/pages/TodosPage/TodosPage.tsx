@@ -18,17 +18,11 @@ const TodosPage = () => {
     completed: 0,
   });
 
-  // Проверка списка на наличие обновлений
-  const areTodosUpdated = (a: Todo[], b: Todo[]) => {
-    return JSON.stringify(a) !== JSON.stringify(b);
-  };
-
-  const fetchTodos = useCallback(async (todosStatus?: TodosStatus) => {
+  const fetchTodos = async (todosStatus?: TodosStatus) => {
     const result = await todosApi.getTodos(todosStatus);
-    // Новое состояние только если список обновился
-    setTodos(prev => areTodosUpdated(prev, result.data) ? result.data : prev)
+    setTodos(result.data);
     setTodosCount(result.info);
-  }, [])
+  };
 
   useEffect(() => {
     fetchTodos(todosStatus);

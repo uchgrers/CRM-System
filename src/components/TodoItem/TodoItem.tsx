@@ -12,13 +12,13 @@ import { todosApi } from "../../api/todosApi";
 import Typography from "antd/es/typography/Typography";
 import { List } from "antd";
 
-type TodoItem = Omit<Todo, "created"> & {
+type TodoItemProps = Omit<Todo, "created"> & {
   key: number;
   todosStatus: TodosStatus;
   fetchTodos: (todosStatus?: TodosStatus) => void;
 };
 
-const TodoItem: React.FC<TodoItem> = (props) => {
+const TodoItem: React.FC<TodoItemProps> = (props) => {
   const [form] = useForm();
 
   const [title, setTitle] = useState<string>(props.title);

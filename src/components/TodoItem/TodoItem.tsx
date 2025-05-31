@@ -18,28 +18,43 @@ type TodoItemProps = Omit<Todo, "created"> & {
   fetchTodos: (todosStatus?: TodosStatus) => void;
 };
 
-const TodoItem: React.FC<TodoItemProps> = (props) => {
+const TodoItem: React.FC<TodoItemProps> = ({
+  key,
+  title,
+  id,
+  isDone,
+  todosStatus,
+  fetchTodos,
+}) => {
   const [form] = useForm();
 
-  const [title, setTitle] = useState<string>(props.title);
+  const [localTitle, setLocalTitle] = useState<string>(title);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isDone, setIsDone] = useState<boolean>(props.isDone);
+  const [localIsDone, setLocalIsDone] = useState<boolean>(isDone);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    setLocalTitle(e.target.value);
   };
 
   const handleTitleEditing = async () => {
     setIsEditing(false);
-    await todosApi.updateTodo(props.id, props.isDone, title);
-    props.fetchTodos(props.todosStatus);
+    try {
+      await todosApi.updateTodo(id, isDone, localTitle);
+      fetchTodos(todosStatus);
+    } catch (error) {
+      setLocalTitle(title);
+    }
   };
 
   const handleCheckboxStatusChange = async () => {
-    const relevantIsDone = !isDone;
-    setIsDone(relevantIsDone);
-    await todosApi.updateTodo(props.id, relevantIsDone, title);
-    props.fetchTodos(props.todosStatus);
+    const relevantIsDone = !localIsDone;
+    setLocalIsDone(relevantIsDone);
+    try {
+      await todosApi.updateTodo(id, relevantIsDone, localTitle);
+      fetchTodos(todosStatus);
+    } catch (error) {
+      setLocalIsDone(isDone);
+    }
   };
 
   const handleStartEditing = () => {
@@ -50,29 +65,30 @@ const TodoItem: React.FC<TodoItemProps> = (props) => {
     form.setFields([
       {
         name: "editTodoForm",
-        value: props.title,
+        value: title,
       },
     ]);
-    setTitle(props.title);
+    setLocalTitle(title);
     setIsEditing(false);
   };
 
   const handleDeleteTodo = async () => {
-    await todosApi.deleteTodo(props.id);
-    props.fetchTodos(props.todosStatus);
+    await todosApi.deleteTodo(id);
+    fetchTodos(todosStatus);
   };
 
   return (
     <List.Item className={s.item} style={{ padding: "10px", margin: "20px 0" }}>
-      <Checkbox checked={props.isDone} onChange={handleCheckboxStatusChange} />
+      <Checkbox checked={localIsDone} onChange={handleCheckboxStatusChange} />
       {isEditing && (
         <Form
           form={form}
           layout="inline"
           onFinish={handleTitleEditing}
-          initialValues={{ editTodoForm: title }}
+          initialValues={{ editTodoForm: localTitle }}
         >
           <Form.Item
+            key={key}
             name="editTodoForm"
             validateTrigger="onSubmit"
             rules={[
@@ -103,11 +119,11 @@ const TodoItem: React.FC<TodoItemProps> = (props) => {
         <Typography
           style={{
             width: "320px",
-            textDecoration: isDone ? "line-through" : "none",
-            opacity: isDone ? "var(--opacity)" : 1,
+            textDecoration: localIsDone ? "line-through" : "none",
+            opacity: localIsDone ? "var(--opacity)" : 1,
           }}
         >
-          {props.title}
+          {localTitle}
         </Typography>
       )}
       <div style={{ display: "flex", columnGap: "10px" }}>

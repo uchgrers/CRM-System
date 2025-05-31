@@ -9,18 +9,18 @@ type TodosList = {
   fetchTodos: (todosStatus?: TodosStatus) => void;
 };
 
-const TodosList: React.FC<TodosList> = (props) => {
+const TodosList: React.FC<TodosList> = ({ todos, todosStatus, fetchTodos }) => {
   return (
     <List
-      dataSource={props.todos}
+      dataSource={todos}
       renderItem={(item: Todo) => (
         <TodoItem
           key={item.id}
-          todosStatus={props.todosStatus}
+          todosStatus={todosStatus}
           id={item.id}
           title={item.title}
           isDone={item.isDone}
-          fetchTodos={props.fetchTodos}
+          fetchTodos={fetchTodos}
         />
       )}
     />

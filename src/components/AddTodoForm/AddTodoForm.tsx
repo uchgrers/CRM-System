@@ -9,13 +9,15 @@ type AddTodoFormAntDesignProps = {
   fetchTodos: () => void;
 };
 
-const AddTodoFormAntDesign: React.FC<AddTodoFormAntDesignProps> = (props) => {
+const AddTodoFormAntDesign: React.FC<AddTodoFormAntDesignProps> = ({
+  fetchTodos,
+}) => {
   const [form] = Form.useForm();
 
   const onSubmit = async (formValues: any) => {
     await todosApi.addTodo(formValues.addTodoForm);
     form.resetFields();
-    props.fetchTodos();
+    fetchTodos();
   };
 
   return (

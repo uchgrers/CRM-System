@@ -8,26 +8,30 @@ type TodosSelectorProps = {
   setTodosStatus: (todosStatus: TodosStatus) => void;
 };
 
-const TodosSelector: React.FC<TodosSelectorProps> = (props) => {
+const TodosSelector: React.FC<TodosSelectorProps> = ({
+  todosCount,
+  fetchTodos,
+  setTodosStatus,
+}) => {
   const handleStatusChange = (status: string) => {
-    props.setTodosStatus(status as TodosStatus);
-    props.fetchTodos(status as TodosStatus);
+    setTodosStatus(status as TodosStatus);
+    fetchTodos(status as TodosStatus);
   };
 
   const items = [
     {
       key: TodosStatus.All,
-      label: `All (${props.todosCount.all})`,
+      label: `All (${todosCount.all})`,
       children: [],
     },
     {
       key: TodosStatus.InWork,
-      label: `In Work (${props.todosCount.inWork})`,
+      label: `In Work (${todosCount.inWork})`,
       children: [],
     },
     {
       key: TodosStatus.Completed,
-      label: `Completed (${props.todosCount.completed})`,
+      label: `Completed (${todosCount.completed})`,
       children: [],
     },
   ];

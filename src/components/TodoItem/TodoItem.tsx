@@ -90,7 +90,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
           <Form.Item
             key={key}
             name="editTodoForm"
-            validateTrigger="onSubmit"
             rules={[
               { required: true, message: ErrorMessageType.TooShort },
               { min: TodoMinMaxLength.Min, message: ErrorMessageType.TooShort },
@@ -101,12 +100,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
               autoFocus
               onChange={(e) => {
                 handleInputChange(e);
-                form.setFields([
-                  {
-                    name: "editTodoForm",
-                    errors: undefined,
-                  },
-                ]);
               }}
             />
           </Form.Item>

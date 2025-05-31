@@ -30,24 +30,13 @@ const AddTodoFormAntDesign: React.FC<AddTodoFormAntDesignProps> = ({
       <Form.Item
         name={"addTodoForm"}
         style={{ width: "70%" }}
-        validateTrigger="onSubmit"
         rules={[
           { required: true, message: ErrorMessageType.TooShort },
           { min: TodoMinMaxLength.Min, message: ErrorMessageType.TooShort },
           { max: TodoMinMaxLength.Max, message: ErrorMessageType.TooLong },
         ]}
       >
-        <Input
-          placeholder={"Task to be done..."}
-          onChange={() => {
-            form.setFields([
-              {
-                name: "addTodoForm",
-                errors: undefined,
-              },
-            ]);
-          }}
-        />
+        <Input placeholder={"Task to be done..."} />
       </Form.Item>
       <Button type="primary" htmlType="submit" style={{ width: "120px" }}>
         Add todo

@@ -3,13 +3,12 @@ import TodosList from "../../components/TodosList/TodosList";
 import { Todo, TodoInfo, TodosStatus } from "../../types/types";
 import AddTodoForm from "../../components/AddTodoForm/AddTodoForm";
 import TodosSelector from "../../components/TodosSelector/TodosSelector";
-import { todosApi } from "../../api/todosApi";
+import { getTodos } from "../../api/todosApi";
 import { Flex } from "antd";
 
 const TodosPage = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  // Статус просматриваемых туду (все/в работе/завершенные)
   const [todosStatus, setTodosStatus] = useState<TodosStatus>(TodosStatus.All);
 
   const [todosCount, setTodosCount] = useState<TodoInfo>({
@@ -19,7 +18,7 @@ const TodosPage = () => {
   });
 
   const fetchTodos = async (todosStatus?: TodosStatus) => {
-    const result = await todosApi.getTodos(todosStatus);
+    const result = await getTodos(todosStatus);
     setTodos(result.data);
     setTodosCount(result.info);
   };

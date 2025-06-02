@@ -3,7 +3,7 @@ import Form from "antd/es/form";
 import Button from "antd/es/button";
 import Input from "antd/es/input";
 import { ErrorMessageType, TodoMinMaxLength } from "../../constants/todo";
-import { todosApi } from "../../api/todosApi";
+import { addTodo } from "../../api/todosApi";
 
 type AddTodoFormAntDesignProps = {
   fetchTodos: () => void;
@@ -15,7 +15,7 @@ const AddTodoFormAntDesign: React.FC<AddTodoFormAntDesignProps> = ({
   const [form] = Form.useForm();
 
   const onSubmit = async (formValues: any) => {
-    await todosApi.addTodo(formValues.addTodoForm);
+    await addTodo(formValues.addTodoForm);
     form.resetFields();
     fetchTodos();
   };

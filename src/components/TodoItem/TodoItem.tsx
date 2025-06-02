@@ -8,7 +8,7 @@ import Form from "antd/es/form";
 import Input from "antd/es/input";
 import Checkbox from "antd/es/checkbox";
 import { useForm } from "antd/es/form/Form";
-import { todosApi } from "../../api/todosApi";
+import { deleteTodo, updateTodo } from "../../api/todosApi";
 import Typography from "antd/es/typography/Typography";
 import { List } from "antd";
 
@@ -39,7 +39,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   const handleTitleEditing = async () => {
     setIsEditing(false);
     try {
-      await todosApi.updateTodo(id, isDone, localTitle);
+      await updateTodo(id, isDone, localTitle);
       fetchTodos(todosStatus);
     } catch (error) {
       setLocalTitle(title);
@@ -50,7 +50,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
     const relevantIsDone = !localIsDone;
     setLocalIsDone(relevantIsDone);
     try {
-      await todosApi.updateTodo(id, relevantIsDone, localTitle);
+      await updateTodo(id, relevantIsDone, localTitle);
       fetchTodos(todosStatus);
     } catch (error) {
       setLocalIsDone(isDone);
@@ -73,7 +73,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   };
 
   const handleDeleteTodo = async () => {
-    await todosApi.deleteTodo(id);
+    await deleteTodo(id);
     fetchTodos(todosStatus);
   };
 

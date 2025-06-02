@@ -1,29 +1,30 @@
-import React from 'react'
-import TodoItem from "../TodoItem/TodoItem"
-import s from './TodoList.module.scss'
-import {Todo, TodosStatus} from "../../types/types"
+import React from "react";
+import TodoItem from "../TodoItem/TodoItem";
+import { Todo, TodosStatus } from "../../types/types";
+import { List } from "antd";
 
 type TodosList = {
-    todos: Todo[],
-    todosStatus: TodosStatus,
-    fetchTodos: (todosStatus?: TodosStatus) => void
-}
+  todos: Todo[];
+  todosStatus: TodosStatus;
+  fetchTodos: (todosStatus?: TodosStatus) => void;
+};
 
-const TodosList: React.FC<TodosList> = (props) => {
-
-    const todos = props.todos.map(todo => <TodoItem id={todo.id}
-                                                      title={todo.title}
-                                                      isDone={todo.isDone}
-                                                      key={todo.id}
-                                                      todosStatus={props.todosStatus}
-                                                      fetchTodos={props.fetchTodos}
-    />)
-
-    return (
-        <ul className={s.list}>
-            {todos}
-        </ul>
-    );
+const TodosList: React.FC<TodosList> = ({ todos, todosStatus, fetchTodos }) => {
+  return (
+    <List
+      dataSource={todos}
+      renderItem={(item: Todo) => (
+        <TodoItem
+          key={item.id}
+          todosStatus={todosStatus}
+          id={item.id}
+          title={item.title}
+          isDone={item.isDone}
+          fetchTodos={fetchTodos}
+        />
+      )}
+    />
+  );
 };
 
 export default TodosList;

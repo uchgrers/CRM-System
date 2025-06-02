@@ -1,50 +1,48 @@
-import React, {useState} from 'react'
-import s from './AddTodoForm.module.scss'
-import ErrorMessage from "../common/ErrorMessage/ErrorMessage"
-import {checkTodoTitle} from "../../functions/inputValidation"
-import {addTodo} from "../../api/api"
-import {ErrorMessageType} from "../../constants/todo"
-import Button from "../ui/Button/Button";
+import React from "react";
+import Form from "antd/es/form";
+import Button from "antd/es/button";
+import Input from "antd/es/input";
+import { ErrorMessageType, TodoMinMaxLength } from "../../constants/todo";
+import { addTodo } from "../../api/todosApi";
 
-type AddTodoFormProps = {
-    fetchTodos: () => void
-}
-
-const AddTodoForm: React.FC<AddTodoFormProps> = (props) => {
-
-    const [title, setTitle] = useState<string>('')
-    const [error, setError] = useState<ErrorMessageType>(ErrorMessageType.Correct)
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setError(ErrorMessageType.Correct)
-        setTitle(e.target.value)
-    }
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        const isIncorrect = checkTodoTitle(e, title)
-        if (!isIncorrect) {
-            await addTodo(title)
-            setTitle('')
-            props.fetchTodos()
-        }
-        setError(isIncorrect)
-    }
-
-    return (
-        <form className={s.form} onSubmit={handleSubmit}>
-            {error && <ErrorMessage message={error}/>}
-            <input type="text"
-                   placeholder="Task To Be Done..."
-                   value={title}
-                   onChange={handleInputChange}
-            />
-            <Button type="submit"
-                    color={'button-primary'}
-            >
-                Add
-            </Button>
-        </form>
-    );
+type AddTodoFormAntDesignProps = {
+  fetchTodos: () => void;
 };
 
-export default AddTodoForm;
+const AddTodoFormAntDesign: React.FC<AddTodoFormAntDesignProps> = ({
+  fetchTodos,
+}) => {
+  const [form] = Form.useForm();
+
+  const onSubmit = async (formValues: any) => {
+    await addTodo(formValues.addTodoForm);
+    form.resetFields();
+    fetchTodos();
+  };
+
+  return (
+    <Form
+      form={form}
+      layout="inline"
+      style={{ width: "var(--content-width)" }}
+      onFinish={onSubmit}
+    >
+      <Form.Item
+        name={"addTodoForm"}
+        style={{ width: "70%" }}
+        rules={[
+          { required: true, message: ErrorMessageType.TooShort },
+          { min: TodoMinMaxLength.Min, message: ErrorMessageType.TooShort },
+          { max: TodoMinMaxLength.Max, message: ErrorMessageType.TooLong },
+        ]}
+      >
+        <Input placeholder={"Task to be done..."} />
+      </Form.Item>
+      <Button type="primary" htmlType="submit" style={{ width: "120px" }}>
+        Add todo
+      </Button>
+    </Form>
+  );
+};
+
+export default AddTodoFormAntDesign;

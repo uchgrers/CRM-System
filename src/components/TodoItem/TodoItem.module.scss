@@ -1,13 +1,6 @@
 .item {
-  position: relative;
   width: var(--content-width);
   height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 4px 0;
-  padding: 20px 20px;
-  column-gap: 2px;
   background-color: var(--color-bg-secondary);
   border-radius: var(--border-radius);
   box-shadow: 0 2px 6px 0 var(--color-secondary);
@@ -18,7 +11,7 @@
 
   &__title,
   &__done {
-    width: 250px;
+    width: 300px;
   }
 
   &__done {
@@ -27,11 +20,6 @@
   }
 
   & form {
-    width: 250px;
-  }
-
-  & input[type="text"] {
-    border-radius: 0;
-    border-bottom: var(--color-success) 1px solid;
+    width: 300px;
   }
 }

@@ -1,44 +1,48 @@
-import React from 'react'
-import s from './TodosSelector.module.scss'
-import {TodoInfo, TodosStatus} from "../../types/types"
+import React from "react";
+import { Tabs } from "antd";
+import { TodosStatus, TodoInfo } from "../../types/types";
 
-type TodosSelector = {
-    todosCount: TodoInfo,
-    todosStatus: TodosStatus,
-    fetchTodos: (todosStatus: TodosStatus) => void,
-    setTodosStatus: (todosStatus: TodosStatus) => void
-}
+type TodosSelectorProps = {
+  todosCount: TodoInfo;
+  fetchTodos: (todosStatus: TodosStatus) => void;
+  setTodosStatus: (todosStatus: TodosStatus) => void;
+};
 
-const TodosSelector: React.FC<TodosSelector> = (props) => {
+const TodosSelector: React.FC<TodosSelectorProps> = ({
+  todosCount,
+  fetchTodos,
+  setTodosStatus,
+}) => {
+  const handleStatusChange = (status: string) => {
+    setTodosStatus(status as TodosStatus);
+    fetchTodos(status as TodosStatus);
+  };
 
-    const handleStatusChange = (status: TodosStatus) => {
-        props.setTodosStatus(status)
-        props.fetchTodos(status)
-    }
+  const items = [
+    {
+      key: TodosStatus.All,
+      label: `All (${todosCount.all})`,
+      children: [],
+    },
+    {
+      key: TodosStatus.InWork,
+      label: `In Work (${todosCount.inWork})`,
+      children: [],
+    },
+    {
+      key: TodosStatus.Completed,
+      label: `Completed (${todosCount.completed})`,
+      children: [],
+    },
+  ];
 
-    const getStatusClass = (status: TodosStatus) => {
-        return `${s.selector__category} ${props.todosStatus === status ? s.selector__current : ''}`
-    }
-
-    return (
-        <nav className={s.selector}>
-            <div className={getStatusClass(TodosStatus.All)}
-                 onClick={() => handleStatusChange(TodosStatus.All)}
-            >
-                All ({props.todosCount?.all})
-            </div>
-            <div className={getStatusClass(TodosStatus.InWork)}
-                 onClick={() => handleStatusChange(TodosStatus.InWork)}
-            >
-                In Work ({props.todosCount?.inWork})
-            </div>
-            <div className={getStatusClass(TodosStatus.Completed)}
-                 onClick={() => handleStatusChange(TodosStatus.Completed)}
-            >
-                Completed ({props.todosCount?.completed})
-            </div>
-        </nav>
-    );
+  return (
+    <Tabs
+      defaultActiveKey={TodosStatus.All}
+      items={items}
+      onChange={handleStatusChange}
+    />
+  );
 };
 
 export default TodosSelector;

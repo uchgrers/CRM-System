@@ -3,7 +3,7 @@ import { Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import { ProfileFilled, UnorderedListOutlined } from "@ant-design/icons";
 
-const Nav = () => {
+const MainManu = () => {
   const navigationItems = [
     { label: "Profile", key: "/profile", icon: <ProfileFilled /> },
     {
@@ -23,4 +23,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default MainManu;

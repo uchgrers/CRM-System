@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
-import TodosList from "../../components/TodosList/TodosList";
-import { Todo, TodoInfo, TodosStatus } from "../../types/types";
-import AddTodoForm from "../../components/AddTodoForm/AddTodoForm";
-import TodosSelector from "../../components/TodosSelector/TodosSelector";
-import { getTodos } from "../../api/todosApi";
+import { useEffect, useState } from "react";
+import TodosList from "../components/TodosList/TodosList";
+import { Todo, TodoInfo, TodosStatus } from "../types/types";
+import AddTodoForm from "../components/AddTodoForm/AddTodoForm";
+import TodosSelector from "../components/TodosSelector/TodosSelector";
+import { getTodos } from "../api/todosApi";
 import { Flex } from "antd";
 
 const TodosPage = () => {

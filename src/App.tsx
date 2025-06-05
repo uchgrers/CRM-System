@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import TodosPage from "./pages/TodosPage";
 import { Layout } from "antd";
 import MainManu from "./components/MainMenu/MainMenu";
-import LoginPage from "./pages/LoginPage";
+import AuthPage from "./pages/AuthPage";
 
 function App() {
   const location = useLocation();
@@ -27,7 +27,7 @@ function App() {
               <Route path="/" element={<TodosPage />} />
               <Route path="/todos" element={<TodosPage />} />
               <Route path="/profile" element={<div>Hello</div>} />
-              <Route path="/auth" element={<LoginPage />} />
+              <Route path="/auth" element={<AuthPage />} />
               <Route path="/*" element={<div>Not found</div>} />
             </Routes>
           </Content>

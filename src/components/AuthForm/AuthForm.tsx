@@ -1,7 +1,7 @@
 import { Button, Checkbox, Input, Typography } from "antd";
 import Form from "antd/es/form";
 
-const LoginForm = () => {
+const AuthForm = () => {
   return (
     <Form
       layout="vertical"
@@ -38,7 +38,7 @@ const LoginForm = () => {
           Remember me
         </Checkbox>
         <Typography>
-          <a style={{ color: "var(--color-auth-secondary)" }} href="#">
+          <a style={{ color: "var(--color-auth-secondary)" }} href="">
             Forgot Password?
           </a>
         </Typography>
@@ -58,4 +58,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default AuthForm;

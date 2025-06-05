@@ -1,9 +1,9 @@
 import React from "react";
 import logo from "./../icons/logo.svg";
 import cross from "./../icons/cross.svg";
-import { Flex } from "antd";
-import { Typography, Image } from "antd";
-import LoginForm from "../components/LoginForm/LoginForm";
+import { Typography, Image, Button, Flex } from "antd";
+import AuthForm from "../components/AuthForm/AuthForm";
+import { Link, useNavigate } from "react-router-dom";
 
 const AuthPage = () => {
   const { Title } = Typography;
@@ -11,9 +11,8 @@ const AuthPage = () => {
     <Flex
       style={{
         backgroundColor: "var(--color-bg-secondary)",
-        height: "100%",
+        minHeight: "100vh",
         padding: "4px",
-        position: "relative",
       }}
     >
       <Image
@@ -59,19 +58,18 @@ const AuthPage = () => {
           <Typography
             style={{
               textAlign: "left",
-              paddingInline: "4px",
+              paddingInline: "6px",
               color: "var(--color-auth-primary)",
             }}
           >
             See what is going on with your business
           </Typography>
         </Flex>
-        <LoginForm />
+        <AuthForm />
+
         <Typography style={{ color: "var(--color-auth-primary)" }}>
           Not Registered Yet?{" "}
-          <a style={{ color: "var(--color-auth-secondary)" }} href="#">
-            Create an account
-          </a>
+          <Link to={'/register'} style={{color: "var(--color-auth-secondary)"}}>Create an account</Link>
         </Typography>
       </Flex>
     </Flex>

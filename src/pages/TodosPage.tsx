@@ -4,7 +4,9 @@ import { Todo, TodoInfo, TodosStatus } from "../types/types";
 import AddTodoForm from "../components/AddTodoForm/AddTodoForm";
 import TodosSelector from "../components/TodosSelector/TodosSelector";
 import { getTodos } from "../api/todosApi";
-import { Flex } from "antd";
+import { Flex, Layout } from "antd";
+import Sider from "antd/es/layout/Sider";
+import MainManu from "../components/MainMenu/MainMenu";
 
 const TodosPage = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -35,19 +37,31 @@ const TodosPage = () => {
   }, [todosStatus]);
 
   return (
-    <Flex vertical style={{ margin: "20px 0", alignItems: "center" }}>
-      <AddTodoForm fetchTodos={fetchTodos} />
-      <TodosSelector
-        todosCount={todosCount}
-        fetchTodos={fetchTodos}
-        setTodosStatus={setTodosStatus}
-      />
-      <TodosList
-        todos={todos}
-        todosStatus={todosStatus}
-        fetchTodos={fetchTodos}
-      />
-    </Flex>
+    <Layout style={{ columnGap: "10px", minHeight: "100vh" }}>
+      <Sider
+        style={{
+          color: "var(--color-bg-secondary)",
+          backgroundColor: "var(--color-button-primary)",
+        }}
+      >
+        <MainManu />
+      </Sider>
+      <Layout>
+        <Flex vertical style={{ margin: "20px 0", alignItems: "center" }}>
+          <AddTodoForm fetchTodos={fetchTodos} />
+          <TodosSelector
+            todosCount={todosCount}
+            fetchTodos={fetchTodos}
+            setTodosStatus={setTodosStatus}
+          />
+          <TodosList
+            todos={todos}
+            todosStatus={todosStatus}
+            fetchTodos={fetchTodos}
+          />
+        </Flex>
+      </Layout>
+    </Layout>
   );
 };
 

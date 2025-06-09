@@ -17,7 +17,6 @@ const RegistrationForm = () => {
 
   const register = (userRegistrationData: UserRegistration) => {
     const { login, email, username, password, phoneNumber } = userRegistrationData;
-    console.log(userRegistrationData);
     dispatch(signupThunk({ login, email, password, username, phoneNumber }));
   };
 

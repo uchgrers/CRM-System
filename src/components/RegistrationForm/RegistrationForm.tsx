@@ -3,11 +3,32 @@ import { Button, Input } from "antd";
 import Form from "antd/es/form";
 import { AuthFieldsLength, ErrorMessageType } from "../../constants/auth";
 import s from "./RegistrationForm.module.scss";
+import { UserRegistration } from "../../types/types";
+import { setErrorMessage, signupThunk } from "../../state_manager/authSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
+  const dispatch = useAppDispatch();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+
+  const registrationError = useAppSelector((state) => state.auth.error);
+
+  const register = (userRegistrationData: UserRegistration) => {
+    const { login, email, username, password, phoneNumber } = userRegistrationData;
+    console.log(userRegistrationData);
+    dispatch(signupThunk({ login, email, password, username, phoneNumber }));
+  };
+
+  const handleFormFieldsChange = () => {
+    dispatch(setErrorMessage(''))
+  }
+
   return (
     <Form
+      onFinish={register}
+      onChange={handleFormFieldsChange}
       className={s.form}
       form={form}
       layout="vertical"
@@ -19,6 +40,7 @@ const RegistrationForm = () => {
         rowGap: 0,
       }}
     >
+      <p style={{color: 'var(--color-danger)'}}>{registrationError}</p>
       <Form.Item
         label="Username"
         name="username"

@@ -21,3 +21,31 @@ export type MetaResponse<T, U> = {
     data: T[],
     info: U
 }
+
+export type UserRegistration = { 
+  login: string; 
+  username: string; 
+  password: string; 
+  email: string; 
+  phoneNumber: string; 
+}
+
+export type Register = {
+    email: string,
+    login: string,
+    password: string,
+    username: string,
+    phoneNumber?: string
+}
+
+export type Role = 'ADMIN' | 'USER' | 'MODERATOR'
+
+export type Profile = { 
+  id: number; 
+  username: string; 
+  email: string; 
+  date: string; 
+  isBlocked: boolean; 
+  roles: Role[]; 
+  phoneNumber: string; 
+}

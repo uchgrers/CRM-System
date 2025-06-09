@@ -6,14 +6,12 @@ import s from "./RegistrationForm.module.scss";
 import { UserRegistration } from "../../types/types";
 import { setErrorMessage, signupThunk } from "../../state_manager/authSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { useNavigate } from "react-router-dom";
 
 const RegistrationForm = () => {
   const dispatch = useAppDispatch();
   const [form] = Form.useForm();
-  const navigate = useNavigate();
 
-  const registrationError = useAppSelector((state) => state.auth.error);
+  const registrationError = useAppSelector(state => state.auth.error);
 
   const register = (userRegistrationData: UserRegistration) => {
     const { login, email, username, password, phoneNumber } = userRegistrationData;

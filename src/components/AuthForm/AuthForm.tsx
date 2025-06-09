@@ -1,9 +1,18 @@
 import { Button, Checkbox, Input, Typography } from "antd";
 import Form from "antd/es/form";
+import { useAppDispatch } from "../../hooks";
+import { AuthData } from "../../types/types";
+import { signinThunk } from "../../state_manager/authSlice";
 
 const AuthForm = () => {
+  const dispatch = useAppDispatch();
+  const authUser = (authData: AuthData) => {
+    dispatch(signinThunk(authData));
+  };
+
   return (
     <Form
+      onFinish={authUser}
       layout="vertical"
       style={{
         width: "420px",
@@ -13,13 +22,21 @@ const AuthForm = () => {
         justifyContent: "center",
       }}
     >
-      <Form.Item label="Email" style={{ width: "100%", margin: "0" }}>
+      <Form.Item
+        label="Email"
+        style={{ width: "100%", margin: "0" }}
+        name="login"
+      >
         <Input
           placeholder="mail@abc.com"
           style={{ color: "var(--color-auth-primary)" }}
         />
       </Form.Item>
-      <Form.Item label="Password" style={{ width: "100%", margin: "0" }}>
+      <Form.Item
+        label="Password"
+        style={{ width: "100%", margin: "0" }}
+        name="password"
+      >
         <Input
           placeholder="********"
           type="password"

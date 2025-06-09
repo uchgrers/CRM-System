@@ -1,12 +1,14 @@
 import React from "react";
 import logo from "./../icons/logo.svg";
 import cross from "./../icons/cross.svg";
-import { Typography, Image, Button, Flex } from "antd";
+import { Typography, Image, Flex } from "antd";
 import AuthForm from "../components/AuthForm/AuthForm";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../hooks";
 
 const AuthPage = () => {
   const { Title } = Typography;
+  const isAuth = useAppSelector((state) => state.auth.token.accessToken);
   return (
     <Flex
       style={{
@@ -15,6 +17,7 @@ const AuthPage = () => {
         padding: "4px",
       }}
     >
+      {isAuth && <Navigate to={"/todos"} />}
       <Image
         src={logo}
         alt="Auth page image"
@@ -69,7 +72,12 @@ const AuthPage = () => {
 
         <Typography style={{ color: "var(--color-auth-primary)" }}>
           Not Registered Yet?{" "}
-          <Link to={'/register'} style={{color: "var(--color-auth-secondary)"}}>Create an account</Link>
+          <Link
+            to={"/register"}
+            style={{ color: "var(--color-auth-secondary)" }}
+          >
+            Create an account
+          </Link>
         </Typography>
       </Flex>
     </Flex>

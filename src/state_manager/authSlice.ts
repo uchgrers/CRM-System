@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Profile, UserRegistration } from "../types/types";
-import { signup } from "../api/authApi";
+import { AuthData, Profile, Token, UserRegistration } from "../types/types";
+import { signin, signup } from "../api/authApi";
 
 type InitialStateType = {
     profile: Profile,
-    error: string
+    error: string,
+    created: boolean,
+    token: Token
 }
 
 const initialState: InitialStateType = {
@@ -17,7 +19,12 @@ const initialState: InitialStateType = {
         roles: [],
         phoneNumber: '',
     },
-    error: ''
+    error: '',
+    created: false,
+    token: {
+        accessToken: '',
+        refreshToken: ''
+    }
 }
 
 export const signupThunk = createAsyncThunk(
@@ -25,6 +32,17 @@ export const signupThunk = createAsyncThunk(
     async (userRegistrationData: UserRegistration, {rejectWithValue}) => {
         try {
             return await signup(userRegistrationData) as Profile
+        } catch (error: any) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
+export const signinThunk = createAsyncThunk(
+    'auth/signin',
+    async (authData: AuthData, {rejectWithValue}) => {
+        try {
+            return await signin(authData) as Token
         } catch (error: any) {
             return rejectWithValue(error.response.data)
         }
@@ -49,9 +67,19 @@ const authSlice = createSlice({
                 state.profile.isBlocked = action.payload.isBlocked
                 state.profile.roles = action.payload.roles
                 state.profile.phoneNumber = action.payload.phoneNumber
+
+                state.created = true
             }
         }),
         builder.addCase(signupThunk.rejected, (state, action) => {
+            state.error = action.payload as string
+        }),
+        builder.addCase(signinThunk.fulfilled, (state, action) => {
+            if (action.payload) {
+                state.token = action.payload
+            }
+        }),
+        builder.addCase(signinThunk.rejected, (state, action) => {
             state.error = action.payload as string
         })
     }

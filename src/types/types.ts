@@ -30,14 +30,6 @@ export type UserRegistration = {
   phoneNumber: string; 
 }
 
-export type Register = {
-    email: string,
-    login: string,
-    password: string,
-    username: string,
-    phoneNumber?: string
-}
-
 export type Role = 'ADMIN' | 'USER' | 'MODERATOR'
 
 export type Profile = { 
@@ -48,4 +40,14 @@ export type Profile = {
   isBlocked: boolean; 
   roles: Role[]; 
   phoneNumber: string; 
+}
+
+export type AuthData = {
+    login: string,
+    password: string
+}
+
+export type Token = {
+ accessToken: string
+ refreshToken: string
 }

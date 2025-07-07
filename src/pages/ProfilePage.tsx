@@ -1,8 +1,14 @@
 import { Layout } from "antd";
 import Sider from "antd/es/layout/Sider";
 import MainManu from "../components/MainMenu/MainMenu";
+import { useEffect } from "react";
+import { getProfile } from "../api/profileApi";
 
 const ProfilePage = () => {
+  useEffect(() => {
+    getProfile();
+  }, []);
+
   return (
     <Layout>
       <Sider
@@ -13,7 +19,7 @@ const ProfilePage = () => {
       >
         <MainManu />
       </Sider>
-      <Layout style={{minHeight: '100vh'}}>
+      <Layout style={{ minHeight: "100vh" }}>
         <div>Hello</div>
       </Layout>
     </Layout>

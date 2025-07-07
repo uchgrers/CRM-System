@@ -3,12 +3,13 @@ import logo from "./../icons/logo.svg";
 import cross from "./../icons/cross.svg";
 import { Typography, Image, Flex } from "antd";
 import AuthForm from "../components/AuthForm/AuthForm";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAppSelector } from "../hooks";
 
 const AuthPage = () => {
   const { Title } = Typography;
-  const isAuth = useAppSelector((state) => state.auth.token.accessToken);
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+
   return (
     <Flex
       style={{

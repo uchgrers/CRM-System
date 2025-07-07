@@ -5,7 +5,7 @@ import { ProfileFilled, UnorderedListOutlined } from "@ant-design/icons";
 
 const MainManu = () => {
   const navigationItems = [
-    { label: "Profile", key: "/profile", icon: <ProfileFilled /> },
+    { label: "Profile", key: "/user/profile", icon: <ProfileFilled /> },
     {
       label: "Todos List",
       key: "/todos",

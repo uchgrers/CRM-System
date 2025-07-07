@@ -1,89 +1,111 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthData, Profile, Token, UserRegistration } from "../types/types";
-import { signin, signup } from "../api/authApi";
+import { logout, signin, signup } from "../api/authApi";
+import { refresh } from "../api/apiInstance";
 
 type InitialStateType = {
-    profile: Profile,
-    error: string,
-    created: boolean,
-    token: Token
-}
+  isAuth: boolean;
+  isCreated: boolean;
+  error: string;
+  accessToken: string | null;
+};
 
 const initialState: InitialStateType = {
-    profile: {
-        id: 0,
-        username: '', 
-        email: '',
-        date: '',
-        isBlocked: false,
-        roles: [],
-        phoneNumber: '',
-    },
-    error: '',
-    created: false,
-    token: {
-        accessToken: '',
-        refreshToken: ''
+  isAuth: false,
+  isCreated: false,
+  error: "",
+  accessToken: "",
+};
+
+export const refreshThunk = createAsyncThunk(
+  "auth/refresh",
+  async (refreshToken: string, { rejectWithValue }) => {
+    try {
+      return (await refresh(refreshToken)) as Token;
+    } catch (error: any) {
+      if (error.response.status === 401) {
+        return rejectWithValue(error.response.data);
+      }
     }
-}
+  }
+);
 
 export const signupThunk = createAsyncThunk(
-    'auth/signup',
-    async (userRegistrationData: UserRegistration, {rejectWithValue}) => {
-        try {
-            return await signup(userRegistrationData) as Profile
-        } catch (error: any) {
-            return rejectWithValue(error.response.data)
-        }
+  "auth/signup",
+  async (userRegistrationData: UserRegistration, { rejectWithValue }) => {
+    try {
+      return (await signup(userRegistrationData)) as Profile;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
     }
-)
+  }
+);
 
 export const signinThunk = createAsyncThunk(
-    'auth/signin',
-    async (authData: AuthData, {rejectWithValue}) => {
-        try {
-            return await signin(authData) as Token
-        } catch (error: any) {
-            return rejectWithValue(error.response.data)
-        }
+  "auth/signin",
+  async (authData: AuthData, { rejectWithValue }) => {
+    try {
+      return await signin(authData);
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
     }
-)
+  }
+);
+
+export const logoutThunk = createAsyncThunk(
+  "user/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await logout();
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 const authSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {
-        setErrorMessage: (state, action) => {
-            state.error = action.payload
-        }
+  name: "auth",
+  initialState,
+  reducers: {
+    setToken: (state, action) => {
+      state.accessToken = action.payload.accessToken;
     },
-    extraReducers: builder => {
-        builder.addCase(signupThunk.fulfilled, (state, action) => {
-            if (action.payload) {
-                state.profile.id = action.payload.id
-                state.profile.username = action.payload.username
-                state.profile.email = action.payload.email
-                state.profile.date = action.payload.date
-                state.profile.isBlocked = action.payload.isBlocked
-                state.profile.roles = action.payload.roles
-                state.profile.phoneNumber = action.payload.phoneNumber
+    logoutUser: (state, action) => {
+      state.isAuth = false;
+      state.accessToken = "";
+      localStorage.removeItem("refreshToken");
+    },
+    setErrorMessage: (state, action) => {
+      state.error = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(signupThunk.fulfilled, (state, action) => {
+      state.isCreated = true;
+    }),
+      builder.addCase(signupThunk.rejected, (state, action) => {
+        console.log(action.payload);
+        // state.error =
+      }),
+      builder.addCase(signinThunk.fulfilled, (state, action) => {
+        localStorage.setItem("refreshToken", action.payload.refreshToken);
+        state.accessToken = action.payload.accessToken;
+        state.isAuth = true;
+      }),
+      builder.addCase(refreshThunk.fulfilled, (state, action) => {
+        state.isAuth = true;
+        state.accessToken = action.payload?.accessToken || "";
+      }),
+      builder.addCase(refreshThunk.rejected, (state, action) => {
+        state.accessToken = "";
+      }),
+      builder.addCase(logoutThunk.fulfilled, (state, action) => {
+        state.isAuth = false;
+        state.accessToken = "";
+      });
+  },
+});
 
-                state.created = true
-            }
-        }),
-        builder.addCase(signupThunk.rejected, (state, action) => {
-            state.error = action.payload as string
-        }),
-        builder.addCase(signinThunk.fulfilled, (state, action) => {
-            if (action.payload) {
-                state.token = action.payload
-            }
-        }),
-        builder.addCase(signinThunk.rejected, (state, action) => {
-            state.error = action.payload as string
-        })
-    }
-})
-
-export const {setErrorMessage} = authSlice.actions
-export default authSlice.reducer
+export const { setToken, logoutUser, setErrorMessage } = authSlice.actions;
+export default authSlice.reducer;

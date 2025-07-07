@@ -3,11 +3,17 @@ import Form from "antd/es/form";
 import { useAppDispatch } from "../../hooks";
 import { AuthData } from "../../types/types";
 import { signinThunk } from "../../state_manager/authSlice";
+import { useNavigate } from "react-router-dom";
+import { AuthFieldsLength, ErrorMessageType } from "../../constants/auth";
 
 const AuthForm = () => {
   const dispatch = useAppDispatch();
-  const authUser = (authData: AuthData) => {
-    dispatch(signinThunk(authData));
+  const authUser = async (authData: AuthData) => {
+    try {
+      await dispatch(signinThunk(authData));
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
@@ -23,9 +29,17 @@ const AuthForm = () => {
       }}
     >
       <Form.Item
-        label="Email"
+        label="Login"
         style={{ width: "100%", margin: "0" }}
         name="login"
+        rules={[
+          { required: true, message: ErrorMessageType.LoginIsTooShort },
+          {
+            min: AuthFieldsLength.LoginMin,
+            message: ErrorMessageType.LoginIsTooShort,
+          },
+          { max: AuthFieldsLength.Max, message: ErrorMessageType.TooLong },
+        ]}
       >
         <Input
           placeholder="mail@abc.com"
@@ -36,6 +50,14 @@ const AuthForm = () => {
         label="Password"
         style={{ width: "100%", margin: "0" }}
         name="password"
+        rules={[
+          { required: true, message: ErrorMessageType.PasswordIsTooShort },
+          {
+            min: AuthFieldsLength.PasswordMin,
+            message: ErrorMessageType.PasswordIsTooShort,
+          },
+          { max: AuthFieldsLength.Max, message: ErrorMessageType.TooLong },
+        ]}
       >
         <Input
           placeholder="********"

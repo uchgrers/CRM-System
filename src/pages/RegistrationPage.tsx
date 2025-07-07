@@ -1,11 +1,12 @@
 import { Typography, Image, Flex } from "antd";
 import logo from "./../icons/logo.svg";
 import RegistrationForm from "../components/RegistrationForm/RegistrationForm";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAppSelector } from "../hooks";
 
 const RegisterPage = () => {
-  const isUserCreated = useAppSelector((state) => state.auth.created);
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const userIsCreated = useAppSelector((state) => state.auth.isCreated);
   return (
     <Flex
       style={{
@@ -14,6 +15,7 @@ const RegisterPage = () => {
         padding: "4px",
       }}
     >
+      {isAuth && <Navigate to={"/todos"} />}
       <Image
         src={logo}
         alt="Auth page image"
@@ -33,7 +35,7 @@ const RegisterPage = () => {
           justifyContent: "space-around",
         }}
       >
-        {isUserCreated ? (
+        {userIsCreated ? (
           <Typography style={{ color: "var(--color-auth-primary)" }}>
             Success!{<br />}
             <Link to={"/auth"} style={{ color: "var(--color-auth-secondary)" }}>

@@ -21,6 +21,8 @@ const ProfilePage = () => {
       </Sider>
       <Layout style={{ minHeight: "100vh" }}>
         <div>Hello</div>
+        <div>Hello</div>
+        <div>Hello</div>
       </Layout>
     </Layout>
   );

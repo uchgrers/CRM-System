@@ -1,8 +1,7 @@
 import axios from "axios";
 import { Token } from "../types/types";
 import { store } from "../state_manager/store";
-import { logout, logoutUser, refreshThunk, setToken } from "../state_manager/authSlice";
-// import { logout } from "./authApi";
+import { logoutUser, refreshThunk } from "../state_manager/authSlice";
 
 export const apiInstance = axios.create({
   baseURL: "https://easydev.club/api/v1/",
@@ -58,8 +57,8 @@ apiInstance.interceptors.response.use(
         }`;
         return apiInstance(originalRequest);
       }
+      return Promise.reject(error);
     } catch (error) {
-      // window.location.pathname = "auth";
       return Promise.reject(error);
     }
   }

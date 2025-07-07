@@ -33,7 +33,7 @@ export type UserRegistration = {
 export type Role = 'ADMIN' | 'USER' | 'MODERATOR'
 
 export type Profile = { 
-  id: number; 
+  id: number | undefined; 
   username: string; 
   email: string; 
   date: string; 

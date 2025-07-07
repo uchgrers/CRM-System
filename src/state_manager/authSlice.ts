@@ -36,7 +36,6 @@ export const signupThunk = createAsyncThunk(
     try {
       return (await signup(userRegistrationData)) as Profile;
     } catch (error: any) {
-      console.log(error);
       return rejectWithValue(error.response.data);
     }
   }
@@ -85,8 +84,7 @@ const authSlice = createSlice({
       state.isCreated = true;
     }),
       builder.addCase(signupThunk.rejected, (state, action) => {
-        console.log(action.payload);
-        // state.error =
+        state.error = action.payload
       }),
       builder.addCase(signinThunk.fulfilled, (state, action) => {
         localStorage.setItem("refreshToken", action.payload.refreshToken);

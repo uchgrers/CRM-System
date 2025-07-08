@@ -67,9 +67,6 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setToken: (state, action) => {
-      state.accessToken = action.payload.accessToken;
-    },
     logoutUser: (state, action) => {
       state.isAuth = false;
       state.accessToken = "";
@@ -84,7 +81,7 @@ const authSlice = createSlice({
       state.isCreated = true;
     }),
       builder.addCase(signupThunk.rejected, (state, action) => {
-        state.error = action.payload
+        state.error = action.payload as string;
       }),
       builder.addCase(signinThunk.fulfilled, (state, action) => {
         localStorage.setItem("refreshToken", action.payload.refreshToken);
@@ -97,6 +94,7 @@ const authSlice = createSlice({
       }),
       builder.addCase(refreshThunk.rejected, (state, action) => {
         state.accessToken = "";
+        state.error = action.payload as string;
       }),
       builder.addCase(logoutThunk.fulfilled, (state, action) => {
         state.isAuth = false;
@@ -105,5 +103,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setToken, logoutUser, setErrorMessage } = authSlice.actions;
+export const { logoutUser, setErrorMessage } = authSlice.actions;
 export default authSlice.reducer;

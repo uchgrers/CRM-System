@@ -22,7 +22,7 @@ export const signin = async (authData: AuthData) => {
 
 export const logout = async () => {
   try {
-    const result = await apiInstance.post("user/logout");
+    const result = await apiInstance.post<string>("user/logout");
     return result.data;
   } catch (error) {
     throw error;

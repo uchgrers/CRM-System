@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthData, Profile, Token, UserRegistration } from "../types/types";
-import { logout, signin, signup } from "../api/authApi";
-import { refresh } from "../api/apiInstance";
+import { refresh, signin, signup } from "../api/authApi";
 
 type InitialStateType = {
   isAuth: boolean;
@@ -52,26 +51,10 @@ export const signinThunk = createAsyncThunk(
   }
 );
 
-export const logoutThunk = createAsyncThunk(
-  "user/logout",
-  async (_, { rejectWithValue }) => {
-    try {
-      return await logout();
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logoutUser: (state, action) => {
-      state.isAuth = false;
-      state.accessToken = "";
-      localStorage.removeItem("refreshToken");
-    },
     setErrorMessage: (state, action) => {
       state.error = action.payload;
     },
@@ -95,13 +78,9 @@ const authSlice = createSlice({
       builder.addCase(refreshThunk.rejected, (state, action) => {
         state.accessToken = "";
         state.error = action.payload as string;
-      }),
-      builder.addCase(logoutThunk.fulfilled, (state, action) => {
-        state.isAuth = false;
-        state.accessToken = "";
       });
   },
 });
 
-export const { logoutUser, setErrorMessage } = authSlice.actions;
+export const { setErrorMessage } = authSlice.actions;
 export default authSlice.reducer;

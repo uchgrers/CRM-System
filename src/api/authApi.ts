@@ -1,6 +1,6 @@
-import axios from "axios";
 import { AuthData, Profile, Token, UserRegistration } from "../types/types";
 import { apiInstance } from "./apiInstance";
+import { refreshInstance } from "./refreshInstance";
 
 export const signup = async (userData: UserRegistration) => {
   try {
@@ -20,9 +20,12 @@ export const signin = async (authData: AuthData) => {
   }
 };
 
-export const logout = async () => {
+export const refresh = async (refreshToken: string) => {
   try {
-    const result = await apiInstance.post<string>("user/logout");
+    const result = await refreshInstance.post<Token>("auth/refresh", {
+      refreshToken: refreshToken,
+    });
+    localStorage.setItem("refreshToken", result.data.refreshToken);
     return result.data;
   } catch (error) {
     throw error;

@@ -2,11 +2,17 @@ import { Layout } from "antd";
 import Sider from "antd/es/layout/Sider";
 import MainManu from "../components/MainMenu/MainMenu";
 import { useEffect } from "react";
-import { getProfile } from "../api/profileApi";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { getProfileThunk } from "../state_manager/profileSlice";
 
 const ProfilePage = () => {
+  const dispatch = useAppDispatch();
+  const username = useAppSelector((state) => state.profile.username);
+  const email = useAppSelector((state) => state.profile.email);
+  const phoneNumber = useAppSelector((state) => state.profile.phoneNumber);
+
   useEffect(() => {
-    getProfile();
+    dispatch(getProfileThunk());
   }, []);
 
   return (
@@ -20,9 +26,9 @@ const ProfilePage = () => {
         <MainManu />
       </Sider>
       <Layout style={{ minHeight: "100vh" }}>
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>Hello</div>
+        <div>Username: {username}</div>
+        <div>Email: {email}</div>
+        <div>Phone number: {phoneNumber || '-'}</div>
       </Layout>
     </Layout>
   );

@@ -16,7 +16,7 @@ export const getProfileThunk = createAsyncThunk(
   "/user/profile",
   async (_, { rejectWithValue }) => {
     try {
-      return await getProfile();
+      return (await getProfile()) as Profile;
     } catch (error) {
       return rejectWithValue(error);
     }

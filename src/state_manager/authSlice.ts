@@ -4,12 +4,14 @@ import { logout, refresh, signin, signup } from "../api/authApi";
 
 type InitialStateType = {
   isCreated: boolean;
+  isAuth: boolean;
   error: string;
   accessToken: string | null;
 };
 
 const initialState: InitialStateType = {
   isCreated: false,
+  isAuth: false,
   error: "",
   accessToken: "",
 };
@@ -86,15 +88,18 @@ const authSlice = createSlice({
       builder.addCase(signinThunk.fulfilled, (state, action) => {
         localStorage.setItem("refreshToken", action.payload.refreshToken);
         state.accessToken = action.payload.accessToken;
+        state.isAuth = true;
       }),
       builder.addCase(signinThunk.rejected, (state, action) => {
         state.error = action.payload as string;
       }),
       builder.addCase(refreshThunk.fulfilled, (state, action) => {
         state.accessToken = action.payload?.accessToken || "";
+        state.isAuth = true;
       }),
       builder.addCase(refreshThunk.rejected, (state, action) => {
         state.accessToken = "";
+        state.isAuth = false;
         state.error = action.payload as string;
       });
   },

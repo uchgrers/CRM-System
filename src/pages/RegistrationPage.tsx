@@ -5,7 +5,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useAppSelector } from "../hooks";
 
 const RegisterPage = () => {
-  const accessToken = useAppSelector((state) => state.auth.accessToken);
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
   const userIsCreated = useAppSelector((state) => state.auth.isCreated);
   return (
     <Flex
@@ -15,7 +15,7 @@ const RegisterPage = () => {
         padding: "4px",
       }}
     >
-      {accessToken && <Navigate to={"/todos"} />}
+      {isAuth && <Navigate to={"/todos"} />}
       <Image
         src={logo}
         alt="Auth page image"

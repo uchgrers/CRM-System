@@ -46,7 +46,11 @@ export const signinThunk = createAsyncThunk(
     try {
       return await signin(authData);
     } catch (error: any) {
-      return rejectWithValue(error.response.data);
+      let errorMessage = error.response.data;
+      if (error.status === 401) {
+        errorMessage = "Неверные логин или пароль";
+      }
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -70,6 +74,9 @@ const authSlice = createSlice({
         localStorage.setItem("refreshToken", action.payload.refreshToken);
         state.accessToken = action.payload.accessToken;
         state.isAuth = true;
+      }),
+      builder.addCase(signinThunk.rejected, (state, action) => {
+        state.error = action.payload as string;
       }),
       builder.addCase(refreshThunk.fulfilled, (state, action) => {
         state.isAuth = true;

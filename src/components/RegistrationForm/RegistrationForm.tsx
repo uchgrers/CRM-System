@@ -51,7 +51,7 @@ const RegistrationForm = () => {
           { max: AuthFieldsLength.Max, message: ErrorMessageType.TooLong },
         ]}
       >
-        <Input placeholder="mail@abc.com" size="small" />
+        <Input placeholder="Username" size="small" />
       </Form.Item>
       <Form.Item
         label="Login"

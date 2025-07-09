@@ -1,8 +1,8 @@
 import { Button, Checkbox, Input, Typography } from "antd";
 import Form from "antd/es/form";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { AuthData } from "../../types/types";
-import { signinThunk } from "../../state_manager/authSlice";
+import { setErrorMessage, signinThunk } from "../../state_manager/authSlice";
 import { useNavigate } from "react-router-dom";
 import { AuthFieldsLength, ErrorMessageType } from "../../constants/auth";
 
@@ -16,9 +16,15 @@ const AuthForm = () => {
     }
   };
 
+  const signinError = useAppSelector((state) => state.auth.error);
+  const handleFormFieldsChange = () => {
+    dispatch(setErrorMessage(''))
+  }
+
   return (
     <Form
       onFinish={authUser}
+      onChange={handleFormFieldsChange}
       layout="vertical"
       style={{
         width: "420px",
@@ -28,6 +34,7 @@ const AuthForm = () => {
         justifyContent: "center",
       }}
     >
+      <p style={{ color: "var(--color-danger)" }}>{signinError}</p>
       <Form.Item
         label="Login"
         style={{ width: "100%", margin: "0" }}
@@ -42,7 +49,7 @@ const AuthForm = () => {
         ]}
       >
         <Input
-          placeholder="mail@abc.com"
+          placeholder="Login"
           style={{ color: "var(--color-auth-primary)" }}
         />
       </Form.Item>

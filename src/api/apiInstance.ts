@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Token } from "../types/types";
 import { store } from "../state_manager/store";
 import { refreshThunk } from "../state_manager/authSlice";
 import { apiConfig } from "./apiConfig";

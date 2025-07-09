@@ -4,10 +4,13 @@ import { refreshInstance } from "./refreshInstance";
 
 export const signup = async (userData: UserRegistration) => {
   try {
-    const result = await apiInstance.post<Profile | string>("auth/signup", userData);
+    const result = await apiInstance.post<Profile | string>(
+      "auth/signup",
+      userData
+    );
     return result.data;
   } catch (error: any) {
-    throw error
+    throw error;
   }
 };
 
@@ -18,6 +21,10 @@ export const signin = async (authData: AuthData) => {
   } catch (error) {
     throw error;
   }
+};
+
+export const logout = async () => {
+  return await apiInstance.post<string>("user/logout");
 };
 
 export const refresh = async (refreshToken: string) => {

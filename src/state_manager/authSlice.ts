@@ -1,16 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthData, Profile, Token, UserRegistration } from "../types/types";
-import { refresh, signin, signup } from "../api/authApi";
+import { logout, refresh, signin, signup } from "../api/authApi";
 
 type InitialStateType = {
-  isAuth: boolean;
   isCreated: boolean;
   error: string;
   accessToken: string | null;
 };
 
 const initialState: InitialStateType = {
-  isAuth: false,
   isCreated: false,
   error: "",
   accessToken: "",
@@ -55,12 +53,27 @@ export const signinThunk = createAsyncThunk(
   }
 );
 
+export const logoutThunk = createAsyncThunk(
+  "auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await logout();
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     setErrorMessage: (state, action) => {
       state.error = action.payload;
+    },
+    resetTokens: (state, action) => {
+      state.accessToken = "";
+      localStorage.removeItem("refreshToken");
     },
   },
   extraReducers: (builder) => {
@@ -73,13 +86,11 @@ const authSlice = createSlice({
       builder.addCase(signinThunk.fulfilled, (state, action) => {
         localStorage.setItem("refreshToken", action.payload.refreshToken);
         state.accessToken = action.payload.accessToken;
-        state.isAuth = true;
       }),
       builder.addCase(signinThunk.rejected, (state, action) => {
         state.error = action.payload as string;
       }),
       builder.addCase(refreshThunk.fulfilled, (state, action) => {
-        state.isAuth = true;
         state.accessToken = action.payload?.accessToken || "";
       }),
       builder.addCase(refreshThunk.rejected, (state, action) => {
@@ -89,5 +100,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { setErrorMessage } = authSlice.actions;
+export const { setErrorMessage, resetTokens } = authSlice.actions;
 export default authSlice.reducer;

@@ -8,7 +8,7 @@ import { useAppSelector } from "../hooks";
 
 const AuthPage = () => {
   const { Title } = Typography;
-  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const accessToken = useAppSelector((state) => state.auth.accessToken);
 
   return (
     <Flex
@@ -18,7 +18,7 @@ const AuthPage = () => {
         padding: "4px",
       }}
     >
-      {isAuth && <Navigate to={"/todos"} />}
+      {accessToken && <Navigate to={"/todos"} />}
       <Image
         src={logo}
         alt="Auth page image"

@@ -35,27 +35,21 @@ const RegisterPage = () => {
           justifyContent: "space-around",
         }}
       >
-        {userIsCreated ? (
+        {userIsCreated && (
           <Typography style={{ color: "var(--color-auth-primary)" }}>
             Success!{<br />}
             <Link to={"/auth"} style={{ color: "var(--color-auth-secondary)" }}>
               Login here
             </Link>
           </Typography>
-        ) : (
-          <>
-            <RegistrationForm />
-            <Typography style={{ color: "var(--color-auth-primary)" }}>
-              Already have an account?{" "}
-              <Link
-                to={"/auth"}
-                style={{ color: "var(--color-auth-secondary)" }}
-              >
-                Login here
-              </Link>
-            </Typography>
-          </>
         )}
+        <RegistrationForm />
+        <Typography style={{ color: "var(--color-auth-primary)" }}>
+          Already have an account?{" "}
+          <Link to={"/auth"} style={{ color: "var(--color-auth-secondary)" }}>
+            Login here
+          </Link>
+        </Typography>
       </Flex>
     </Flex>
   );

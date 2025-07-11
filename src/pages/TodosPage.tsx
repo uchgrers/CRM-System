@@ -1,0 +1,68 @@
+import { useEffect, useState } from "react";
+import TodosList from "../components/TodosList/TodosList";
+import { Todo, TodoInfo, TodosStatus } from "../types/types";
+import AddTodoForm from "../components/AddTodoForm/AddTodoForm";
+import TodosSelector from "../components/TodosSelector/TodosSelector";
+import { getTodos } from "../api/todosApi";
+import { Flex, Layout } from "antd";
+import Sider from "antd/es/layout/Sider";
+import MainManu from "../components/MainMenu/MainMenu";
+
+const TodosPage = () => {
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const [todosStatus, setTodosStatus] = useState<TodosStatus>(TodosStatus.All);
+
+  const [todosCount, setTodosCount] = useState<TodoInfo>({
+    all: 0,
+    inWork: 0,
+    completed: 0,
+  });
+
+  const fetchTodos = async (todosStatus?: TodosStatus) => {
+    const result = await getTodos(todosStatus);
+    setTodos(result.data);
+    setTodosCount(result.info);
+  };
+
+  useEffect(() => {
+    fetchTodos(todosStatus);
+    const interval = setInterval(() => {
+      fetchTodos(todosStatus);
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [todosStatus]);
+
+  return (
+    <Layout style={{ columnGap: "10px", minHeight: "100vh" }}>
+      <Sider
+        style={{
+          color: "var(--color-bg-secondary)",
+          backgroundColor: "var(--color-button-primary)",
+        }}
+      >
+        <MainManu />
+      </Sider>
+      <Layout>
+        <Flex vertical style={{ margin: "20px 0", alignItems: "center" }}>
+          <AddTodoForm fetchTodos={fetchTodos} />
+          <TodosSelector
+            todosCount={todosCount}
+            fetchTodos={fetchTodos}
+            setTodosStatus={setTodosStatus}
+          />
+          <TodosList
+            todos={todos}
+            todosStatus={todosStatus}
+            fetchTodos={fetchTodos}
+          />
+        </Flex>
+      </Layout>
+    </Layout>
+  );
+};
+
+export default TodosPage;

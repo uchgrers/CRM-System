@@ -72,8 +72,9 @@ const authSlice = createSlice({
     setErrorMessage: (state, action) => {
       state.error = action.payload;
     },
-    resetTokens: () => {
-      accessTokenHelper.setAccessToken("");
+    resetTokens: (state, action) => {
+      state.isAuth = false;
+      accessTokenHelper.setAccessToken(action.payload);
       localStorage.removeItem("refreshToken");
     },
   },

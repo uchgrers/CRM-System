@@ -21,7 +21,6 @@ const MainManu = () => {
     try {
       await dispatch(logoutThunk());
     } catch (error) {
-      throw error;
     } finally {
       dispatch(resetTokens(""));
       navigate("/");
@@ -35,7 +34,6 @@ const MainManu = () => {
         style={{
           height: "100%",
           backgroundColor: "var(--color-bg-primary)",
-          position: "relative",
         }}
         onClick={({ key }) => navigate(key)}
         items={navigationItems}

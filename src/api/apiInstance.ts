@@ -2,15 +2,16 @@ import axios from "axios";
 import { store } from "../state_manager/store";
 import { refreshThunk } from "../state_manager/authSlice";
 import { apiConfig } from "./apiConfig";
+import { accessTokenHelper } from "../utils/accessTokenHelper";
 
 export const apiInstance = axios.create({
   ...apiConfig,
 });
 
 apiInstance.interceptors.request.use(async (config) => {
-  config.headers["Authorization"] = `Bearer ${
-    store.getState().auth.accessToken
-  }`;
+  config.headers[
+    "Authorization"
+  ] = `Bearer ${accessTokenHelper.getAccessToken()}`;
   return config;
 });
 
@@ -26,9 +27,9 @@ apiInstance.interceptors.response.use(
           refreshThunk(localStorage.getItem("refreshToken") || "")
         );
 
-        originalRequest.headers["Authorization"] = `Bearer ${
-          store.getState().auth.accessToken
-        }`;
+        originalRequest.headers[
+          "Authorization"
+        ] = `Bearer ${accessTokenHelper.getAccessToken()}`;
         return apiInstance(originalRequest);
       }
       return Promise.reject(error);

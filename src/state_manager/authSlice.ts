@@ -1,19 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthData, Profile, Token, UserRegistration } from "../types/types";
 import { logout, refresh, signin, signup } from "../api/authApi";
+import { accessTokenHelper } from "../utils/accessTokenHelper";
 
 type InitialStateType = {
   isCreated: boolean;
   isAuth: boolean;
   error: string;
-  accessToken: string | null;
 };
 
 const initialState: InitialStateType = {
   isCreated: false,
   isAuth: false,
   error: "",
-  accessToken: "",
 };
 
 export const refreshThunk = createAsyncThunk(
@@ -73,8 +72,8 @@ const authSlice = createSlice({
     setErrorMessage: (state, action) => {
       state.error = action.payload;
     },
-    resetTokens: (state, action) => {
-      state.accessToken = "";
+    resetTokens: () => {
+      accessTokenHelper.setAccessToken("");
       localStorage.removeItem("refreshToken");
     },
   },
@@ -87,18 +86,18 @@ const authSlice = createSlice({
       }),
       builder.addCase(signinThunk.fulfilled, (state, action) => {
         localStorage.setItem("refreshToken", action.payload.refreshToken);
-        state.accessToken = action.payload.accessToken;
         state.isAuth = true;
+        accessTokenHelper.setAccessToken(action.payload.accessToken);
       }),
       builder.addCase(signinThunk.rejected, (state, action) => {
         state.error = action.payload as string;
       }),
       builder.addCase(refreshThunk.fulfilled, (state, action) => {
-        state.accessToken = action.payload?.accessToken || "";
         state.isAuth = true;
+        accessTokenHelper.setAccessToken(action.payload?.accessToken || "");
       }),
       builder.addCase(refreshThunk.rejected, (state, action) => {
-        state.accessToken = "";
+        accessTokenHelper.setAccessToken("");
         state.isAuth = false;
         state.error = action.payload as string;
       });
